@@ -1,0 +1,27 @@
+.form-search-order {
+    border-radius: 5px;
+    padding: 10px;
+    border: thin solid rgba(228, 228, 228, 1);
+    box-shadow: 3px 3px 3px #ccc;
+    background: rgba(228, 228, 228, 1);
+    padding-left: 20px;
+}
+
+.radio-inline {
+    margin-right: 50px;
+}
+
+.order-info {
+    border: thin solid #f0f0f0;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    box-shadow: 3px 3px 4px 0 #9a9a9a;
+}
+
+.tim-kiem-wrapper {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.428571429;
+    color: #46484a;
+    background-color: #e6e8ea;
+}

@@ -1,0 +1,23 @@
+/* header */
+
+.header-wrapper {
+    background: var(--main-bg-nav-color);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 60px;
+}
+
+.header-nav-link {
+    padding-bottom: 6px;
+    border-bottom: 1px solid #494a48;
+}
+
+.header-nav-link:hover {
+    border-color: var(--nav-link-hover-color);
+    transition: all 0.2s linear;
+}
+
+.header-nav-icon:hover {
+    transform: scale(1.2);
+    transition: all 0.2s linear;
+}

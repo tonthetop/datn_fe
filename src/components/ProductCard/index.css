@@ -1,0 +1,126 @@
+.product-img>a {
+    overflow: hidden;
+}
+
+.onsale {
+    background: #000000;
+    box-shadow: none;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 500;
+    height: 95px;
+    left: auto;
+    line-height: 162px;
+    min-height: auto;
+    min-width: auto;
+    position: absolute;
+    right: -48px;
+    text-align: center;
+    text-shadow: none;
+    text-transform: none;
+    top: -50px;
+    width: 94px;
+    z-index: 4;
+    border-radius: 0;
+    -webkit-transform: rotate(45deg) translateZ(0) scale(1, 1);
+    transform: rotate(45deg) translateZ(0) scale(1, 1);
+    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.single-product>.product-img {
+    height: 300px;
+}
+
+.single-product>.product-img>a {
+    display: block;
+}
+
+.single-product>.product-img>a>img {
+    object-fit: cover;
+    /* object-position: bottom; */
+}
+
+.item-img-first {
+    z-index: 3;
+    transition: all 1s ease;
+    opacity: 1;
+}
+
+.item-img-second {
+    z-index: 2;
+    opacity: 0;
+    transition: all 1s ease;
+}
+
+.product-img:hover .item-img-first {
+    z-index: 1;
+    opacity: 0;
+}
+
+.product-img:hover .item-img-second {
+    opacity: 1;
+}
+
+.product-img:hover .btn-quickview {
+    opacity: 1;
+}
+
+a.btn-quickview {
+    color: #fff;
+    padding: 8px 0;
+    background: #fff;
+    left: 50%;
+    opacity: 0;
+    -webkit-transition: all 1s ease;
+    transition: all 1s ease;
+    background: rgba(75, 63, 63, 0.5);
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    top: auto;
+    border: none;
+    outline: none;
+    text-align: center;
+}
+
+.size-item {
+    float: left;
+    min-width: 25px !important;
+    height: 25px !important;
+    margin: 0;
+    text-align: center;
+    line-height: 25px;
+    white-space: nowrap;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    position: relative;
+}
+
+.price-box {
+    color: #555;
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+span.regular-price {
+    font-weight: bold;
+    color: #000;
+}
+
+.regular-price {
+    color: red !important;
+    font-size: 16px !important;
+}
+
+.discount-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 14px;
+}
