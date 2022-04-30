@@ -1,6 +1,6 @@
 import React from 'react'
 import ProductCard from '../ProductCard'
-const ListCategory = () => {
+const ListProduct = () => {
   return (
     <div className="container">
         <h1>San pham ban chay</h1>
@@ -18,4 +18,4 @@ const ListCategory = () => {
   )
 }
 
-export default ListCategory
+export default ListProduct

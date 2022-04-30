@@ -3,6 +3,7 @@ import Footer from './components/Footer'
 import { Routes, Route } from 'react-router-dom'
 import TimKiemDonHang from './pages/TimkiemDonHang';
 import TrangChu from './pages/TrangChu';
+import ProductsPage from './pages/Products';
 function App() {
   return (
 
@@ -10,13 +11,15 @@ function App() {
 
       {/* Header */}
       <Header></Header>
-      <div style={{marginTop:"60px"}}>
+      <div style={{ marginTop: "60px" }}>
         <Routes>
           <Route path="/" element={
             <TrangChu></TrangChu>
           }></Route>
           <Route path="/gioi-thieu" element={<div>GioiThieu</div>}></Route>
-          <Route path="/san-pham" element={<div>Sanpham</div>}></Route>
+          <Route path="/san-pham" element={
+            <ProductsPage></ProductsPage>
+          }></Route>
           <Route path='/tim-kiem-don-hang' element={
             <TimKiemDonHang></TimKiemDonHang>
           }></Route>

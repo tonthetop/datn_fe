@@ -1,7 +1,6 @@
 import "./index.css";
 import { Link } from "react-router-dom";
 function Header() {
-    console.log("renderer")
     return (
         <div className="header-wrapper fixed-top">
             <header className="header  h-100">
@@ -30,7 +29,7 @@ function Header() {
                                         </Link>
                                     </li>
                                     <li className="col-sm-4 col-lg-2">
-                                        <Link className="text-white text-decoration-none header-nav-link" to="/" title="Trang chủ">
+                                        <Link className="text-white text-decoration-none header-nav-link" to="/san-pham" title="Trang chủ">
                                             Sản phẩm
                                         </Link>
                                     </li>

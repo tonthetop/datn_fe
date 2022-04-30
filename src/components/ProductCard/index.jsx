@@ -8,7 +8,7 @@ const ProductCard = () => {
         <div className="col-6 col-sm-6 col-md-4 mb-4">
             <div className="mb-20 mt-0 single-product d-flex flex-column ">
                 <div className="product-img d-flex flex-column">
-                    <Link className="position-relative h-75 mb-4" to="">
+                    <Link className="position-relative h-75 mb-3" to="">
                         <span className="onsale">- 10%</span>
                         <img className="position-absolute h-100 w-100 item-img-first " src="https://bizweb.dktcdn.net/100/377/398/products/women-s-air-force-1-white-pendant-dd1525-100-release-date.jpg?v=1646286178000" />
                         <img className="position-absolute h-100 w-100 item-img-second" src="https://bizweb.dktcdn.net/thumb/grande/100/377/398/products/women-s-air-force-1-white-pendant-dd1525-100-release-date-c630b781-6dba-4139-8a3f-d106bdafcedd.jpg?v=1646286268000" />
