@@ -1,8 +1,9 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react"
-import CategorySubItem from './CategorySubItem.jsx'
 import './index.css'
-const SideBarItemCategory = () => {
+import {Field} from 'formik'
+const SideBarItemCheckbox = (props) => {
+
     const [iconState, setIconState] = useState(true)
     const dropDownItem = useRef()
     let originHeight = useRef();
@@ -15,28 +16,30 @@ const SideBarItemCategory = () => {
         if (!iconState) { dropDownItem.current.style.height = originHeight.current + "px"; }
         else dropDownItem.current.style.height = "0px";
     }
+
     return (
         <div className="side-bar-item">
             <div className="aside-title d-flex justify-content-between align-items-center">
                 <h5 className="title-head margin-top-0 ">
-                    <span>DANH MỤC SẢN PHẨM</span>
+                    <span>{props.title}</span>
                 </h5>
                 <i className={`fa fa-angle-${iconState ? 'up' : 'down'}`} onClick={handleChangeIcon}></i>
             </div>
             <div className="aside-content overflow-hidden" ref={dropDownItem} style={{ display: "block" }}>
                 <nav className="">
-                    <div className>
-                        <CategorySubItem></CategorySubItem>
-                        <CategorySubItem></CategorySubItem>
-                        <li className="d-flex align-items-center justify-content-between">
-                            <a className="nav-link link-dark" title="Phụ kiện" href="/phu-kien-1">
-                                Phụ kiện
-                            </a>
-                        </li>
-                    </div>
+                    {props.content.map(item => (
+                        <div key={item.key} className="d-flex align-items-center gap-3">
+                            <Field type="checkbox"  title=""  value={item.value} name={props.queryKey} className="form-check-input"></Field>
+                            <label htmlFor={props.queryKey} className="nav-link link-dark">
+                                {item.content}
+                            </label>
+                        </div>
+                    ))
+                    }
+
                 </nav>
             </div>
         </div >
     );
 };
-export default SideBarItemCategory; //
+export default SideBarItemCheckbox; //

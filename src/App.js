@@ -16,7 +16,10 @@ function App() {
           <Route path="/" element={
             <TrangChu></TrangChu>
           }></Route>
-          <Route path="/gioi-thieu" element={<div>GioiThieu</div>}></Route>
+          <Route path="/gioi-thieu" element={
+            <ProductsPage></ProductsPage>
+
+          }></Route>
           <Route path="/san-pham" element={
             <ProductsPage></ProductsPage>
           }></Route>
