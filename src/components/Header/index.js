@@ -43,14 +43,14 @@ function Header() {
                                             Tìm kiếm Đ/H
                                         </Link>
                                     </li>
-                                    <li className="col-sm-4 col-lg-2 row">
-                                        <div className="col-4  header-nav-icon">
+                                    <li className="col-sm-4 col-lg-2 d-flex align-items-center">
+                                        <div className="col-3  header-nav-icon">
                                             <i className="fa-solid fa-magnifying-glass"></i>
                                         </div>
-                                        <div className="col-4 header-nav-icon">
+                                        <div className="col-3 header-nav-icon">
                                             <i className="fa-solid fa-user"></i>
                                         </div>
-                                        <div className="col-4 header-nav-icon">
+                                        <div className="col-3 header-nav-icon">
                                             <i className="fa-solid fa-cart-shopping"></i>
                                         </div>
                                     </li>

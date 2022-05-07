@@ -33,8 +33,8 @@ const SideBar = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const handleQuery = (values) => {
-        const paramBrand = values.brand.length > 0 ? `${props2.queryKey}:(${values.brand.join('-')})` : "";
-        const paramPriceRange = values.priceRange.length > 0 ? `${props1.queryKey}:(${values.priceRange.join('-')})` : "";
+        const paramBrand = values.brand? `${props2.queryKey}:(${values.brand})` : "";
+        const paramPriceRange = values.priceRange? `${props1.queryKey}:(${values.priceRange})` : "";
         const paramMain=`q=${paramBrand}&${paramPriceRange}`
         console.log(paramMain)
         // navigate(`?${paramMain}`)

@@ -70,6 +70,10 @@
     background-color: #33353d
 }
 
+.site-footer .social-icons a>i {
+    line-height: -1!important;
+}
+
 .copyright-text {
     margin: 0
 }
@@ -110,19 +114,15 @@
 }
 
 .social-icons a {
-    background-color: #eceeef;
     color: #818a91;
     font-size: 16px;
     display: inline-block;
-    line-height: 44px;
-    width: 44px;
-    height: 44px;
     text-align: center;
-    margin-right: 8px;
-    border-radius: 100%;
     -webkit-transition: all .2s linear;
     -o-transition: all .2s linear;
-    transition: all .2s linear
+    transition: all .2s linear;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .social-icons a:active,
@@ -137,6 +137,10 @@
     height: 34px;
     width: 34px;
     font-size: 14px
+}
+
+ul.social-icons>li {
+    margin-right: 8px;
 }
 
 .social-icons a.facebook:hover {

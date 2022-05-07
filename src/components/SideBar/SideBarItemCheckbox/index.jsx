@@ -29,7 +29,7 @@ const SideBarItemCheckbox = (props) => {
                 <nav className="">
                     {props.content.map(item => (
                         <div key={item.key} className="d-flex align-items-center gap-3">
-                            <Field type="checkbox"  title=""  value={item.value} name={props.queryKey} className="form-check-input"></Field>
+                            <Field type="radio"  title=""  value={item.value} name={props.queryKey} className="form-check-input"></Field>
                             <label htmlFor={props.queryKey} className="nav-link link-dark">
                                 {item.content}
                             </label>

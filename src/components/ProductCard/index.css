@@ -31,6 +31,7 @@
 
 .single-product>.product-img {
     height: 300px;
+    width: auto;
 }
 
 .single-product>.product-img>a {
@@ -63,8 +64,9 @@
     opacity: 1;
 }
 
-.product-img:hover .btn-quickview {
-    opacity: 1;
+.product-img:hover a.btn-quickview {
+    opacity: 1.5;
+    color: #fff;
 }
 
 a.btn-quickview {
@@ -83,6 +85,7 @@ a.btn-quickview {
     border: none;
     outline: none;
     text-align: center;
+    z-index: 2;
 }
 
 .size-item {
