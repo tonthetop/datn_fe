@@ -1,7 +1,7 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react"
 import './index.css'
-import {Field} from 'formik'
+import { Field } from 'formik'
 const SideBarItemCheckbox = (props) => {
 
     const [iconState, setIconState] = useState(true)
@@ -28,9 +28,9 @@ const SideBarItemCheckbox = (props) => {
             <div className="aside-content overflow-hidden" ref={dropDownItem} style={{ display: "block" }}>
                 <nav className="">
                     {props.content.map(item => (
-                        <div key={item.key} className="d-flex align-items-center gap-3">
-                            <Field type="radio"  title=""  value={item.value} name={props.queryKey} className="form-check-input"></Field>
-                            <label htmlFor={props.queryKey} className="nav-link link-dark">
+                        <div key={item.key} className="d-flex align-items-center ">
+                            <label htmlFor={item.value} title={item.content} className="nav-link  link-dark">
+                                <Field type="radio" id={item.value} value={item.value} name={props.queryKey} className="form-check-input me-3"></Field>
                                 {item.content}
                             </label>
                         </div>

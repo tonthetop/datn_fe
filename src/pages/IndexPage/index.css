@@ -4,3 +4,8 @@
     height: 100%;
     object-fit: cover;
 }
+
+span.title-banner {
+    border-bottom: solid;
+    padding-bottom: 8px;
+}

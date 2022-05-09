@@ -24,34 +24,40 @@ function Header() {
                                         </Link>
                                     </li>
                                     <li className="col-sm-4 col-lg-2">
-                                        <Link className="text-white text-decoration-none header-nav-link" to="/gioi-thieu" title="Trang chủ">
+                                        <Link className="text-white text-decoration-none header-nav-link" to="/introduction" title="Introduction Page">
                                             Giới thiệu
                                         </Link>
                                     </li>
                                     <li className="col-sm-4 col-lg-2">
-                                        <Link className="text-white text-decoration-none header-nav-link" to="/san-pham" title="Trang chủ">
+                                        <Link className="text-white text-decoration-none header-nav-link" to="/products" title="Products Page">
                                             Sản phẩm
                                         </Link>
                                     </li>
                                     <li className="col-sm-4 col-lg-2">
-                                        <Link className="text-white text-decoration-none header-nav-link" to="/" title="Trang chủ">
+                                        <Link className="text-white text-decoration-none header-nav-link" to="#" title="News Page">
                                             Tin tức
                                         </Link>
                                     </li>
                                     <li className="col-sm-4 col-lg-2">
-                                        <Link className="text-white text-decoration-none header-nav-link" to="/tim-kiem-don-hang" title="Trang chủ">
+                                        <Link className="text-white text-decoration-none header-nav-link" to="/find-order" title="FindOrder Page">
                                             Tìm kiếm Đ/H
                                         </Link>
                                     </li>
                                     <li className="col-sm-4 col-lg-2 d-flex align-items-center">
                                         <div className="col-3  header-nav-icon">
-                                            <i className="fa-solid fa-magnifying-glass"></i>
+                                            <Link to="#" className="text-light">
+                                                <i className="fa-solid fa-magnifying-glass"></i>
+                                            </Link>
                                         </div>
                                         <div className="col-3 header-nav-icon">
-                                            <i className="fa-solid fa-user"></i>
+                                            <Link to="/login-and-register" className="text-light">
+                                                <i className="fa-solid fa-user"></i>
+                                            </Link>
                                         </div>
                                         <div className="col-3 header-nav-icon">
-                                            <i className="fa-solid fa-cart-shopping"></i>
+                                            <Link to="/login-and-register" className="text-light">
+                                                <i className="fa-solid fa-cart-shopping"></i>
+                                            </Link>
                                         </div>
                                     </li>
                                 </ul>

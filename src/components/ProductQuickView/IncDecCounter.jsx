@@ -16,13 +16,13 @@ function IncDecCounter() {
   }
   return (
     <>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <button class="btn btn-outline-dark" type="button" onClick={decNum}>-</button>
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <button className="btn btn-outline-dark" type="button" onClick={decNum}>-</button>
         </div>
-        <input type="text" class="form-control" value={num} onChange={handleChange} />
-        <div class="input-group-prepend">
-          <button class="btn btn-outline-dark" type="button" onClick={incNum}>+</button>
+        <input type="text" className="form-control" value={num} onChange={handleChange} />
+        <div className="input-group-prepend">
+          <button className="btn btn-outline-dark" type="button" onClick={incNum}>+</button>
         </div>
       </div>
     </>

@@ -45,7 +45,7 @@ const SideBar = () => {
     //     // goiAPI theo location /list/dep/size20
     // }, [])
     return (
-        <div className="side-bar">
+        <div className="side-bar mt-5">
             <SideBarItemCategory></SideBarItemCategory>
             <Formik
                 initialValues={{
