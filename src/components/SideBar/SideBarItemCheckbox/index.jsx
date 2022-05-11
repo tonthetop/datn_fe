@@ -1,9 +1,9 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react"
 import './index.css'
-import { Field } from 'formik'
+import { Field, useFormikContext } from 'formik'
 const SideBarItemCheckbox = (props) => {
-
+    const formik =useFormikContext()
     const [iconState, setIconState] = useState(true)
     const dropDownItem = useRef()
     let originHeight = useRef();
@@ -15,6 +15,10 @@ const SideBarItemCheckbox = (props) => {
         setIconState(prev => !prev)
         if (!iconState) { dropDownItem.current.style.height = originHeight.current + "px"; }
         else dropDownItem.current.style.height = "0px";
+    }
+    const handleRadioChange = (e) => {
+        formik.handleChange(e)
+        formik.submitForm()
     }
 
     return (
@@ -30,15 +34,14 @@ const SideBarItemCheckbox = (props) => {
                     {props.content.map(item => (
                         <div key={item.key} className="d-flex align-items-center ">
                             <label htmlFor={item.value} title={item.content} className="nav-link  link-dark">
-                                <Field type="radio" id={item.value} value={item.value} name={props.queryKey} className="form-check-input me-3"></Field>
+                                <Field type="radio" onChange={handleRadioChange} id={item.value} value={item.value} name={props.queryKey} className="form-check-input me-3"></Field>
                                 {item.content}
                             </label>
                         </div>
                     ))
                     }
-
                 </nav>
-            </div>
+            </div >
         </div >
     );
 };

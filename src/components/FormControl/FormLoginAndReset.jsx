@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import Login from './Login'
 import ForgotPassword from './ForgotPassword';
 const schemaLogin = yup.object().shape({
-    email: yup.string().required(),
+    email: yup.string().required().email(),
     password: yup.string().required(),
 });
 const schemaReset = yup.object().shape({
@@ -57,7 +57,6 @@ function FormLoginAndReset() {
                         ></Login>)
                 )}
             </Formik>
-
         </div>
 
     );

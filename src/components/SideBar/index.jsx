@@ -2,9 +2,9 @@ import React from 'react'
 import './index.css'
 import SideBarItemCategory from './SideBarItemCategory'
 import SideBarItemCheckbox from './SideBarItemCheckbox'
-import { useLocation, useNavigate, } from "react-router";
+import { useLocation, useNavigate, } from "react-router-dom";
 import { useEffect } from 'react';
-import { Formik, Field, Form,useFormik } from 'formik';
+import { Formik, Field, Form, useFormik } from 'formik';
 
 const SideBar = () => {
     const props2 = {
@@ -32,12 +32,13 @@ const SideBar = () => {
     }
     const location = useLocation();
     const navigate = useNavigate();
-    const handleQuery = (values) => {
-        const paramBrand = values.brand? `${props2.queryKey}:(${values.brand})` : "";
-        const paramPriceRange = values.priceRange? `${props1.queryKey}:(${values.priceRange})` : "";
-        const paramMain=`q=${paramBrand}&${paramPriceRange}`
-        console.log(paramMain)
-        // navigate(`?${paramMain}`)
+    const handleQuery =  (values) => {
+        console.log(values);
+        const paramBrand = values.brand ? `${props2.queryKey}:(${values.brand})` : "";
+        const paramPriceRange = values.priceRange ? `${props1.queryKey}:(${values.priceRange})` : "";
+        const paramMain = `q=${paramBrand}&${paramPriceRange}`
+        //console.log(paramMain)
+         navigate(`?${paramMain}`)
     }
 
     console.log('render')
@@ -52,11 +53,11 @@ const SideBar = () => {
                     brand: [],
                     priceRange: [],
                 }}
+                onSubmit={values=>handleQuery(values)}
             >
                 {
                     ({ values }) => (
                         <Form>
-                            {handleQuery(values)}
                             <SideBarItemCheckbox
                                 {...props1}
                             ></SideBarItemCheckbox>
