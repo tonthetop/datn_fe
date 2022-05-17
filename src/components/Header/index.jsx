@@ -55,7 +55,7 @@ function Header() {
                                             </Link>
                                         </div>
                                         <div className="col-3 header-nav-icon">
-                                            <Link to="/login-and-register" className="text-light">
+                                            <Link to="/cart" className="text-light">
                                                 <i className="fa-solid fa-cart-shopping"></i>
                                             </Link>
                                         </div>

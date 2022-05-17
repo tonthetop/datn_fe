@@ -1,11 +1,11 @@
 import React from 'react'
-
+import {Link} from 'react-router-dom'
 const CategorySubItem = (props) => {
     return (
         <div className="d-flex align-items-center justify-content-between">
-            <a href="/dep-1" title="Dép" className="nav-link link-dark">
+            <Link to="/dep-1" title="Dép" className="nav-link link-dark">
                 Dép
-            </a>
+            </Link>
             <i className="fas fa-angle-right fa"></i>
         </div>
     )

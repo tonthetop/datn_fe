@@ -15,4 +15,4 @@ function LoginAndRegisterPage() {
         </div>
     )
 }
-export default LoginAndRegisterPage
+export  {LoginAndRegisterPage}

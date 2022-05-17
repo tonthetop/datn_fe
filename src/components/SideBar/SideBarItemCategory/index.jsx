@@ -1,6 +1,7 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react"
 import CategorySubItem from './CategorySubItem.jsx'
+import {Link} from 'react-router-dom'
 import './index.css'
 const SideBarItemCategory = () => {
     const [iconState, setIconState] = useState(true)
@@ -29,9 +30,9 @@ const SideBarItemCategory = () => {
                         <CategorySubItem></CategorySubItem>
                         <CategorySubItem></CategorySubItem>
                         <li className="d-flex align-items-center justify-content-between">
-                            <a className="nav-link link-dark" title="Phụ kiện" href="/phu-kien-1">
+                            <Link className="nav-link link-dark" title="Phụ kiện" to="/phu-kien-1">
                                 Phụ kiện
-                            </a>
+                            </Link>
                         </li>
                     </div>
                 </nav>

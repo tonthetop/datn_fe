@@ -1,4 +1,4 @@
-import { Row, Col, InputGroup, Button, Form } from 'react-bootstrap'
+import { Row, InputGroup, Button, Form } from 'react-bootstrap'
 function Login({ handleSubmit, values, errors, handleChange, handleSetForgotPassWord }) {
     return (
         <Form className="my-5" noValidate onSubmit={handleSubmit}>
@@ -7,7 +7,7 @@ function Login({ handleSubmit, values, errors, handleChange, handleSetForgotPass
                     <Form.Label>Email</Form.Label>
                     <InputGroup hasValidation>
                         <InputGroup.Text id="inputGroupPrepend">
-                            <i class="fa-solid fa-envelope"></i>
+                            <i className="fa-solid fa-envelope"></i>
                         </InputGroup.Text>
                         <Form.Control
                             type="text"
@@ -29,7 +29,7 @@ function Login({ handleSubmit, values, errors, handleChange, handleSetForgotPass
                     <Form.Label>Password</Form.Label>
                     <InputGroup hasValidation>
                         <InputGroup.Text id="inputGroupPrepend">
-                            <i class="fa-solid fa-lock"></i>
+                            <i className="fa-solid fa-lock"></i>
                         </InputGroup.Text>
                         <Form.Control
                             type="password"

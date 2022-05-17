@@ -1,5 +1,7 @@
-import FindOrderPage from './FindOrderPage'
-import ProductsPage from './ProductsPage'
-import IndexPage from './IndexPage'
-import LoginAndRegisterPage from './LoginAndRegisterPage'
-export { FindOrderPage, ProductsPage, IndexPage, LoginAndRegisterPage }
+export * from './FindOrderPage'
+export * from './ProductsPage'
+export * from './IndexPage'
+export * from './LoginAndRegisterPage'
+export * from './CartPage'
+export * from './ThankPage'
+

@@ -29,7 +29,7 @@ function DetailProduct() {
                 </div>
             </Form.Group>
             <Form.Group className="row mt-5">
-                <Button variant="outline-dark col-md-4" >Thêm vào giỏ</Button>
+                <Button className="rounded-pill" variant="outline-dark col-md-4" >Thêm vào giỏ</Button>
                 <div className="col-md-5 pt-2">
                     <span> hoặc </span><Link className="text-danger" to="/bq6806-100-m-nike-blazer-mid-77-vintage" role="button">Xem chi tiết</Link>
                 </div>

@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { Row, Col, InputGroup, Button, Form } from 'react-bootstrap'
+import { Row, InputGroup, Button, Form } from 'react-bootstrap'
 import * as yup from 'yup';
 const schema = yup.object().shape({
     firstName: yup.string().required(),
@@ -35,7 +35,7 @@ function FormRegister() {
                                 <Form.Label>First Name</Form.Label>
                                 <InputGroup hasValidation>
                                     <InputGroup.Text id="inputGroupPrepend">
-                                        <i class="fa-solid fa-user"></i>
+                                        <i className="fa-solid fa-user"></i>
                                     </InputGroup.Text>
                                     <Form.Control
                                         type="text"
@@ -57,7 +57,7 @@ function FormRegister() {
                                 <Form.Label>Last Name</Form.Label>
                                 <InputGroup hasValidation>
                                     <InputGroup.Text id="inputGroupPrepend">
-                                        <i class="fa-solid fa-user"></i>
+                                        <i className="fa-solid fa-user"></i>
                                     </InputGroup.Text>
                                     <Form.Control
                                         type="text"
@@ -80,7 +80,7 @@ function FormRegister() {
                                 <Form.Label>Email</Form.Label>
                                 <InputGroup hasValidation>
                                     <InputGroup.Text id="inputGroupPrepend">
-                                        <i class="fa-solid fa-envelope"></i>
+                                        <i className="fa-solid fa-envelope"></i>
                                     </InputGroup.Text>
                                     <Form.Control
                                         type="text"
@@ -102,7 +102,7 @@ function FormRegister() {
                                 <Form.Label>Password</Form.Label>
                                 <InputGroup hasValidation>
                                     <InputGroup.Text id="inputGroupPrepend">
-                                        <i class="fa-solid fa-lock"></i>
+                                        <i className="fa-solid fa-lock"></i>
                                     </InputGroup.Text>
                                     <Form.Control
                                         type="password"

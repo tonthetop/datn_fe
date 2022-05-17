@@ -1,4 +1,4 @@
-import { Row, Col, InputGroup, Button, Form } from 'react-bootstrap'
+import { Row, InputGroup, Button, Form } from 'react-bootstrap'
 function ForgotPassword({ handleSubmit, values, errors, handleChange, handleSetForgotPassWord }) {
     return (
         <Form className="my-3" noValidate onSubmit={handleSubmit}>
@@ -7,7 +7,7 @@ function ForgotPassword({ handleSubmit, values, errors, handleChange, handleSetF
                     <Form.Label>Quên mật khẩu</Form.Label>
                     <InputGroup hasValidation>
                         <InputGroup.Text id="inputGroupPrepend">
-                            <i class="fa-solid fa-envelope"></i>
+                            <i className="fa-solid fa-envelope"></i>
                         </InputGroup.Text>
                         <Form.Control
                             type="text"

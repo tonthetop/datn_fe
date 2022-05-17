@@ -44,4 +44,4 @@ function FindOrderPage() {
         </div>
     );
 }
-export default FindOrderPage;
+export  {FindOrderPage};

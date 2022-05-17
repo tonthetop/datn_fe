@@ -64,12 +64,12 @@
     opacity: 1;
 }
 
-.product-img:hover a.btn-quickview {
+.product-img:hover div.btn-quickview {
     opacity: 1.5;
     color: #fff;
 }
 
-a.btn-quickview {
+div.btn-quickview {
     color: #fff;
     padding: 8px 0;
     background: #fff;

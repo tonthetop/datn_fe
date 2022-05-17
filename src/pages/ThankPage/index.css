@@ -1,0 +1,17 @@
+div.logo-tick>i {
+    font-size: 60px;
+    color: green;
+}
+
+.thong-tin-mua-hang {
+    border: 1px solid #dadada;
+    padding: 1em;
+    margin: 1em;
+    margin-right: 0px;
+    padding-right: 0px;
+}
+
+.thank-page-wrapper p {
+    margin-bottom: 0px;
+    font-size: 13px
+}
