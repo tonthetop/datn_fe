@@ -19,7 +19,8 @@ const ProductCard = ({product}) => {
                             XEM NHANH
                         </div>
                     </Link>
-                    <ProductQuickView
+                    <ProductQuickView 
+                        product={product}
                         show={modalShow}
                         onHide={() => setModalShow(false)}
                     />

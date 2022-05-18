@@ -27,10 +27,10 @@ const SideBarItemCategory = () => {
             <div className="aside-content overflow-hidden" ref={dropDownItem} style={{ display: "block" }}>
                 <nav className="">
                     <div className>
-                        <CategorySubItem></CategorySubItem>
-                        <CategorySubItem></CategorySubItem>
+                        <CategorySubItem title="DÉP" name="dep"></CategorySubItem>
+                        <CategorySubItem title="GIÀY" name="giay"></CategorySubItem>
                         <li className="d-flex align-items-center justify-content-between">
-                            <Link className="nav-link link-dark" title="Phụ kiện" to="/phu-kien-1">
+                            <Link className="nav-link link-dark" title="Phụ kiện" to="/category/phukien">
                                 Phụ kiện
                             </Link>
                         </li>
@@ -40,4 +40,4 @@ const SideBarItemCategory = () => {
         </div >
     );
 };
-export default SideBarItemCategory; //
+export default SideBarItemCategory;

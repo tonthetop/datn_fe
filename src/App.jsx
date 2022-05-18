@@ -17,8 +17,9 @@ function App() {
           <Route Route path="/introduction" element={<> </>}></Route>
           <Route
             path="/products"
-            element={<pages.ProductsPage> </pages.ProductsPage>}
-          ></Route>
+            element={<pages.ProductMainPage> </pages.ProductMainPage>}>
+          </Route>
+          <Route path="/category/:categoryId" element={<pages.ProductCategoryPage />} />
           <Route
             path="/find-order"
             element={<pages.FindOrderPage> </pages.FindOrderPage>}
@@ -28,7 +29,7 @@ function App() {
             element={<pages.LoginAndRegisterPage> </pages.LoginAndRegisterPage>}
           ></Route>
           <Route
-            path="/cart/"
+            path="/cart"
             element={<pages.CartPage> </pages.CartPage>}
           ></Route>
           <Route

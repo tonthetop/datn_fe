@@ -39,7 +39,7 @@
 }
 
 .single-product>.product-img>a>img {
-    object-fit: cover;
+    object-fit: contain;
     /* object-position: bottom; */
 }
 

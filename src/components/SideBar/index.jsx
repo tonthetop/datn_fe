@@ -32,9 +32,9 @@ const SideBar = () => {
         const valueTemp = JSON.parse(JSON.stringify(values));
         if (valueTemp.priceRange!=='') valueTemp.priceRange=JSON.parse(valueTemp.priceRange)
         let objJsonStr = JSON.stringify(valueTemp);
-        console.log(objJsonStr)
         let objJsonB64 = Buffer.from(objJsonStr).toString("base64");
-        navigate(`?q=${objJsonB64}`)
+
+        navigate(`?filter=${objJsonB64}`)
     }
     return (
         <div className="side-bar mt-5">

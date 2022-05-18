@@ -2,13 +2,13 @@ import './index.css'
 import { Form, Row, Col, InputGroup, Button } from 'react-bootstrap'
 import IncDecCounter from './IncDecCounter.jsx'
 import { Link } from 'react-router-dom'
-function DetailProduct() {
+function DetailProduct({ product }) {
     return (
         <>
             <div className="">
-                <div className="product-title p-title"><h3>[BQ6806-100] M NIKE BLAZER MID '77 VINTAGE</h3></div>
+                <div className="product-title p-title"><h3>{product.name}</h3></div>
                 <div className="product-price">
-                    <h5 className="p-price ">2.990.000₫</h5>
+                    <h5 className="p-price ">{product.price}</h5>
                     <del></del>
                 </div>
             </div>
@@ -16,10 +16,13 @@ function DetailProduct() {
             <Form.Group className="my-2">
                 <Form.Label >Size</Form.Label>
                 <Form.Select aria-label="Mặc định">
-                    <option>Mặc định</option>
-                    <option value="1">41</option>
-                    <option value="2">42</option>
-                    <option value="3">43</option>
+                    {product.productBySize.map(item => {
+                        return (
+                            <option value={item.size}>{item.size}</option>
+                        )
+                     })
+                    }
+                    
                 </Form.Select>
             </Form.Group>
             <Form.Group className="my-2 ">

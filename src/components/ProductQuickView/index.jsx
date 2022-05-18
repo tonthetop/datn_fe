@@ -16,7 +16,7 @@ function ProductQuickView(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <BodyQuickView></BodyQuickView>
+            <BodyQuickView product={props.product}></BodyQuickView>
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={props.onHide}>Close</Button>
