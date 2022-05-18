@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './index.css'
 import ProductQuickView from '../ProductQuickView'
-const ProductCard = () => {
+const ProductCard = ({product}) => {
     // Modal product quickview
     const [modalShow, setModalShow] = React.useState(false);
     //
@@ -13,8 +13,8 @@ const ProductCard = () => {
                 <div className="product-img d-flex flex-column">
                     <Link className="position-relative h-100 mb-3" to="#">
                         <span className="onsale">- 10%</span>
-                        <img alt="" className="position-absolute h-100 w-100 item-img-first " src="https://bizweb.dktcdn.net/100/377/398/products/women-s-air-force-1-white-pendant-dd1525-100-release-date.jpg?v=1646286178000" />
-                        <img alt="" className="position-absolute h-100 w-100 item-img-second" src="https://bizweb.dktcdn.net/thumb/grande/100/377/398/products/women-s-air-force-1-white-pendant-dd1525-100-release-date-c630b781-6dba-4139-8a3f-d106bdafcedd.jpg?v=1646286268000" />
+                        <img alt="" className="position-absolute h-100 w-100 item-img-first " src={product.imgList[0]} />
+                        <img alt="" className="position-absolute h-100 w-100 item-img-second" src={product.imgList[1]} />
                         <div to="#" className="btn-quickview position-absolute" onClick={() => setModalShow(true)} >
                             XEM NHANH
                         </div>
@@ -27,11 +27,11 @@ const ProductCard = () => {
                 <div className="product-content my-1">
                     <div className="product-list-size d-flex justify-content-evenly mb-2">
                         {
-                            listSize.map(size => {
+                            product.productBySize.map((item,index)=> {
                                 return (
-                                    <div key={size}>
+                                    <div key={index}>
                                         <span className="size-item">
-                                            {size}
+                                            {item.size}
                                         </span>
                                     </div>
                                 )
@@ -40,13 +40,13 @@ const ProductCard = () => {
                     </div>
                     <h6 className="text-center mb-0">
                         <Link to="##" className="text-dark text-decoration-none">
-                            [DD1525-100] W NIKE AIR FORCE 1 LOW "WHITE PENDANT"
+                            {product.name}
                         </Link>
                     </h6>
                     <div className="product-price">
                         <div className="price-box text-center">
-                            <span className="regular-price">3.825.000₫</span>
-                            <span className="discount-price ml-1">4.250.000₫</span>
+                            <span className="regular-price">{product.price}</span>
+                            <span className="discount-price ml-1">{product.price*0.9}</span>
                         </div>
                     </div>
                 </div>

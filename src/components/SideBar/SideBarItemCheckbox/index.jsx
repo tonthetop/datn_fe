@@ -20,7 +20,6 @@ const SideBarItemCheckbox = (props) => {
         formik.handleChange(e)
         formik.submitForm()
     }
-
     return (
         <div className="side-bar-item">
             <div className="aside-title d-flex justify-content-between align-items-center">

@@ -5,18 +5,15 @@ import SideBarItemCheckbox from './SideBarItemCheckbox'
 import { useLocation, useNavigate, } from "react-router-dom";
 import { useEffect } from 'react';
 import { Formik, Field, Form, useFormik } from 'formik';
-
+import { Buffer } from 'buffer';
 const SideBar = () => {
     const props2 = {
         title: 'KHOẢNG GIÁ',
         content: [
-            { key: 1, content: "Giá dưới 1.000.000₫", value: "1000000" },
-            { key: 2, content: "Giá dưới 2.000.000₫", value: "2000000" },
-
-            { key: 3, content: "Giá dưới 3.000.000₫", value: "3000000" },
-
-            { key: 4, content: "Giá dưới 4.000.000₫", value: "4000000" }
-
+            { key: 1, content: "Giá dưới 1.000.000₫", value: JSON.stringify({ min: 0, max: 1000000 }) },
+            { key: 2, content: "1.000.000₫ - 2.000.000₫", value: JSON.stringify({ min: 1000000, max: 2000000 }) },
+            { key: 3, content: "2.000.000₫ - 3.000.000₫", value: JSON.stringify({ min: 2000000, max: 3000000 }) },
+            { key: 4, content: "3.000.000₫ - 4.000.000₫", value: JSON.stringify({ min: 3000000, max: 4000000 }) }
         ],
         queryKey: "priceRange"
     }
@@ -30,30 +27,24 @@ const SideBar = () => {
         ],
         queryKey: "brand"
     }
-    const location = useLocation();
     const navigate = useNavigate();
-    const handleQuery =  (values) => {
-        console.log(values);
-        const paramBrand = values.brand ? `${props2.queryKey}:(${values.brand})` : "";
-        const paramPriceRange = values.priceRange ? `${props1.queryKey}:(${values.priceRange})` : "";
-        const paramMain = `q=${paramBrand}&${paramPriceRange}`
-        //console.log(paramMain)
-         navigate(`?${paramMain}`)
+    const handleQuery = (values) => {
+        const valueTemp = JSON.parse(JSON.stringify(values));
+        if (valueTemp.priceRange!=='') valueTemp.priceRange=JSON.parse(valueTemp.priceRange)
+        let objJsonStr = JSON.stringify(valueTemp);
+        console.log(objJsonStr)
+        let objJsonB64 = Buffer.from(objJsonStr).toString("base64");
+        navigate(`?q=${objJsonB64}`)
     }
-
-    console.log('render')
-    // useEffect(() => {
-    //     // goiAPI theo location /list/dep/size20
-    // }, [])
     return (
         <div className="side-bar mt-5">
             <SideBarItemCategory></SideBarItemCategory>
             <Formik
                 initialValues={{
-                    brand: [],
-                    priceRange: [],
+                    brand: '',
+                    priceRange: ''
                 }}
-                onSubmit={values=>handleQuery(values)}
+                onSubmit={values => handleQuery(values)}
             >
                 {
                     ({ values }) => (
