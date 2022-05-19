@@ -39,7 +39,7 @@
 }
 
 .single-product>.product-img>a>img {
-    object-fit: contain;
+    object-fit: cover;
     /* object-position: bottom; */
 }
 
@@ -77,7 +77,7 @@ div.btn-quickview {
     opacity: 0;
     -webkit-transition: all 1s ease;
     transition: all 1s ease;
-    background: rgba(75, 63, 63, 0.5);
+    background: hsla(120, 1%, 36%, 0.507);
     bottom: 0;
     left: 0;
     width: 100%;
@@ -86,6 +86,7 @@ div.btn-quickview {
     outline: none;
     text-align: center;
     z-index: 2;
+    cursor: pointer;
 }
 
 .size-item {

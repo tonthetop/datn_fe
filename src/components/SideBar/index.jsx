@@ -2,8 +2,8 @@ import React from 'react'
 import './index.css'
 import SideBarItemCategory from './SideBarItemCategory'
 import SideBarItemCheckbox from './SideBarItemCheckbox'
-import {getParamQueries} from '../../utils/getParamQueries'
-import { useLocation, useNavigate,createSearchParams } from "react-router-dom";
+import { getParamQueries } from '../../utils/getParamQueries'
+import { useLocation, useNavigate, createSearchParams } from "react-router-dom";
 import { useEffect } from 'react';
 import { Formik, Field, Form, useFormik } from 'formik';
 import { Buffer } from 'buffer';
@@ -29,16 +29,31 @@ const SideBar = () => {
         queryKey: "brand"
     }
     const navigate = useNavigate();
-    const location=useLocation()
-    const handleQuery = (values) => {
-        const valueTemp = JSON.parse(JSON.stringify(values));
-        if (valueTemp.priceRange !== '') valueTemp.priceRange = JSON.parse(valueTemp.priceRange)
-        let objJsonStr = JSON.stringify(valueTemp);
-        let objJsonB64 = Buffer.from(objJsonStr).toString("base64");
+    const location = useLocation()
 
+
+    const setSecondBinding = () => {
         let params = getParamQueries(location)
+        if (params.hasOwnProperty('filter')) {
+            let object = JSON.parse(Buffer(params.filter, 'base64').toString())
+            object.priceRange = JSON.stringify(object.priceRange)
+            return object
+        }
+        return {}
+    }
+    const { brand='', priceRange='' } = setSecondBinding()
+    const handleQuery = (values) => {
+        console.log(values)
+        const valueTemp = JSON.parse(JSON.stringify(values));
+        if (valueTemp.priceRange!=='') valueTemp.priceRange = JSON.parse(valueTemp.priceRange)
+        let objJsonStr = JSON.stringify(valueTemp);
+
+        console.log(objJsonStr)
+
+        let objJsonB64 = Buffer.from(objJsonStr).toString("base64");
+        let params = getParamQueries(location)
+        params = { ...params, filter: objJsonB64 }
         console.log(params)
-        params={...params, filter:objJsonB64}
         const search = decodeURIComponent(createSearchParams(params))
         navigate({
             search: `?${search}`
@@ -49,8 +64,8 @@ const SideBar = () => {
             <SideBarItemCategory></SideBarItemCategory>
             <Formik
                 initialValues={{
-                    brand: '',
-                    priceRange: ''
+                    brand: brand,
+                    priceRange: priceRange,
                 }}
                 onSubmit={values => handleQuery(values)}
             >

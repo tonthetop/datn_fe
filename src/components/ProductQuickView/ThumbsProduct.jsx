@@ -16,7 +16,6 @@ import { FreeMode, Navigation, Thumbs, Pagination } from "swiper";
 // const img1 = "https://bizweb.dktcdn.net/100/377/398/products/women-s-air-force-1-white-pendant-dd1525-100-release-date.jpg?v=1646286178000"
 // const img2 = "https://bizweb.dktcdn.net/thumb/grande/100/377/398/products/women-s-air-force-1-white-pendant-dd1525-100-release-date-c630b781-6dba-4139-8a3f-d106bdafcedd.jpg?v=1646286268000"
 export default function ThumbsProduct({imgList}) {
-    console.log("imgList", imgList);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const img1 = imgList[0]
     const img2 = imgList[1]
