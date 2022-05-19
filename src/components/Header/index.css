@@ -21,3 +21,7 @@
     transform: scale(1.2);
     transition: all 0.2s linear;
 }
+
+nav.main-nav li>a {
+    text-transform: uppercase;
+}

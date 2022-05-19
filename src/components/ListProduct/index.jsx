@@ -2,7 +2,7 @@ import React from 'react'
 import ProductCard from '../ProductCard'
 const ListProduct = ({ productList }) => {
   return (
-    <div className="container mt-5">
+    <div className="mt-3">
       <div className="row">
         {productList.map((product) => {
           return (

@@ -2,7 +2,8 @@ import React from 'react'
 import './index.css'
 import SideBarItemCategory from './SideBarItemCategory'
 import SideBarItemCheckbox from './SideBarItemCheckbox'
-import { useLocation, useNavigate, } from "react-router-dom";
+import {getParamQueries} from '../../utils/getParamQueries'
+import { useLocation, useNavigate,createSearchParams } from "react-router-dom";
 import { useEffect } from 'react';
 import { Formik, Field, Form, useFormik } from 'formik';
 import { Buffer } from 'buffer';
@@ -28,13 +29,20 @@ const SideBar = () => {
         queryKey: "brand"
     }
     const navigate = useNavigate();
+    const location=useLocation()
     const handleQuery = (values) => {
         const valueTemp = JSON.parse(JSON.stringify(values));
-        if (valueTemp.priceRange!=='') valueTemp.priceRange=JSON.parse(valueTemp.priceRange)
+        if (valueTemp.priceRange !== '') valueTemp.priceRange = JSON.parse(valueTemp.priceRange)
         let objJsonStr = JSON.stringify(valueTemp);
         let objJsonB64 = Buffer.from(objJsonStr).toString("base64");
 
-        navigate(`?filter=${objJsonB64}`)
+        let params = getParamQueries(location)
+        console.log(params)
+        params={...params, filter:objJsonB64}
+        const search = decodeURIComponent(createSearchParams(params))
+        navigate({
+            search: `?${search}`
+        })
     }
     return (
         <div className="side-bar mt-5">
