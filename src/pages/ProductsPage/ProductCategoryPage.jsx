@@ -10,7 +10,6 @@ const { Option } = Select;
 
 const ProductCategoryPage = () => {
     const [selectedValue, setSelectedValue] = useState()
-    const [pageCurrent, setPageCurrent] = useState()
     const newLocation = useLocation()
     const { categoryId } = useParams()
     const currentLocation = useRef({
@@ -31,18 +30,17 @@ const ProductCategoryPage = () => {
         async function fetchData() {
             const params = getParamQueries(location);
             params.type = categoryId
+            console.log("params fetch productAPI",params)
             const { totalRecords, products } = await productApi.getProducts(params)
+            console.log("productCategoryPage", products)
             setProducts(products)
             setTotalRecords(totalRecords)
 
         }
         fetchData()
     }, [location]);
-
-    console.log(totalRecords)
     const navigate = useNavigate();
     const handleChangePagination = (value) => {
-        setPageCurrent(value)
         let params = getParamQueries(location)
         params = { ...params, page: value }
         const search = decodeURIComponent(createSearchParams(params))
@@ -59,6 +57,7 @@ const ProductCategoryPage = () => {
             search: `?${search}`
         })
     }
+    const limit=getParamQueries(location)?.hasOwnProperty('limit')?getParamQueries(location).limit:12
     return (
         <div className="products-wrapper container mt-8">
             <div className="row">
@@ -78,7 +77,7 @@ const ProductCategoryPage = () => {
                     </div>
                     <ListProduct productList={products}></ListProduct>
                     <div className="mb-4 d-flex justify-content-end">
-                        <Pagination defaultCurrent={1} onChange={handleChangePagination} pageSize={12} total={totalRecords} responsive />
+                        <Pagination defaultCurrent={1} onChange={handleChangePagination} pageSize={limit} total={totalRecords} responsive />
                     </div>
                 </div>
             </div>

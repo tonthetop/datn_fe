@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SideBar from '../../components/SideBar'
 import ListProduct from '../../components/ListProduct'
-import {getParamQueries} from '../../utils/getParamQueries'
+import { getParamQueries } from '../../utils/getParamQueries'
 import { useLocation, useSearchParams, useNavigate, createSearchParams, generatePath } from 'react-router-dom'
 import { productApi } from '../../api'
 import 'antd/dist/antd.css';
@@ -13,39 +13,39 @@ const { Option } = Select;
 const ProductMainPage = () => {
   let location = useLocation();
   const [products, setProducts] = useState([])
-  const parseQueryString = (location) => {
-    const str = location.search;
-    const objURL = {};
-    str.replace(
-      new RegExp("([^?=&]+)(=([^&]*))?", "g"),
-      function ($0, $1, $2, $3) {
-        objURL[$1] = $3;
-      }
-    );
-    return objURL;
-  };
+  const [totalRecords, setTotalRecords] = useState()
   //Example how to use it: 
   useEffect(() => {
     async function fetchData() {
       const params = getParamQueries(location);
-      const { totalRecord, products } = await productApi.getProducts(params)
+      const { totalRecords, products } = await productApi.getProducts(params)
       setProducts(products)
+      setTotalRecords(totalRecords)
     }
     fetchData()
   }, [location]);
 
 
   const navigate = useNavigate();
-  const handleChange = async (valueSortBy) => {
+
+  const handleChangePagination = (value) => {
     let params = getParamQueries(location)
-    params={...params, sortBy:valueSortBy}
-    console.log(params)
-    const search=decodeURIComponent(createSearchParams(params))
+    params = { ...params, page: value }
+    const search = decodeURIComponent(createSearchParams(params))
     navigate({
       search: `?${search}`
     })
   }
-
+  const handleChange = async (valueSortBy) => {
+    let params = getParamQueries(location)
+    params = { ...params, sortBy: valueSortBy }
+    console.log(params)
+    const search = decodeURIComponent(createSearchParams(params))
+    navigate({
+      search: `?${search}`
+    })
+  }
+  const limit=getParamQueries(location)?.hasOwnProperty('limit')?getParamQueries(location).limit:12
   return (
     <div className="products-wrapper container mt-8">
       <div className="row">
@@ -66,7 +66,7 @@ const ProductMainPage = () => {
           </div>
           <ListProduct productList={products}></ListProduct>
           <div className="mb-4 d-flex justify-content-end">
-            <Pagination defaultCurrent={1} total={50} />
+            <Pagination defaultCurrent={1} onChange={handleChangePagination} pageSize={limit} total={totalRecords} responsive />
           </div>
         </div>
       </div>

@@ -43,7 +43,6 @@ const SideBar = () => {
     }
     const { brand='', priceRange='' } = setSecondBinding()
     const handleQuery = (values) => {
-        console.log(values)
         const valueTemp = JSON.parse(JSON.stringify(values));
         if (valueTemp.priceRange!=='') valueTemp.priceRange = JSON.parse(valueTemp.priceRange)
         let objJsonStr = JSON.stringify(valueTemp);
@@ -52,6 +51,7 @@ const SideBar = () => {
 
         let objJsonB64 = Buffer.from(objJsonStr).toString("base64");
         let params = getParamQueries(location)
+        if (params.hasOwnProperty('page')) delete params.page
         params = { ...params, filter: objJsonB64 }
         console.log(params)
         const search = decodeURIComponent(createSearchParams(params))
