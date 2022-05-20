@@ -11,15 +11,15 @@ function App() {
     <Layout>
       <Header></Header>
       <Content
-        className="site-layout"
+        className="site-layout container"
         style={{
-          padding: '0 50px',
           marginTop: 30,
         }}
       >
         <Breadcrumb
           style={{
-            margin: '16px 0',
+            marginTop:20,
+            marginBottom:12
           }}
         >
           <Breadcrumb.Item>Home</Breadcrumb.Item>
@@ -29,7 +29,6 @@ function App() {
         <div
           className="site-layout-background"
           style={{
-            padding: 24,
             paddingTop:0,
             minHeight: 380,
           }}
