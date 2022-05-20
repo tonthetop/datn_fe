@@ -23,23 +23,23 @@ function Header() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarResponsive" toggle="collapse" data-target="navbar-collapse">
-                    <ul className="navbar-nav ms-auto text-uppercase fs-6">
-                        <li className="nav-item active  px-2">
+                    <ul className="navbar-nav ms-auto text-uppercase" style={{fontSize:"17px"}}>
+                        <li className="nav-item active  px-3">
                             <Link className="nav-link text-light header-nav-link" to="/">Trang chủ</Link>
                         </li>
-                        <li className="nav-item px-2">
+                        <li className="nav-item px-3">
                             <Link className="nav-link text-light header-nav-link" to="/introduction">Giới thiệu</Link>
                         </li>
-                        <li className="nav-item px-2">
+                        <li className="nav-item px-3">
                             <Link className="nav-link text-light header-nav-link" to="/products">Sản phẩm</Link>
                         </li>
-                        <li className="nav-item px-2">
+                        <li className="nav-item px-3">
                             <Link className="nav-link text-light header-nav-link" to="/contact">Liên hệ</Link>
                         </li>
-                        <li className="nav-item px-2">
+                        <li className="nav-item px-3">
                             <Link className="nav-link text-light header-nav-link" to="/find-order">Tìm kiếm đơn hàng</Link>
                         </li>
-                        <li className="nav-item d-flex align-items-center text-center px-2" style={{ columnGap: "25%", width: "70px" }}>
+                        <li className="nav-item d-flex align-items-center text-center px-3" style={{ columnGap: "25%", width: "70px",fontSize:"20px" }}>
                             <div className="header-nav-icon">
                                 <Link to="#" className="text-light">
                                     <i className="fa-solid fa-magnifying-glass"></i>
@@ -52,7 +52,7 @@ function Header() {
                             </div>
                             <div className="header-nav-icon">
                                 <Link to="/cart" className="text-light">
-                                    <i className="fa-solid fa-cart-shopping"></i>
+                                    <i className="fa-solid fa-cart-shopping" value="5"></i>
                                 </Link>
                             </div>
                         </li>
