@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react'
-import Carousel from './Carousel'
 import ListProduct from '../../components/ListProduct'
 import BannerProduct from '../../components/Banner/BannerProduct'
 import { productApi } from '../../api'
@@ -21,7 +20,13 @@ const IndexPage = () => {
 
   return (
     <div>
-      <Carousel></Carousel>
+      <div className="row">
+        <h1 className="text-uppercase text-center ">
+          <span className="title-banner border-dark ">
+            Danh mục sản phẩm
+          </span>
+        </h1>
+      </div>
       <BannerProduct></BannerProduct>
       <div className="row mb-3 ">
         <h1 className="text-uppercase text-center">

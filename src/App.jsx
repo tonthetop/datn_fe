@@ -1,16 +1,14 @@
 import Header from "./components/Header/header";
 import Footer from "./components/Footer";
 import { Routes, Route, useLocation, Link } from "react-router-dom";
+import Carousel from './pages/IndexPage/Carousel.jsx'
 import * as pages from "./pages";
 import 'antd/dist/antd.css';
 import './index.css';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Breadcrumb } from 'antd';
+import { FilterOutlined, HomeOutlined, UserOutlined } from '@ant-design/icons';
 const { Content } = Layout;
-import { emphasize, styled } from '@mui/material/styles';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Chip from '@mui/material/Chip';
-import HomeIcon from '@mui/icons-material/Home';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 function App() {
   const arrayPath = useLocation().pathname.replace("/", "").split("/")
   const pathList = {
@@ -20,7 +18,7 @@ function App() {
     "find-order": "tìm kiếm đơn hàng",
     "login-and-register": "đăng nhập",
     cart: "giỏ hàng",
-    category: "Category",
+    category: "danh mục",
     dep: "dép",
     giay: "giày",
     phukien: "phụ kiện"
@@ -30,11 +28,15 @@ function App() {
     return pathList[item]
   })
 
-  console.log(pathName)
+  console.log(useLocation().pathname)
 
   return (
     <Layout>
       <Header></Header>
+      {useLocation().pathname === "/" && <div className="carousel-slide" style={{ marginTop: "39px" }}>
+        <Carousel></Carousel>
+      </div>}
+
       <Content
         className="site-layout container"
         style={{
@@ -46,15 +48,12 @@ function App() {
           style={{
             marginTop: 20,
             marginBottom: 12,
-          }}
-        >
-          <StyledBreadcrumb
-            component="a"
-            href="#"
-            label="TRANG CHỦ"
-            icon={<HomeIcon fontSize="small" />}
-          />
-
+          }}>
+          {useLocation().pathname !== "/" &&
+            <Breadcrumb.Item style={{ textTransform: 'uppercase', }} href="/">
+              <span style={{ display: "inline" }}>Trang Chủ</span>
+            </Breadcrumb.Item>
+            }
           {pathName.map(item => {
             return (
               <Breadcrumb.Item style={{
@@ -62,7 +61,6 @@ function App() {
               }}>{item}</Breadcrumb.Item>
             )
           })}
-
         </Breadcrumb>
         <div
           className="site-layout-background"
