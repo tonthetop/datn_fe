@@ -23,25 +23,23 @@ function FindOrderPage() {
     };
 
     return (
-        <div className="tim-kiem-wrapper py-5">
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-5">
-                        <div className="container">
-                            <FormSearchOrder
-                                showInput={showInput}
-                                handleClick={handleClick}
-                            />
-                        </div>
+        <div className="tim-kiem-wrapper">
+            <div className="row">
+                <div className="col-md-5">
+                    <div className="container">
+                        <FormSearchOrder
+                            showInput={showInput}
+                            handleClick={handleClick}
+                        />
                     </div>
-                    <div className="col-md-7 ">
-                        <div className="container">
-                            <OrderInfo {...fakeInfo}></OrderInfo>
-                        </div>
+                </div>
+                <div className="col-md-7 ">
+                    <div className="container">
+                        <OrderInfo {...fakeInfo}></OrderInfo>
                     </div>
                 </div>
             </div>
         </div>
     );
 }
-export  {FindOrderPage};
+export { FindOrderPage };

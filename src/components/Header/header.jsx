@@ -1,0 +1,64 @@
+import { Link } from 'react-router-dom'
+import './header.css'
+function Header() {
+    return (
+        <nav
+            style={{
+                backgroundColor: "#494a48!important",
+            }}
+            className="navbar navbar-expand-lg navbar-dark  fixed-top"
+        >
+            <div className="container">
+                <Link to="/" classNameName="logo h-100" title="Trạm Tabo">
+                    <img
+                        classNameName=""
+                        style={{ height: "45px" }}
+                        src="//bizweb.dktcdn.net/100/377/398/themes/755909/assets/logo.png?1649394240577"
+                        alt="logo Trạm Tabo"
+                    />
+                </Link>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarResponsive">
+                    <ul className="navbar-nav ms-auto text-uppercase fs-6">
+                        <li className="nav-item active  px-2">
+                            <Link className="nav-link text-light header-nav-link" to="/">Trang chủ</Link>
+                        </li>
+                        <li className="nav-item px-2">
+                            <Link className="nav-link text-light header-nav-link" to="/introduction">Giới thiệu</Link>
+                        </li>
+                        <li className="nav-item px-2">
+                            <Link className="nav-link text-light header-nav-link" to="/products">Sản phẩm</Link>
+                        </li>
+                        <li className="nav-item px-2">
+                            <Link className="nav-link text-light header-nav-link" to="#">Liên hệ</Link>
+                        </li>
+                        <li className="nav-item px-2">
+                            <Link className="nav-link text-light header-nav-link" to="/find-order">Tìm kiếm đơn hàng</Link>
+                        </li>
+                        <li className="nav-item d-flex align-items-center text-center px-2" style={{ columnGap: "25%", width: "70px" }}>
+                            <div className="header-nav-icon">
+                                <Link to="#" className="text-light">
+                                    <i className="fa-solid fa-magnifying-glass"></i>
+                                </Link>
+                            </div>
+                            <div className="header-nav-icon">
+                                <Link to="/login-and-register" className="text-light">
+                                    <i className="fa-solid fa-user"></i>
+                                </Link>
+                            </div>
+                            <div className="header-nav-icon">
+                                <Link to="/cart" className="text-light">
+                                    <i className="fa-solid fa-cart-shopping"></i>
+                                </Link>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav >
+
+    )
+}
+export default Header

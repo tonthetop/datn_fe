@@ -60,7 +60,7 @@ const SideBar = () => {
         })
     }
     return (
-        <div className="side-bar mt-5">
+        <div className="side-bar">
             <SideBarItemCategory></SideBarItemCategory>
             <Formik
                 initialValues={{

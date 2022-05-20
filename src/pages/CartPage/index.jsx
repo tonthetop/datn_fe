@@ -3,12 +3,11 @@ import { Table, ButtonGroup, Button, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import RowItem from './RowItem'
 function CartPage() {
-    const showEmptyCard = true;
+    const showEmptyCard = false;
 
     return (
-        <div className="cart-page-wrapper py-5">
-            <div className="container">
-                <div className="row pb-3">
+        <div className="cart-page-wrapper">
+                <div className="row">
                     <h2>
                         Giỏ hàng
                     </h2>
@@ -75,10 +74,7 @@ function CartPage() {
                         </div>
                     </div>
                 }
-
-
             </div>
-        </div>
     );
 }
 export { CartPage };

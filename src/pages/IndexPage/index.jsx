@@ -8,14 +8,14 @@ const IndexPage = () => {
       <Carousel></Carousel>
       <BannerProduct></BannerProduct>
       <div className="container">
-        <div className="row mb-3  ">
+        <div className="row mb-3 ">
           <h1 className="text-uppercase text-center">
             <span className="title-banner border-dark">
               Sản phẩm bán chạy
             </span>
           </h1>
         </div>
-        <ListProduct></ListProduct>
+        {/* <ListProduct></ListProduct> */}
       </div>
       <div className="container">
         <div className="row mb-3">
@@ -24,7 +24,7 @@ const IndexPage = () => {
               Sản phẩm mới
             </span> </h1>
         </div>
-        <ListProduct></ListProduct>
+        {/* <ListProduct></ListProduct> */}
       </div>
     </div>
   )

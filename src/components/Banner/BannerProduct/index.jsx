@@ -2,7 +2,7 @@ import './index.css'
 import {Link} from 'react-router-dom'
 function BannerProduct() {
     return (
-        <div className="container my-5">
+        <div className="my-5">
             <div className="row">
                 <div className="col-xs-12 col-sm-4">
                     <div className="xxx-banner">

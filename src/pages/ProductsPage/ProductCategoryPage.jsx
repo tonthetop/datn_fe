@@ -30,7 +30,7 @@ const ProductCategoryPage = () => {
         async function fetchData() {
             const params = getParamQueries(location);
             params.type = categoryId
-            console.log("params fetch productAPI",params)
+            console.log("params fetch productAPI", params)
             const { totalRecords, products } = await productApi.getProducts(params)
             console.log("productCategoryPage", products)
             setProducts(products)
@@ -57,28 +57,26 @@ const ProductCategoryPage = () => {
             search: `?${search}`
         })
     }
-    const limit=getParamQueries(location)?.hasOwnProperty('limit')?getParamQueries(location).limit:12
+    const limit = getParamQueries(location)?.hasOwnProperty('limit') ? getParamQueries(location).limit : 12
     return (
-        <div className="products-wrapper container mt-8">
-            <div className="row">
-                <div className="col-0 col-md-3">
-                    <SideBar>
-                    </SideBar>
+        <div className="row">
+            <div className="col-0 col-md-3">
+                <SideBar>
+                </SideBar>
+            </div>
+            <div className="col-md-9 col-xs-12 d-flex flex-column justify-content-between">
+                <div className=" d-flex justify-content-end">
+                    <FilterOutlined className="me-2 fs-5 d-flex align-items-center" />
+                    <Select defaultValue="Mặc định" value={selectedValue} style={{ width: 150 }} onChange={handleChangeSortBy}>
+                        <Option value="min_price">Giá: Tăng dần</Option>
+                        <Option value="max_price">Giá: Giảm dần</Option>
+                        <Option value="min_time">Mới nhất</Option>
+                        <Option value="max_time">Cũ nhất</Option>
+                    </Select>
                 </div>
-                <div className="col-md-9 col-xs-12 d-flex flex-column justify-content-between">
-                    <div className="mt-5 d-flex justify-content-end">
-                        <FilterOutlined className="me-2 fs-5 d-flex align-items-center" />
-                        <Select defaultValue="Mặc định" value={selectedValue} style={{ width: 150 }} onChange={handleChangeSortBy}>
-                            <Option value="min_price">Giá: Tăng dần</Option>
-                            <Option value="max_price">Giá: Giảm dần</Option>
-                            <Option value="min_time">Mới nhất</Option>
-                            <Option value="max_time">Cũ nhất</Option>
-                        </Select>
-                    </div>
-                    <ListProduct productList={products}></ListProduct>
-                    <div className="mb-4 d-flex justify-content-end">
-                        <Pagination defaultCurrent={1} onChange={handleChangePagination} pageSize={limit} total={totalRecords} responsive />
-                    </div>
+                <ListProduct productList={products}></ListProduct>
+                <div className="mb-4 d-flex justify-content-end">
+                    <Pagination defaultCurrent={1} onChange={handleChangePagination} pageSize={limit} total={totalRecords} responsive />
                 </div>
             </div>
         </div>
