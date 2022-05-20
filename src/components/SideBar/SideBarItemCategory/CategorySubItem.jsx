@@ -6,7 +6,7 @@ const CategorySubItem = (props) => {
             <Link to={`/category/${props.name}`} title="Dép" className="nav-link link-dark">
                 {props.title}
             </Link>
-            <i className="fas fa-angle-right fa"></i>
+            <i className="fa fa-angle-right"></i>
         </div>
     )
 }

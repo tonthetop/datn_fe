@@ -1,5 +1,4 @@
 import React from 'react'
-import './index.css'
 import SideBarItemCategory from './SideBarItemCategory'
 import SideBarItemCheckbox from './SideBarItemCheckbox'
 import { getParamQueries } from '../../utils/getParamQueries'
@@ -7,7 +6,7 @@ import { useLocation, useNavigate, createSearchParams } from "react-router-dom";
 import { useEffect } from 'react';
 import { Formik, Field, Form, useFormik } from 'formik';
 import { Buffer } from 'buffer';
-const SideBar = () => {
+const SideBar = ({setCurrentPage}) => {
     const props2 = {
         title: 'KHOẢNG GIÁ',
         content: [
@@ -43,6 +42,7 @@ const SideBar = () => {
     }
     const { brand='', priceRange='' } = setSecondBinding()
     const handleQuery = (values) => {
+        setCurrentPage(1)
         const valueTemp = JSON.parse(JSON.stringify(values));
         if (valueTemp.priceRange!=='') valueTemp.priceRange = JSON.parse(valueTemp.priceRange)
         let objJsonStr = JSON.stringify(valueTemp);

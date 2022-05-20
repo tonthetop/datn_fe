@@ -1,12 +1,37 @@
 import Header from "./components/Header/header";
 import Footer from "./components/Footer";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation, Link } from "react-router-dom";
 import * as pages from "./pages";
 import 'antd/dist/antd.css';
 import './index.css';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu } from 'antd';
 const { Content } = Layout;
+import { emphasize, styled } from '@mui/material/styles';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Chip from '@mui/material/Chip';
+import HomeIcon from '@mui/icons-material/Home';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 function App() {
+  const arrayPath = useLocation().pathname.replace("/", "").split("/")
+  const pathList = {
+    introduction: "giới thiệu",
+    products: "sản phẩm",
+    contact: "liên hệ",
+    "find-order": "tìm kiếm đơn hàng",
+    "login-and-register": "đăng nhập",
+    cart: "giỏ hàng",
+    category: "Category",
+    dep: "dép",
+    giay: "giày",
+    phukien: "phụ kiện"
+  }
+
+  const pathName = arrayPath.map(item => {
+    return pathList[item]
+  })
+
+  console.log(pathName)
+
   return (
     <Layout>
       <Header></Header>
@@ -14,22 +39,35 @@ function App() {
         className="site-layout container"
         style={{
           marginTop: 30,
+          marginBottom: 100
         }}
       >
         <Breadcrumb
           style={{
-            marginTop:20,
-            marginBottom:12
+            marginTop: 20,
+            marginBottom: 12,
           }}
         >
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
+          <StyledBreadcrumb
+            component="a"
+            href="#"
+            label="TRANG CHỦ"
+            icon={<HomeIcon fontSize="small" />}
+          />
+
+          {pathName.map(item => {
+            return (
+              <Breadcrumb.Item style={{
+                textTransform: 'uppercase'
+              }}>{item}</Breadcrumb.Item>
+            )
+          })}
+
         </Breadcrumb>
         <div
           className="site-layout-background"
           style={{
-            paddingTop:0,
+            paddingTop: 30,
             minHeight: 380,
           }}
         >

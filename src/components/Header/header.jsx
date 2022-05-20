@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import './header.css'
+import {useState} from 'react'
 function Header() {
+    const [showNavbar,setShowNavbar]=useState(false)
     return (
         <nav
             style={{
@@ -9,18 +11,18 @@ function Header() {
             className="navbar navbar-expand-lg navbar-dark  fixed-top"
         >
             <div className="container">
-                <Link to="/" classNameName="logo h-100" title="Trạm Tabo">
+                <Link to="/" className="logo h-100" title="Trạm Tabo">
                     <img
-                        classNameName=""
+                        className=""
                         style={{ height: "45px" }}
                         src="//bizweb.dktcdn.net/100/377/398/themes/755909/assets/logo.png?1649394240577"
                         alt="logo Trạm Tabo"
                     />
                 </Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <button onClick={()=>setShowNavbar(prev=>!prev)} className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="navbarResponsive">
+                <div className="collapse navbar-collapse" id="navbarResponsive" toggle="collapse" data-target="navbar-collapse">
                     <ul className="navbar-nav ms-auto text-uppercase fs-6">
                         <li className="nav-item active  px-2">
                             <Link className="nav-link text-light header-nav-link" to="/">Trang chủ</Link>
@@ -32,7 +34,7 @@ function Header() {
                             <Link className="nav-link text-light header-nav-link" to="/products">Sản phẩm</Link>
                         </li>
                         <li className="nav-item px-2">
-                            <Link className="nav-link text-light header-nav-link" to="#">Liên hệ</Link>
+                            <Link className="nav-link text-light header-nav-link" to="/contact">Liên hệ</Link>
                         </li>
                         <li className="nav-item px-2">
                             <Link className="nav-link text-light header-nav-link" to="/find-order">Tìm kiếm đơn hàng</Link>
@@ -58,6 +60,7 @@ function Header() {
                 </div>
             </div>
         </nav >
+
 
     )
 }

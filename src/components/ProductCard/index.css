@@ -90,17 +90,12 @@ div.btn-quickview {
 }
 
 .size-item {
-    float: left;
     min-width: 25px !important;
     height: 25px !important;
-    margin: 0;
     text-align: center;
-    line-height: 25px;
-    white-space: nowrap;
-    font-size: 12px;
     border: 1px solid #ccc;
     cursor: pointer;
-    position: relative;
+    padding: 2px 4px;
 }
 
 .price-box {

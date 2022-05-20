@@ -6,12 +6,13 @@ const ProductCard = ({ product }) => {
     // Modal product quickview
     const [modalShow, setModalShow] = React.useState(false);
     //
+    const discound =product.discountIds[0]
     return (
         <div className="col-6 col-sm-6 col-md-4 mb-4">
             <div className="mb-20 mt-0 single-product d-flex flex-column ">
                 <div className="product-img d-flex flex-column position-relative">
-                    <Link className="position-relative h-100 mb-3" to="#">
-                        <span className="onsale">- 10%</span>
+                    <Link className="position-relative h-100" to="#">
+                        { !!discound && <span className="onsale">- {discound.value}%</span>}
                         <img alt="" className="position-absolute h-100 w-100 item-img-first " src={product.imgList[0]} />
                         <img alt="" className="position-absolute h-100 w-100 item-img-second" src={product.imgList[1]} />
                     </Link>
@@ -24,12 +25,12 @@ const ProductCard = ({ product }) => {
                         onHide={() => setModalShow(false)}
                     />
                 </div>
-                <div className="product-content my-1">
-                    <div className="product-list-size d-flex justify-content-evenly mb-2">
+                <div className="product-content mt-2">
+                    <div className="product-list-size d-flex flex-wrap justify-content-center mb-2">
                         {
                             product.productBySize.map((item, index) => {
                                 return (
-                                    <div key={index}>
+                                    <div key={index} className="mx-2">
                                         <span className="size-item">
                                             {item.size}
                                         </span>
