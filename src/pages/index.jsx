@@ -4,4 +4,5 @@ export * from './IndexPage'
 export * from './LoginAndRegisterPage'
 export * from './CartPage'
 export * from './ThankPage'
+export * from './ProductDetailPage'
 

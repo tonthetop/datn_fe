@@ -108,14 +108,9 @@ div.btn-quickview {
     transition: all 0.3s ease;
 }
 
-span.regular-price {
-    font-weight: bold;
-    color: #000;
-}
-
 .regular-price {
     color: red !important;
-    font-size: 16px !important;
+    font-size: 20px !important;
 }
 
 .discount-price {

@@ -6,16 +6,13 @@
 }
 
 .modal-header {
-    background: #000000;
+    background-color: #000000;
     padding: 10px;
 }
 
 .modal-header>.btn-close {
     background-color: white;
-}
-
-.modal-header>.btn-close {
-    background-color: white;
+    margin-right: -1px;
 }
 
 

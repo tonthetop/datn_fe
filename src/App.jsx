@@ -28,8 +28,6 @@ function App() {
     return pathList[item]
   })
 
-  console.log(useLocation().pathname)
-
   return (
     <Layout>
       <Header></Header>
@@ -53,7 +51,7 @@ function App() {
             <Breadcrumb.Item style={{ textTransform: 'uppercase', }} href="/">
               <span style={{ display: "inline" }}>Trang Chủ</span>
             </Breadcrumb.Item>
-            }
+          }
           {pathName.map(item => {
             return (
               <Breadcrumb.Item style={{
@@ -95,6 +93,10 @@ function App() {
             <Route
               path="/thankyou/:id"
               element={<pages.ThankPage> </pages.ThankPage>}
+            ></Route>
+            <Route
+              path="/product-detail/:id"
+              element={<pages.ProductDetailPage> </pages.ProductDetailPage>}
             ></Route>
           </Routes>
         </div>
