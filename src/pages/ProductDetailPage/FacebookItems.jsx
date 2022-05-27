@@ -8,7 +8,7 @@ const IconFont = createFromIconfontCN({
 });
 export const CommentPlugin = () => {
     const url="https://datn-fe-flame.vercel.app"
-    const href=url+ useLocation().pathname+"/"
+    const href=url+ useLocation().pathname
     return (
         <FacebookProvider appId="998182394159488">
             <Comments width="800" href={href} />
@@ -19,7 +19,7 @@ export const CommentPlugin = () => {
 export const LikeButton = () => {
     const stringUrl="https://datn-fe-flame.vercel.app"
     const href=encodeURIComponent(stringUrl+ useLocation().pathname)
-    const url=`https://www.facebook.com/plugins/like.php?href=${href}%2F&width=174&layout=button_count&action=like&size=large&share=true&height=28&appId=998182394159488`
+    const url=`https://www.facebook.com/plugins/like.php?href=${href}&width=174&layout=button_count&action=like&size=large&share=true&height=28&appId=998182394159488`
     return (
         <iframe src={url} width="174" height="28" style={{ border: "none", "overflow": "hidden" }}
             scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
