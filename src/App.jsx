@@ -91,11 +91,11 @@ function App() {
               element={<pages.CartPage> </pages.CartPage>}
             ></Route>
             <Route
-              path="/thankyou/:id"
+              path="/thankyou/"
               element={<pages.ThankPage> </pages.ThankPage>}
             ></Route>
             <Route
-              path="/product-detail/:id"
+              path="/product-detail/:productId"
               element={<pages.ProductDetailPage> </pages.ProductDetailPage>}
             ></Route>
           </Routes>

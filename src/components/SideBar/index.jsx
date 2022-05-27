@@ -13,7 +13,10 @@ const SideBar = ({setCurrentPage}) => {
             { key: 1, content: "Giá dưới 1.000.000₫", value: JSON.stringify({ min: 0, max: 1000000 }) },
             { key: 2, content: "1.000.000₫ - 2.000.000₫", value: JSON.stringify({ min: 1000000, max: 2000000 }) },
             { key: 3, content: "2.000.000₫ - 3.000.000₫", value: JSON.stringify({ min: 2000000, max: 3000000 }) },
-            { key: 4, content: "3.000.000₫ - 4.000.000₫", value: JSON.stringify({ min: 3000000, max: 4000000 }) }
+            { key: 4, content: "3.000.000₫ - 4.000.000₫", value: JSON.stringify({ min: 3000000, max: 4000000 }) },
+            { key: 5, content: "4.000.000₫ - 5.000.000₫", value: JSON.stringify({ min: 4000000, max: 5000000 }) },
+            { key: 5, content: "Giá trên 5 triệu", value: JSON.stringify({ min: 5000000, max: 500000000 }) },
+
         ],
         queryKey: "priceRange"
     }

@@ -1,8 +1,24 @@
 .product-title.p-title h3:after {
-    content: '';
+    content: "";
     display: block;
     width: 100px;
     height: 1px;
     background: #000000;
     margin: 20px 0px 0px 0px;
+}
+
+.ant-tabs-tab span {
+    display: flex;
+    align-items: center;
+}
+
+.tab-danhgia {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #c4cdd5;
+    box-sizing: border-box;
+    min-height: 130px;
+    background-color: rgba(0, 136, 255, 0.1);
+    flex-direction: column;
 }
