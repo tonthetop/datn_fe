@@ -10,6 +10,11 @@ const productApi = {
         const url = `/product/${id}`;
         return axiosClient.get(url);
     },
+    getSizes(id) {
+        // get productID
+        const url = `/product/size`;
+        return axiosClient.get(url);
+    },
     add(data) {
         const url = `/product/${data.id}`;
         return axiosClient.post(url, data);

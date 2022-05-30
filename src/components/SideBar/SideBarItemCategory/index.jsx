@@ -2,7 +2,6 @@ import React from "react";
 import { useRef, useState, useEffect } from "react"
 import CategorySubItem from './CategorySubItem.jsx'
 import {Link} from 'react-router-dom'
-import "../index.css"
 
 const SideBarItemCategory = () => {
     const [iconState, setIconState] = useState(true)

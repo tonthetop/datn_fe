@@ -36,7 +36,7 @@ const ProductCategoryPage = () => {
             console.log("productCategoryPage", products)
             setProducts(products)
             setTotalRecords(totalRecords)
-
+            setCurrentPage(params.page);
         }
         fetchData()
     }, [location]);
@@ -84,7 +84,7 @@ const ProductCategoryPage = () => {
                 </div>
                 <ListProduct productList={products}></ListProduct>
                 <div className="mb-4 d-flex justify-content-end">
-                    <Pagination defaultCurrent={1} current={currentPage} onChange={handleChangePagination} pageSize={limit} total={totalRecords} responsive />
+                    <Pagination simple current={currentPage} defaultCurrent={1} onChange={handleChangePagination} pageSize={limit} total={totalRecords} responsive />
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { productApi } from '../../api/productApi'
 import SideBarItemCategory from './SideBarItemCategory'
 import SideBarItemCheckbox from './SideBarItemCheckbox'
 import { getParamQueries } from '../../utils/getParamQueries'
@@ -6,7 +7,26 @@ import { useLocation, useNavigate, createSearchParams } from "react-router-dom";
 import { useEffect } from 'react';
 import { Formik, Field, Form, useFormik } from 'formik';
 import { Buffer } from 'buffer';
-const SideBar = ({setCurrentPage}) => {
+import "./index.css"
+
+const SideBar = ({ setCurrentPage }) => {
+    const [sizes, setSizes] = useState([])
+    useEffect(() => {
+        async function fetchData() {
+            const sizes = await productApi.getSizes()
+            setSizes(sizes.map((e, index) => {
+                return { key: index, content: e, value: e }
+            }))
+        }
+        fetchData()
+    }, []);
+
+    const props3 = {
+        title: 'Size',
+        content: sizes,
+        queryKey: "size"
+
+    }
     const props2 = {
         title: 'KHOẢNG GIÁ',
         content: [
@@ -15,7 +35,7 @@ const SideBar = ({setCurrentPage}) => {
             { key: 3, content: "2.000.000₫ - 3.000.000₫", value: JSON.stringify({ min: 2000000, max: 3000000 }) },
             { key: 4, content: "3.000.000₫ - 4.000.000₫", value: JSON.stringify({ min: 3000000, max: 4000000 }) },
             { key: 5, content: "4.000.000₫ - 5.000.000₫", value: JSON.stringify({ min: 4000000, max: 5000000 }) },
-            { key: 5, content: "Giá trên 5 triệu", value: JSON.stringify({ min: 5000000, max: 500000000 }) },
+            { key: 6, content: "Giá trên 5 triệu", value: JSON.stringify({ min: 5000000, max: 500000000 }) },
 
         ],
         queryKey: "priceRange"
@@ -25,7 +45,6 @@ const SideBar = ({setCurrentPage}) => {
         content: [
             { key: 1, content: "NIKE", value: "NIKE" },
             { key: 2, content: "ADIDAS", value: "ADIDAS" },
-
             { key: 3, content: "JORDAN", value: "JORDAN" },
         ],
         queryKey: "brand"
@@ -39,24 +58,22 @@ const SideBar = ({setCurrentPage}) => {
         if (params.hasOwnProperty('filter')) {
             let object = JSON.parse(Buffer(params.filter, 'base64').toString())
             object.priceRange = JSON.stringify(object.priceRange)
+            console.log("object", object)
             return object
         }
         return {}
     }
-    const { brand='', priceRange='' } = setSecondBinding()
+    const { brand = '', priceRange = '', size = '' } = setSecondBinding()
     const handleQuery = (values) => {
+
         setCurrentPage(1)
         const valueTemp = JSON.parse(JSON.stringify(values));
-        if (valueTemp.priceRange!=='') valueTemp.priceRange = JSON.parse(valueTemp.priceRange)
+        if (valueTemp.priceRange !== '') valueTemp.priceRange = JSON.parse(valueTemp.priceRange)
         let objJsonStr = JSON.stringify(valueTemp);
-
-        console.log(objJsonStr)
-
         let objJsonB64 = Buffer.from(objJsonStr).toString("base64");
         let params = getParamQueries(location)
         if (params.hasOwnProperty('page')) delete params.page
         params = { ...params, filter: objJsonB64 }
-        console.log(params)
         const search = decodeURIComponent(createSearchParams(params))
         navigate({
             search: `?${search}`
@@ -69,6 +86,7 @@ const SideBar = ({setCurrentPage}) => {
                 initialValues={{
                     brand: brand,
                     priceRange: priceRange,
+                    size: size,
                 }}
                 onSubmit={values => handleQuery(values)}
             >
@@ -76,11 +94,16 @@ const SideBar = ({setCurrentPage}) => {
                     ({ values }) => (
                         <Form>
                             <SideBarItemCheckbox
-                                {...props1}
+                                props={props1}
+                                secondBinding={brand}
                             ></SideBarItemCheckbox>
-
                             <SideBarItemCheckbox
-                                {...props2}
+                                props={props2}
+                                secondBinding={priceRange}
+                            ></SideBarItemCheckbox>
+                            <SideBarItemCheckbox
+                                props={props3}
+                                secondBinding={size}
                             ></SideBarItemCheckbox>
                         </Form>
                     )

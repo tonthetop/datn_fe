@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react'
 import SideBar from '../../components/SideBar'
 import ListProduct from '../../components/ListProduct'
 import { getParamQueries } from '../../utils/getParamQueries'
-import { useLocation, useSearchParams, useNavigate, createSearchParams, generatePath } from 'react-router-dom'
+import { useLocation, useNavigate, createSearchParams, generatePath } from 'react-router-dom'
 import { productApi } from '../../api'
 import 'antd/dist/antd.css';
 import { Pagination, Select } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
-const { Option,OptGroup } = Select;
+const { Option, OptGroup } = Select;
 
 const ProductMainPage = () => {
   let location = useLocation();
   const [products, setProducts] = useState([])
   const [totalRecords, setTotalRecords] = useState()
-  const [currentPage, setCurrentPage] =useState(1)
+  const [currentPage, setCurrentPage] = useState()
   //Example how to use it: 
   useEffect(() => {
     async function fetchData() {
@@ -21,6 +21,8 @@ const ProductMainPage = () => {
       const { totalRecords, products } = await productApi.getProducts(params)
       setProducts(products)
       setTotalRecords(totalRecords)
+      setCurrentPage(params.page);
+
     }
     fetchData()
   }, [location]);
@@ -47,8 +49,9 @@ const ProductMainPage = () => {
       search: `?${search}`
     })
   }
-  console.log(currentPage)
   const limit = getParamQueries(location)?.hasOwnProperty('limit') ? getParamQueries(location).limit : 12
+  
+  console.log("currentPage",currentPage)
   return (
     <div className="row">
       <div className="col-xs-6 col-md-3">
@@ -57,7 +60,7 @@ const ProductMainPage = () => {
       </div>
       <div className="col-md-9 col-xs-12 d-flex flex-column justify-content-between">
         <div className="mb-4 d-flex justify-content-end">
-        <FilterOutlined style ={{opacity: "0.5"}}className="me-2 fs-5 d-flex align-items-center" />
+          <FilterOutlined style={{ opacity: "0.5" }} className="me-2 fs-5 d-flex align-items-center" />
           <Select defaultValue="Mặc định" style={{ width: 150 }} onChange={handleChangeSortBy}>
             <OptGroup label="Theo giá">
               <Option value="min_price">Giá: Tăng dần</Option>
@@ -71,7 +74,7 @@ const ProductMainPage = () => {
         </div>
         <ListProduct productList={products}></ListProduct>
         <div className="d-flex justify-content-end">
-          <Pagination defaultCurrent={1} current={currentPage} onChange={handleChangePagination} pageSize={limit} total={totalRecords} responsive />
+          <Pagination simple current={currentPage} defaultCurrent={1} onChange={handleChangePagination} pageSize={limit} total={totalRecords} responsive />
         </div>
       </div>
     </div>

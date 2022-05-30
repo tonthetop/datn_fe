@@ -1,15 +1,21 @@
 import './index.css'
-function FormSearchOrder({ showInput, handleClick }) {
+function FormSearchOrder({ showInput, handleClick, setPhoneOrEmail, handleSubmit }) {
     const inputPhone = (
         <div className="input-group flex-nowrap">
             <span className="input-group-text" id="addon-wrapping">SDT</span>
-            <input type="text" className="form-control" placeholder="0905xxxxx" aria-label="Phone" aria-describedby="addon-wrapping" />
+            <input type="text" onChange={(e) => setPhoneOrEmail((prev) => {
+                return { ...prev, phone: e.target.value }
+            })
+            } className="form-control" placeholder="0905xxxxx" aria-label="Phone" aria-describedby="addon-wrapping" />
         </div>
     )
     const inputEmail = (
         <div className="input-group flex-nowrap">
             <span className="input-group-text" id="addon-wrapping">@</span>
-            <input type="text" className="form-control" placeholder="email@gmail.com" aria-label="Phone" aria-describedby="addon-wrapping" />
+            <input type="text" onChange={(e) => setPhoneOrEmail((prev) => {
+                return { ...prev, email: e.target.value }
+            })
+            } className="form-control" placeholder="email@gmail.com" aria-label="Email" aria-describedby="addon-wrapping" />
         </div>
     )
     let inputElm
@@ -53,7 +59,7 @@ function FormSearchOrder({ showInput, handleClick }) {
                     <span className="tieu-de-lua-chon"> Kiểm tra bằng </span>
                 </label>
             </div>
-            <form className="">
+            <form className="" onSubmit={e => handleSubmit(e)}>
                 <div className="form-check form-check-inline">
                     <input
                         className="form-check-input"
@@ -91,13 +97,14 @@ function FormSearchOrder({ showInput, handleClick }) {
                     </label>
                 </div>
                 <hr />
+                {inputElm}
+                <div className="pt-2 d-flex justify-content-end">
+                    <button type="submit" className="btn btn-primary text-end">
+                        Kiểm tra
+                    </button>
+                </div>
             </form>
-            {inputElm}
-            <div className="pt-2 d-flex justify-content-end">
-                <button type="submit" className="btn btn-primary text-end">
-                    Kiểm tra
-                </button>
-            </div>
+
         </div>
     );
 }

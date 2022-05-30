@@ -13,3 +13,27 @@
 .aside-content {
     transition: all 0.5s ease;
 }
+
+.size-bar-item:nth-child(0)>.aside-content {
+    display: block;
+}
+
+.side-bar form>.side-bar-item:last-child>.aside-content {
+    display: flex;
+    flex-wrap: wrap;
+    height: 500px;
+    align-content: flex-start;
+}
+
+.side-bar form>.side-bar-item:last-child>.aside-content>div {
+    height: fit-content;
+    width: 30%;
+}
+
+.side-bar form>.side-bar-item:last-child>.aside-content>div>label {
+    display: flex;
+}
+
+.side-bar form>.side-bar-item:last-child>.aside-content>div>label>input {
+    margin-right: 0px;
+}

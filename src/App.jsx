@@ -1,3 +1,5 @@
+import { ToastContainer } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header/header";
 import Footer from "./components/Footer";
 import { Routes, Route, useLocation, Link } from "react-router-dom";
@@ -67,6 +69,7 @@ function App() {
             minHeight: 380,
           }}
         >
+          <ToastContainer autoClose={3000} />
           <Routes>
             <Route
               path="/"
@@ -97,6 +100,14 @@ function App() {
             <Route
               path="/product-detail/:productId"
               element={<pages.ProductDetailPage> </pages.ProductDetailPage>}
+            ></Route>
+            <Route
+              path="/not-found"
+              element={<div>NOTFOUNDAPI</div>}
+            ></Route>
+            <Route
+              path="*"
+              element={<div>NOTFOUNDROUTE</div>}
             ></Route>
           </Routes>
         </div>
