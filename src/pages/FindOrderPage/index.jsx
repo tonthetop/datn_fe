@@ -8,6 +8,7 @@ function FindOrderPage() {
     const [showInput, setShowInput] = useState("phone");
 
     const handleClick = (e) => {
+        console.log("ahndleClick", e.target.value)
         setShowInput(e.target.value);
     };
 
@@ -15,11 +16,7 @@ function FindOrderPage() {
         phone: '',
         email: ''
     })
-    async function fetchData() {
-        let data = phoneOrEmail
-        if (phoneOrEmail.email == "") data = { phone: phoneOrEmail.phone }
-        if (phoneOrEmail.phone == "") data = { email: phoneOrEmail.email }
-        console.log(data)
+    async function fetchData(data) {
         const results = await orderApi.getOrderByEmailOrPhone(data)
         const orderInfos = results.map(e => {
             const status = e.orderStatus[e.orderStatus.length - 1].status;
@@ -36,9 +33,9 @@ function FindOrderPage() {
             }, 0)
             return {
                 id: e._id,
-                name: e.accountId,
-                phone: "kkk",
-                email: "kkk",
+                name: e.accountId.name,
+                phone: e.accountId.phone,
+                email: e.accountId.email,
                 orderDate: e.createdAt,
                 orderAdress: e.deliveryAddress,
                 paymentStatus: e.orderStatus[e.orderStatus.length - 1].description,
@@ -47,15 +44,20 @@ function FindOrderPage() {
                 totalAmount: amount,
             }
         })
-        setOrderInfos(orderInfos)
-        console.log("orderInfos: ", orderInfos)
+        return orderInfos
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log("phoneOrEmail", phoneOrEmail)
+        let data
+        if (showInput === "phone") data = { phone: phoneOrEmail.phone }
+        else if (showInput === "email") data = { email: phoneOrEmail.email }
+        else data = phoneOrEmail
+        console.log("data", data)
         try {
-            await fetchData()
+            const orderInfos = await fetchData(data)
+            setOrderInfos(orderInfos)
         } catch (error) {
+            setOrderInfos([])
             console.log(error)
         }
     }
@@ -67,6 +69,7 @@ function FindOrderPage() {
                         <FormSearchOrder
                             showInput={showInput}
                             handleClick={handleClick}
+                            phoneOrEmail={phoneOrEmail}
                             setPhoneOrEmail={setPhoneOrEmail}
                             handleSubmit={handleSubmit}
                         />

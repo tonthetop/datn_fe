@@ -1,31 +1,31 @@
-import axiosClient from "./axiosClient";
+import axiosInstance from "./axiosInstance";
 
 const productApi = {
     getProducts(params) {
         const url = "/product";
-        return axiosClient.get(url, { params });
+        return axiosInstance.get(url, { params });
     },
     get(id) {
         // get productID
         const url = `/product/${id}`;
-        return axiosClient.get(url);
+        return axiosInstance.get(url);
     },
     getSizes(id) {
         // get productID
         const url = `/product/size`;
-        return axiosClient.get(url);
+        return axiosInstance.get(url);
     },
     add(data) {
         const url = `/product/${data.id}`;
-        return axiosClient.post(url, data);
+        return axiosInstance.post(url, data);
     },
     update(data) {
         const url = `/product/${data.id}`;
-        return axiosClient.patch(url, data);
+        return axiosInstance.patch(url, data);
     },
     remove(id) {
         const url = `/product/${id}`;
-        return axiosClient.delete(url);
+        return axiosInstance.delete(url);
     },
 };
 export { productApi };

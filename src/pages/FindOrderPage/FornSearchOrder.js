@@ -1,9 +1,9 @@
 import './index.css'
-function FormSearchOrder({ showInput, handleClick, setPhoneOrEmail, handleSubmit }) {
+function FormSearchOrder({ showInput, handleClick, phoneOrEmail, setPhoneOrEmail, handleSubmit }) {
     const inputPhone = (
         <div className="input-group flex-nowrap">
             <span className="input-group-text" id="addon-wrapping">SDT</span>
-            <input type="text" onChange={(e) => setPhoneOrEmail((prev) => {
+            <input type="text" value={phoneOrEmail.phone} onChange={(e) => setPhoneOrEmail((prev) => {
                 return { ...prev, phone: e.target.value }
             })
             } className="form-control" placeholder="0905xxxxx" aria-label="Phone" aria-describedby="addon-wrapping" />
@@ -12,7 +12,7 @@ function FormSearchOrder({ showInput, handleClick, setPhoneOrEmail, handleSubmit
     const inputEmail = (
         <div className="input-group flex-nowrap">
             <span className="input-group-text" id="addon-wrapping">@</span>
-            <input type="text" onChange={(e) => setPhoneOrEmail((prev) => {
+            <input type="text" value={phoneOrEmail.email} onChange={(e) => setPhoneOrEmail((prev) => {
                 return { ...prev, email: e.target.value }
             })
             } className="form-control" placeholder="email@gmail.com" aria-label="Email" aria-describedby="addon-wrapping" />

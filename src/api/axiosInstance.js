@@ -32,7 +32,7 @@ axiosInstance.interceptors.response.use(
         console.log(error);
         const statusCode = error.response.status;
         if (statusCode === 404) {
-            window.location.href = "/not-found";
+            toast.error("NotFound \n" + error.response.data.errors[0].message);
             return;
         }
         if (statusCode === 400) {
@@ -45,13 +45,10 @@ axiosInstance.interceptors.response.use(
         }
         if (statusCode === 403) {
             toast.error("No Permission");
-            // window.location.href = '/forbi?dden';
             return;
         }
         if (statusCode === 500) {
-            // show notification
             toast.error("System has an error");
-            console.log("error", error);
             return;
         }
         throw error;

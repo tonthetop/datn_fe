@@ -4,10 +4,37 @@ import { Link } from 'react-router-dom'
 import './index.css'
 import 'antd/dist/antd.css';
 import { InputNumber } from 'antd';
+import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { cartsAction } from '../../redux/actions'
+import { toast } from 'react-toastify'
 
 function BodyQuickView({ product }) {
     const discount = product.discountIds[0]
-    console.log("discount", product)
+
+    const dispatch = useDispatch()
+
+    const handleAddCart = () => {
+        const cart = {
+            _id: product._id,
+            price: product.price,
+            size: subInfo.size,
+            amount: subInfo.amount,
+            discountValue: discount ? discount.value : '',
+            discountCode: discount ? discount.code : '',
+            discountId: discount ? discount._id : ''
+        }
+        console.log("cart", cart)
+        const action = cartsAction.saveCart(product)
+        dispatch(action)
+        toast.success("Thêm thành công")
+    }
+
+    const [subInfo, setSubInfo] = useState({
+        size: product.productBySize[0].size,
+        amount: 1,
+        amountOfSize: null
+    })
     return (
         <div className="container-fluid">
             <div className="row">
@@ -36,10 +63,21 @@ function BodyQuickView({ product }) {
 
 
                     </div>
+                    <span>
+                        Trạng thái:
+                        <span style={{ color: "red", fontWeight: "bold" }}> {product.productBySize[0]?.size === "sold_out" ? "Hết hàng" : subInfo.amountOfSize ? (subInfo.amountOfSize + " sản phẩm") : "Còn hàng"}</span>
+                    </span>
+                    <br />
                     <span>Chưa có mô tả cho sản phẩm này!</span>
                     <Form.Group className="my-2">
                         <Form.Label >Size</Form.Label>
-                        <Form.Select aria-label="Mặc định" style={{ width: "120px" }}>
+                        <Form.Select onChange={(e) => {
+                            setSubInfo(prev => {
+                                const item = product.productBySize.find(item => item.size === e.target.value)
+                                console.log("item", item)
+                                return { ...prev, size: e.target.value, amountOfSize: item.amount, amount: 1 }
+                            })
+                        }} value={subInfo.size} aria-label="Mặc định" style={{ width: "120px" }}>
                             {product.productBySize.map(item => {
                                 return (
                                     <option value={item.size}>{item.size}</option>
@@ -52,11 +90,15 @@ function BodyQuickView({ product }) {
                     <Form.Group className="my-2 ">
                         <Form.Label>Số lượng</Form.Label>
                         <div className="col-md-3">
-                            <InputNumber min={1} max={10} defaultValue={3} style={{ width: "120px" }}></InputNumber>
+                            <InputNumber min={1} max={subInfo.amountOfSize} onChange={(value) => {
+                                setSubInfo(prev => {
+                                    return { ...prev, amount: value }
+                                })
+                            }} defaultValue={1} style={{ width: "120px" }}></InputNumber>
                         </div>
                     </Form.Group>
                     <Form.Group className="row mt-5">
-                        <Button className="rounded-pill" variant="outline-dark col-md-4" >Thêm vào giỏ</Button>
+                        <Button className="rounded-pill" variant="outline-dark col-md-4" onClick={handleAddCart}>Thêm vào giỏ</Button>
                         <div className="col-md-5 pt-2">
                             <span> hoặc </span><Link className="text-danger" to={"/product-detail/" + product._id} role="button">Xem chi tiết</Link>
                         </div>

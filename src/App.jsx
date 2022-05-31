@@ -1,3 +1,8 @@
+
+//
+import {useSelector} from 'react-redux'
+//
+
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header/header";
@@ -11,7 +16,9 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 import { FilterOutlined, HomeOutlined, UserOutlined } from '@ant-design/icons';
 const { Content } = Layout;
 
+
 function App() {
+
   const arrayPath = useLocation().pathname.replace("/", "").split("/")
   const pathList = {
     introduction: "giới thiệu",

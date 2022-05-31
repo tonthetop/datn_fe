@@ -15,7 +15,6 @@ const IndexPage = () => {
       setTotalRecords(totalRecords)
     }
     fetchData()
-    console.log("render first")
   }, []);
 
   return (
