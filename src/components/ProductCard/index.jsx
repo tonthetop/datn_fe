@@ -5,6 +5,10 @@ import ProductQuickView from '../ProductQuickView'
 const ProductCard = ({ product }) => {
     // Modal product quickview
     const [modalShow, setModalShow] = React.useState(false);
+    const handleClickQuickView=()=>{
+        setModalShow(true);
+        // add state
+    }
     //
     const discount = product.discountIds[0]
     return (
@@ -16,7 +20,7 @@ const ProductCard = ({ product }) => {
                         <img alt="" className="position-absolute h-100 w-100 item-img-first " src={product.imgList[0]} />
                         <img alt="" className="position-absolute h-100 w-100 item-img-second" src={product.imgList[1]} />
                     </Link>
-                    <div className="btn-quickview position-absolute" onClick={() => setModalShow(true)} >
+                    <div className="btn-quickview position-absolute" onClick={handleClickQuickView} >
                         XEM NHANH
                     </div>
                     <ProductQuickView

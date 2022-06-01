@@ -8,6 +8,9 @@ import './index.css'
 import 'antd/dist/antd.css';
 import { InputNumber, Radio, Button as ButtonAnt, Tabs } from 'antd';
 import { ReconciliationOutlined, FormOutlined, SettingOutlined, StarOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux'
+import { cartsAction } from '../../redux/actions'
+import { toast } from 'react-toastify'
 const { TabPane } = Tabs;
 function ProductDetailPage() {
 
@@ -52,6 +55,26 @@ function ProductDetailPage() {
         setAmountChoice(1)
     };
 
+
+    //
+    const dispatch = useDispatch()
+
+    const handleAddCart = () => {
+        if (!valueSize) return toast.warning("Vui lòng chọn size")
+        const cart = {
+            _id: product._id,
+            name: product.name,
+            img: product.imgList[1],
+            price: product.price,
+            size: valueSize,
+            amount: amountChoice,
+            discountValue: discount ? discount.value : '',
+            discountCode: discount ? discount.code : '',
+            discountId: discount ? discount._id : ''
+        }
+        const action = cartsAction.saveCart(cart)
+        dispatch(action)
+    }
     return (
         <>
             <div className="row product-detail-main">
@@ -112,7 +135,7 @@ function ProductDetailPage() {
 
                     </Form.Group>
                     <Form.Group className="row mt-5">
-                        <Button className="rounded-pill" variant="outline-dark col-md-4" >Thêm vào giỏ</Button>
+                        <Button className="rounded-pill" onClick={handleAddCart} variant="outline-dark col-md-4" >Thêm vào giỏ</Button>
                     </Form.Group>
                 </div>
             </div>

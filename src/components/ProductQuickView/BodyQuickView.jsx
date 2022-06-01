@@ -7,16 +7,20 @@ import { InputNumber } from 'antd';
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { cartsAction } from '../../redux/actions'
-import { toast } from 'react-toastify'
 
 function BodyQuickView({ product }) {
     const discount = product.discountIds[0]
-
+    const [subInfo, setSubInfo] = useState({
+        size: product.productBySize[0].size,
+        amount: 1,
+        amountOfSize: product.productBySize[0].amount
+    })
     const dispatch = useDispatch()
-
     const handleAddCart = () => {
         const cart = {
             _id: product._id,
+            name: product.name,
+            img: product.imgList[1],
             price: product.price,
             size: subInfo.size,
             amount: subInfo.amount,
@@ -24,17 +28,12 @@ function BodyQuickView({ product }) {
             discountCode: discount ? discount.code : '',
             discountId: discount ? discount._id : ''
         }
-        console.log("cart", cart)
-        const action = cartsAction.saveCart(product)
+        const action = cartsAction.saveCart(cart)
         dispatch(action)
-        toast.success("Thêm thành công")
     }
 
-    const [subInfo, setSubInfo] = useState({
-        size: product.productBySize[0].size,
-        amount: 1,
-        amountOfSize: null
-    })
+    const stateOfSize = subInfo.size === "sold_out" || subInfo.amountOfSize === 0 ? "Hết hàng" : subInfo.amountOfSize + " sản phẩm"
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -65,7 +64,9 @@ function BodyQuickView({ product }) {
                     </div>
                     <span>
                         Trạng thái:
-                        <span style={{ color: "red", fontWeight: "bold" }}> {product.productBySize[0]?.size === "sold_out" ? "Hết hàng" : subInfo.amountOfSize ? (subInfo.amountOfSize + " sản phẩm") : "Còn hàng"}</span>
+                        <span style={{ color: "red", fontWeight: "bold" }}>
+                            {stateOfSize}
+                        </span>
                     </span>
                     <br />
                     <span>Chưa có mô tả cho sản phẩm này!</span>
@@ -74,7 +75,6 @@ function BodyQuickView({ product }) {
                         <Form.Select onChange={(e) => {
                             setSubInfo(prev => {
                                 const item = product.productBySize.find(item => item.size === e.target.value)
-                                console.log("item", item)
                                 return { ...prev, size: e.target.value, amountOfSize: item.amount, amount: 1 }
                             })
                         }} value={subInfo.size} aria-label="Mặc định" style={{ width: "120px" }}>

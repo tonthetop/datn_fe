@@ -1,43 +1,68 @@
 import { Table, ButtonGroup, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-function RowItem() {
-    return (
-        <tr>
-            <td className="product align-middle">
-                <div className="thumb-cart d-flex">
-                    <Link to="/575441-161-k-nike-jordan-1-retro-high-og-heritage?variantid=64976772" title="[575441-161] K NIKE JORDAN 1 RETRO HIGH OG 'HERITAGE'">
-                        <img className="w-75" src="//bizweb.dktcdn.net/thumb/medium/100/377/398/products/air-jordan-1-retro-high-og-herit-1-7868da7b023a45f6837ea7c2e1326152-1024x1024.png?v=1652338449123" alt="[575441-161] K NIKE JORDAN 1 RETRO HIGH OG 'HERITAGE'" />
-                    </Link>
-                    <div className="">
-                        <Link to="/575441-161-k-nike-jordan-1-retro-high-og-heritage?variantid=64976772" title="[575441-161] K NIKE JORDAN 1 RETRO HIGH OG 'HERITAGE'" className="text-decoration-none text-dark">
+import { useState } from 'react'
+import { InputNumber } from 'antd'
+import { useDispatch } from 'react-redux'
+import { cartsAction } from '../../redux/actions'
+function RowItem({ product }) {
+    const dispatch = useDispatch();
+    const priceOrigin = product.discountValue !== "" ? product.price * (1 - product.discountValue / 100) : product.price;
+    const [priceTotal, setPriceTotal] = useState(priceOrigin * product.amount)
+    const onChangeAmount = (value) => {
+        setPriceTotal(priceOrigin * value)
+        const action = cartsAction.changeAmountCart({ _id: product._id, size: product.size, amount: value });
+        dispatch(action)
+    };
+    const handleClickDelete = () => {
+        const action = cartsAction.deleteCart(product);
+        dispatch(action)
 
-                            <h6>[575441-161] K NIKE JORDAN 1 RETRO HIGH OG 'HERITAGE'</h6>
+    }
+    return (
+        <>
+            <td className="product align-middle " style={{width:"65%"}}>
+                <div className="thumb-cart d-flex">
+                    <Link to={`/product-detail/${product._id}`} title={product.name}>
+                        <img style={{
+                            height: "100px",
+                            width: "100px"
+                        }} src={product.img} alt={product.name} />
+                    </Link>
+                    <div className="ps-4">
+                        <Link to={`/product-detail/${product._id}`} title={product.name} className="text-decoration-none text-dark">
+                            <h6>{product.name}</h6>
                         </Link>
-                        <div className="">36</div>
-                        <div>4.850.000₫</div>
+                        <div className="">{product.size}</div>
+                        <div className="product-price">
+                            {product.discountValue !== "" ?
+                                <>
+                                    <span style={{
+                                        fontSize: "16px",
+                                        fontWeight: "500"
+                                    }} className="">{(product.price * (1 - product.discountValue / 100)).toLocaleString()}₫</span>
+
+                                    <span className="discount-price ">{product.price.toLocaleString()}₫</span></>
+                                : <span style={{
+                                    fontSize: "16px",
+                                    fontWeight: "500"
+                                }} className="">{(product.price).toLocaleString()}₫</span>
+                            }
+                        </div>
                     </div>
                 </div>
             </td>
             <td className="align-middle">
-                <ButtonGroup aria-label="Basic example" className="">
-                    <Button variant="white">
-                        <i class="fa-solid fa-minus"></i>
-                    </Button>
-                    <span className="py-2">36</span>
-                    <Button variant="white">
-                        <i class="fa-solid fa-plus"></i>
-                    </Button>
-                </ButtonGroup>
+                <InputNumber min={1} max={10} size="middle" defaultValue={product.amount} onChange={onChangeAmount} />
             </td>
             <td className="align-middle">
-                <span>9.700.000₫</span>
+                <span>{priceTotal.toLocaleString()}₫</span>
             </td>
             <td className="align-middle">
-                <Button variant="light">
-                    <i class="fa-solid fa-trash-can"></i>
+                <Button onClick={handleClickDelete} variant="light">
+                    <i className="fa-solid fa-trash-can"></i>
                 </Button>
             </td>
-        </tr>
+        </>
     )
 }
 export default RowItem

@@ -1,6 +1,6 @@
 
 //
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 //
 
 import { ToastContainer } from 'react-toastify'
@@ -47,7 +47,7 @@ function App() {
       <Content
         className="site-layout container"
         style={{
-          marginTop: 30,
+          marginTop: 50,
           marginBottom: 100
         }}
       >
@@ -61,9 +61,9 @@ function App() {
               <span style={{ display: "inline" }}>Trang Chủ</span>
             </Breadcrumb.Item>
           }
-          {pathName.map(item => {
+          {pathName.map((item, index) => {
             return (
-              <Breadcrumb.Item style={{
+              <Breadcrumb.Item key={index} style={{
                 textTransform: 'uppercase'
               }}>{item}</Breadcrumb.Item>
             )
