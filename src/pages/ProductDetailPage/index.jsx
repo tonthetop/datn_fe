@@ -13,29 +13,50 @@ import { cartsAction } from '../../redux/actions'
 import { toast } from 'react-toastify'
 const { TabPane } = Tabs;
 function ProductDetailPage() {
-
-
-    // fetch API va setProduct
     const { productId } = useParams()
     const [product, setProduct] = useState({
         name: '',
         productType: '',
         imgList: [],
         discountIds: [],
-        productBySize: [],
+        productBySize: [{}],
         price: ''
     })
+    //Láy value của size và số item khách hàng chọn
+    const [subInfo, setSubInfo] = useState(
+        {
+            size: "",
+            amount: "",
+            amountOfSize: ""
+        }
+    )
+    const handleChangeSubInfoSize = ({ target: { value } }) => {
+        const item = optionSize.find(e => e.value === value)
+        setSubInfo(prev => {
+            return { ...prev, size: value, amount: 0, amountOfSize: item.amount }
+        })
+    };
+    const handleChangeSubInfoAmount = (value) => {
+        setSubInfo(prev => {
+            return { ...prev, amount:value }
+        })
+    }
+    // fetch API va setProduct
     useEffect(() => {
         async function fetchData() {
             const product = await productApi.get(productId)
             setProduct(product)
+            setSubInfo({
+                size: product.productBySize[0].size,
+                amount: 0,
+                amountOfSize: product.productBySize[0].amount
+            })
         }
         fetchData()
     }, [productId]);
 
     // Lấy các feild từ product
     const discount = product.discountIds[0]
-    const [amountOfSize, setAmountOfSize] = useState()
     const optionSize = product.productBySize.map(item => {
         return (
             {
@@ -45,29 +66,18 @@ function ProductDetailPage() {
             }
         )
     })
-    //Láy value của size và số item khách hàng chọn
-    const [valueSize, setValueSize] = useState();
-    const [amountChoice, setAmountChoice] = useState()
-    const onChangeSize = ({ target: { value } }) => {
-        setValueSize(value);
-        const item = optionSize.find(e => e.value === value)
-        setAmountOfSize(item.amount)
-        setAmountChoice(1)
-    };
 
-
-    //
+    //dispatch action
     const dispatch = useDispatch()
-
     const handleAddCart = () => {
-        if (!valueSize) return toast.warning("Vui lòng chọn size")
+        if (subInfo.amount===0) return toast.warning("Bạn chưa nhập số lượng!")
         const cart = {
             _id: product._id,
             name: product.name,
             img: product.imgList[1],
             price: product.price,
-            size: valueSize,
-            amount: amountChoice,
+            size: subInfo.size,
+            amount: subInfo.amount,
             discountValue: discount ? discount.value : '',
             discountCode: discount ? discount.code : '',
             discountId: discount ? discount._id : ''
@@ -113,7 +123,7 @@ function ProductDetailPage() {
                         <span>Loại: {product.productType}</span>
                         <span>
                             Trạng thái:
-                            <span style={{ color: "red", fontWeight: "bold" }}> {product.productBySize[0]?.size === "sold_out" ? "Hết hàng" : amountOfSize ? (amountOfSize + " sản phẩm") : "Còn hàng"}</span>
+                            <span style={{ color: "red", fontWeight: "bold" }}> {subInfo.amountOfSize === 0 ? "Hết hàng" : subInfo.amountOfSize + " sản phẩm"}</span>
                         </span>
                         <span>Chưa có mô tả cho sản phẩm này</span>
                     </div>
@@ -123,15 +133,15 @@ function ProductDetailPage() {
                         <Form.Label className="me-5">Size</Form.Label>
                         <Radio.Group
                             options={optionSize.sort((a, b) => a.value - b.value)}
-                            onChange={onChangeSize}
-                            value={valueSize}
+                            onChange={handleChangeSubInfoSize}
+                            value={subInfo.size}
                             optionType="button"
                             buttonStyle="solid"
                         />
                     </Form.Group>
                     <Form.Group className="my-2" >
                         <Form.Label className="me-3">Số lượng</Form.Label>
-                        <InputNumber min={1} max={amountOfSize} value={amountChoice} onChange={setAmountChoice} style={{ width: "70px" }}></InputNumber>
+                        <InputNumber min={0} max={subInfo.amountOfSize} value={subInfo.amount} onChange={handleChangeSubInfoAmount} style={{ width: "70px" }}></InputNumber>
 
                     </Form.Group>
                     <Form.Group className="row mt-5">

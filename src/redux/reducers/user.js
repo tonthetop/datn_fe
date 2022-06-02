@@ -1,17 +1,26 @@
+import { toast } from "react-toastify";
 import * as types from "../constants/actionTypes";
 const data = JSON.parse(localStorage.getItem("user"));
-const initialState = data !== null ? data : [11, 22, 33];
+const initialState = data !== null ? data : {};
 
 const userReducer = (state = initialState, action) => {
     let user = {};
     switch (action.type) {
         case types.SAVE_USER:
             user = {
-                id: action.user._id,
+                _id: action.payload.account._id,
+                email: action.payload.account.email,
+                name: action.payload.account.name,
+                address: action.payload.account.address,
+                phone: action.payload.account.phone,
+                birth: action.payload.account.birth,
+                role: action.payload.account.role,
+                orders: action.payload.account.orderIds,
+                tokenAccess: action.payload.token,
             };
-            state.push(user);
-            localStorage.setItem("user", JSON.stringify(state));
-            return [...state];
+            localStorage.setItem("user", JSON.stringify(user));
+            toast.success("Đăng nhập thành công!")
+            return [...user];
         default:
             return state;
     }

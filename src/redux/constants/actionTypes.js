@@ -5,4 +5,6 @@ export const CHANGE_AMOUNT_CART = "CHANGE_AMOUNT_CART";
 
 //
 export const SAVE_USER = "SAVE_USER";
+export const DELETE_USER = "DELETE_USER";
+
 //

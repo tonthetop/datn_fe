@@ -31,12 +31,8 @@ axiosInstance.interceptors.response.use(
     (error) => {
         console.log(error);
         const statusCode = error.response.status;
-        if (statusCode === 404) {
-            toast.error("NotFound \n" + error.response.data.errors[0].message);
-            return;
-        }
         if (statusCode === 400) {
-            toast.error("Bad Request \n" + error.response.data.errors[0].message);
+            toast.error("Bad Request \\n" + error.response.data.errors[0].message);
             return;
         }
         if (statusCode === 401) {
@@ -47,8 +43,16 @@ axiosInstance.interceptors.response.use(
             toast.error("No Permission");
             return;
         }
+        if (statusCode === 404) {
+            toast.error("NotFound");
+            return;
+        }
+        if (statusCode === 409) {
+            toast.error("Conflict: " + error.response.data.errors[0].message);
+            return;
+        }
         if (statusCode === 500) {
-            toast.error("System has an error");
+            toast.error("System Error: Something error");
             return;
         }
         throw error;

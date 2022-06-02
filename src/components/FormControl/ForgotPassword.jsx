@@ -11,7 +11,7 @@ function ForgotPassword({ handleSubmit, values, errors, handleChange, handleSetF
                         </InputGroup.Text>
                         <Form.Control
                             type="text"
-                            placeholder="Email"
+                            placeholder="Nhập email khôi phục"
                             aria-describedby="inputGroupPrepend"
                             name="emailRecover"
                             value={values.emailRecover}

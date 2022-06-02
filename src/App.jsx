@@ -76,7 +76,7 @@ function App() {
             minHeight: 380,
           }}
         >
-          <ToastContainer autoClose={3000} />
+          <ToastContainer autoClose={1000} />
           <Routes>
             <Route
               path="/"
