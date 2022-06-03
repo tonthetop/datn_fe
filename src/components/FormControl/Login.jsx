@@ -3,7 +3,7 @@ function Login({ handleSubmit, values, errors, handleChange, handleSetForgotPass
     return (
         <Form className="my-5" noValidate onSubmit={handleSubmit}>
             <Row className="mb-3">
-                <Form.Group controlId="validationFormikEmail">
+                <Form.Group controlId="validationFormikEmailLogin">
                     <Form.Label>Email</Form.Label>
                     <InputGroup hasValidation>
                         <InputGroup.Text id="inputGroupPrepend">
@@ -25,7 +25,7 @@ function Login({ handleSubmit, values, errors, handleChange, handleSetForgotPass
                 </Form.Group>
             </Row>
             <Row className="mb-3">
-                <Form.Group controlId="validationFormikPassword">
+                <Form.Group controlId="validationFormikPasswordLogin">
                     <Form.Label>Password</Form.Label>
                     <InputGroup hasValidation>
                         <InputGroup.Text id="inputGroupPrepend">

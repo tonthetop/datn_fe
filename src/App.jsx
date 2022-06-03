@@ -109,6 +109,10 @@ function App() {
               element={<pages.ProductDetailPage> </pages.ProductDetailPage>}
             ></Route>
             <Route
+              path="/checkout"
+              element={<pages.CheckoutPage> </pages.CheckoutPage>}
+            ></Route>
+            <Route
               path="/not-found"
               element={<div>NOTFOUNDAPI</div>}
             ></Route>

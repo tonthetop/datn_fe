@@ -9,5 +9,9 @@ const authApi = {
         const url = `/auth/reset-account`;
         return axiosInstance.post(url, data);
     },
+    logout() {
+        const url = "/auth/logout"
+        return axiosInstance.get(url);
+    }
 };
 export { authApi };

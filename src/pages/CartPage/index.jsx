@@ -3,12 +3,23 @@ import { Table, ButtonGroup, Button, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import RowItem from './RowItem'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate, useLocation, createSearchParams } from 'react-router-dom'
 function CartPage() {
-    const carts = useSelector(state => state.carts)
+    const { user, carts } = useSelector(state => state)
     const totalBill = carts.reduce((acc, item) => {
         const priceOrigin = item.discountValue !== "" ? item.price * (1 - item.discountValue / 100) * item.amount : item.price * item.amount;
         return acc + priceOrigin
     }, 0)
+    //
+    const navigate = useNavigate()
+    const handleSubmitCheckout = () => {
+        //user tồn tại
+        if (!!user.tokenAccess) {
+            return navigate(`/checkout`);
+        }
+        return navigate(`/login-and-register?returnUrl=checkout`)
+    }
+    //
     return (
         <div className="cart-page-wrapper">
             <div className="row">
@@ -71,11 +82,9 @@ function CartPage() {
                             <tbody className="border-top-0">
                                 <tr className="text-center">
                                     <td colSpan={2}>
-                                        <Link to="/checkout" className="">
-                                            <Button className="rounded-pill text-uppercase w-75 my-3 py-2" variant="outline-dark col-md-4" >
-                                                Thanh toán
-                                            </Button>
-                                        </Link>
+                                        <Button onClick={handleSubmitCheckout} className="rounded-pill text-uppercase w-75 my-3 py-2" variant="outline-dark col-md-4" >
+                                            Thanh toán
+                                        </Button>
                                     </td>
                                 </tr>
                             </tbody>

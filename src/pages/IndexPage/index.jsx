@@ -10,7 +10,6 @@ const IndexPage = () => {
     async function fetchData() {
       const params = { limit: 8 };
       const { totalRecords, products } = await productApi.getProducts(params)
-      console.log("productCategoryPage", products)
       setProducts(products)
       setTotalRecords(totalRecords)
     }

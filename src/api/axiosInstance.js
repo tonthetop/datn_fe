@@ -11,7 +11,8 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(async(config) => {
-    const token = JSON.parse(localStorage.getItem("jwt_token"));
+    const token = JSON.parse(localStorage.getItem("user"))?.tokenAccess;
+    console.log("jwtToken", token)
     config.headers = {
         "Content-Type": "application/json",
     };

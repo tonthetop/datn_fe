@@ -33,7 +33,6 @@ const ProductCategoryPage = () => {
             params.type = categoryId
             console.log("params fetch productAPI", params)
             const { totalRecords, products } = await productApi.getProducts(params)
-            console.log("productCategoryPage", products)
             setProducts(products)
             setTotalRecords(totalRecords)
             setCurrentPage(params.page);
@@ -69,20 +68,22 @@ const ProductCategoryPage = () => {
                 </SideBar>
             </div>
             <div className="col-md-9 col-xs-12 d-flex flex-column justify-content-between">
-                <div className="mb-4  d-flex justify-content-end">
-                    <FilterOutlined style={{ opacity: "0.5" }} className="me-2 fs-5 d-flex align-items-center" />
-                    <Select defaultValue="Mặc định" value={selectedValue} style={{ width: 150 }} onChange={handleChangeSortBy}>
-                        <OptGroup label="Theo giá">
-                            <Option value="min_price">Giá: Tăng dần</Option>
-                            <Option value="max_price">Giá: Giảm dần</Option>
-                        </OptGroup>
-                        <OptGroup label="Theo ngày">
-                            <Option value="min_time">Ngày: Mới nhất</Option>
-                            <Option value="max_time">Ngày: Cũ nhất</Option>
-                        </OptGroup>
-                    </Select>
+                <div>
+                    <div className="mb-4  d-flex justify-content-end">
+                        <FilterOutlined style={{ opacity: "0.5" }} className="me-2 fs-5 d-flex align-items-center" />
+                        <Select defaultValue="Mặc định" value={selectedValue} style={{ width: 150 }} onChange={handleChangeSortBy}>
+                            <OptGroup label="Theo giá">
+                                <Option value="min_price">Giá: Tăng dần</Option>
+                                <Option value="max_price">Giá: Giảm dần</Option>
+                            </OptGroup>
+                            <OptGroup label="Theo ngày">
+                                <Option value="min_time">Ngày: Mới nhất</Option>
+                                <Option value="max_time">Ngày: Cũ nhất</Option>
+                            </OptGroup>
+                        </Select>
+                    </div>
+                    <ListProduct productList={products}></ListProduct>
                 </div>
-                <ListProduct productList={products}></ListProduct>
                 <div className="mb-4 d-flex justify-content-end">
                     <Pagination simple current={currentPage} defaultCurrent={1} onChange={handleChangePagination} pageSize={limit} total={totalRecords} responsive />
                 </div>

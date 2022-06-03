@@ -19,8 +19,12 @@ const userReducer = (state = initialState, action) => {
                 tokenAccess: action.payload.token,
             };
             localStorage.setItem("user", JSON.stringify(user));
-            toast.success("Đăng nhập thành công!")
-            return [...user];
+            toast.success("Đăng nhập thành công!");
+            return {...user };
+        case types.DELETE_USER:
+            localStorage.removeItem("user");
+            toast.success("Đã đăng xuất");
+            return {}
         default:
             return state;
     }

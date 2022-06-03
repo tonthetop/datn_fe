@@ -6,9 +6,8 @@ export const saveUser = (user) => {
         payload: user,
     };
 };
-export const deleteUser = (user) => {
+export const deleteUser = () => {
     return {
-        type: types.DELETE_USER,
-        payload: user,
+        type: types.DELETE_USER
     };
 };
