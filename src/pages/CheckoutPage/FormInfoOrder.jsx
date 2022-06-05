@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, InputNumber, Button, Select, DatePicker } from 'antd';
 import { useSelector } from 'react-redux';
 import { useForm } from 'antd/lib/form/Form';
+import axios from "axios";
 const { Option } = Select;
 const layout = {
     labelCol: {
@@ -18,13 +19,16 @@ const validateMessages = {
     },
 };
 /* eslint-enable no-template-curly-in-string */
+
+
+
 const prefixSelector = (
     <Form.Item name="prefix" noStyle>
         <Select
             style={{
                 width: 70,
             }}
-            initialvalue="84"
+            defaultValue="84"
         >
             <Option value="84">+84</Option>
             <Option value="86">+86</Option>
@@ -32,12 +36,43 @@ const prefixSelector = (
     </Form.Item>
 );
 const FormInfoOrder = () => {
+    //
+    const [provinces, setProvinces] = useState([])
+    const [addressSelect, setAddressSelect] = useState({
+        province: "",
+        districts: []
+    })
+    //
+    useEffect(() => {
+        async function fetchData() {
+            const provinces = await axios.get('https://vapi.vnappmob.com/api/province/')
+            setProvinces(provinces.data.results)
+        }
+        fetchData()
+    }, [])
+    useEffect(() => {
+        async function fetchData() {
+            const province_id = addressSelect.province.split('_')[0]
+            const districts = await axios.get(`https://vapi.vnappmob.com/api/province/district/${province_id}`)
+            setAddressSelect(prev => {
+                return { ...prev, districts: districts.data.results }
+            })
+        }
+        fetchData()
+    }, [addressSelect.province])
 
+
+    const handleChangeProvince = (value) => {
+        setAddressSelect(prev => {
+            return { ...prev, province: value }
+        })
+    }
+    //
     const [form] = useForm();
-
     const user = useSelector(state => state.user)
     const { phone, name, email } = user
     const handleValuesChange = (changedValues, allValues) => {
+        allValues.address.city=allValues.address.city.split("_").pop()
         console.log("allvalues", allValues);
     }
     form.setFieldsValue(
@@ -83,7 +118,7 @@ const FormInfoOrder = () => {
                     },
                     {
                         pattern: /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-                        message:"Phone number does not match pattern"
+                        message: "Phone number does not match pattern"
                     }
                 ]}
             >
@@ -117,9 +152,12 @@ const FormInfoOrder = () => {
                             },
                         ]}
                     >
-                        <Select placeholder="Select city" style={{ width: "100%" }}>
-                            <Option value="Zhejiang">Zhejiang</Option>
-                            <Option value="Jiangsu">Jiangsu</Option>
+                        <Select onChange={handleChangeProvince} placeholder="Select city" style={{ width: "100%" }}>
+                            {provinces.map((e, index) => {
+                                return (
+                                    <Option key={index} value={`${e.province_id}_${e.province_name}`}>{e.province_name}</Option>
+                                )
+                            })}
                         </Select>
                     </Form.Item>
                     <Form.Item
@@ -133,8 +171,11 @@ const FormInfoOrder = () => {
                         ]}
                     >
                         <Select placeholder="Select district" style={{ width: "100%" }}>
-                            <Option value="Zhejiang1">Zhejiang1</Option>
-                            <Option value="Jiangsu1">Jiangsu1</Option>
+                            {addressSelect.districts.map((e, index) => {
+                                return (
+                                    <Option key={index} value={e.district_name}>{e.district_name}</Option>
+                                )
+                            })}
                         </Select>
                     </Form.Item>
                     <Form.Item

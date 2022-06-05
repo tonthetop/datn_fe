@@ -1,3 +1,52 @@
 .ant-form-item-label {
     text-align: left;
 }
+
+.checkout-radio-wrapper {
+    border: 1px solid #cecdcd;
+    background: #fff;
+    background-clip: padding-box;
+    border-radius: 5px;
+    color: #545454;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.payment-radio {
+    padding: 1rem;
+}
+
+.checkout-radio-wrapper-last>.payment-radio:last-child {
+    border-top: 1px solid #d9d9d9;
+}
+
+.radio-button-custom>.ant-radio {
+    top: -25px;
+}
+
+.radio-button-custom-2>.ant-radio {
+    top: 1px;
+}
+
+.checkout-border-top {
+    border-top: 1px solid #d9d9d9;
+}
+
+.checkout-list-item {
+    height: 200px;
+    overflow-y: scroll;
+}
+
+.checkout-img-item:after {
+    content: attr(value);
+    font-size: 11px;
+    color: #fff;
+    background: red;
+    border-radius: 50%;
+    padding: 0px 5px;
+    position: relative;
+    left: 40px;
+    top: -12px;
+    opacity: 0.9;
+    position: absolute;
+}

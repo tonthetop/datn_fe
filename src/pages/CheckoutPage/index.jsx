@@ -1,5 +1,7 @@
 import FormInfoOrder from "./FormInfoOrder"
 import './index.css'
+import CheckoutRadio from "./CheckoutRadio"
+import OrderListItem from "./OrderListItem"
 function CheckoutPage() {
     return (
         <div className="row">
@@ -10,12 +12,12 @@ function CheckoutPage() {
                         <FormInfoOrder></FormInfoOrder>
                     </div>
                     <div className="col-xs-12 col-md-6">
-                        <h5>Vận chuyển</h5>
+                        <CheckoutRadio></CheckoutRadio>
                     </div>
                 </div>
             </div>
             <div className="col-xs-12 col-md-4">
-                form 3
+                <OrderListItem></OrderListItem>
             </div>
         </div>
     )
