@@ -2,9 +2,44 @@ import { useSelector } from "react-redux"
 import RowItemCheckout from "./RowItemCheckout"
 import { Input, Button } from 'antd'
 import { Link } from "react-router-dom"
-function OrderListItem() {
+import { toast } from "react-toastify"
+import { orderApi } from '../../api'
+function OrderListItem({ checkedDelivery, infoOrder }) {
     const { carts } = useSelector(state => state)
     const amountTotal = carts.reduce((acc, item) => acc + item.amount, 0)
+    const priceTotal = carts.reduce((acc, item) => {
+        const priceOrigin = item.discountValue !== "" ? item.price * (1 - item.discountValue / 100) * item.amount : item.price * item.amount;
+        return acc + priceOrigin
+    }, 0).toLocaleString()
+
+
+    const handleSubmit = async () => {
+        if (checkedDelivery) {
+            infoOrder.productList = carts.map(e => {
+                const discount = e.discountId !== "" ? {
+                    discountId: e.discountId,
+                    discountValue: e.discountValue,
+                    discountCode: e.discountCode,
+                } : {}
+                return {
+                    productId: e._id,
+                    size: e.size,
+                    amount: e.amount,
+                    price: e.price,
+                    ...discount
+                }
+            })
+            console.log("infoOrder", infoOrder)
+            try {
+                await orderApi.add(infoOrder)
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
+        else {
+            toast.warning("Bạn chưa điền đủ thông tin đặt hàng")
+        }
+    }
     return (
         <div className="checkout-radio-wrapper">
             <div className="checkout-list-top">
@@ -31,7 +66,7 @@ function OrderListItem() {
                                 Tạm tính
                             </span>
                             <span>
-                                5.374.920₫
+                                {priceTotal} ₫
                             </span>
                         </div>
                         <div className="d-flex justify-content-between mt-2">
@@ -49,7 +84,7 @@ function OrderListItem() {
                                 Tổng cộng
                             </span>
                             <span className="fs-5 text-primary">
-                                5.374.920₫
+                                {priceTotal} ₫
                             </span>
                         </div>
                         <div className="d-flex justify-content-between mt-2">
@@ -57,7 +92,7 @@ function OrderListItem() {
                                 <i class="fa-solid fa-angles-left me-2"></i>
                                 Quay về giỏ hàng
                             </Link>
-                            <Button type="primary">Đặt hàng</Button>
+                            <Button onClick={handleSubmit} type="primary">Đặt hàng</Button>
                         </div>
                     </div>
                 </div>

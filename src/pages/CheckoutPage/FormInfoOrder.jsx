@@ -35,7 +35,7 @@ const prefixSelector = (
         </Select>
     </Form.Item>
 );
-const FormInfoOrder = () => {
+const FormInfoOrder = ({ valueInfoOrder, setValueInfoOrder }) => {
     //
     const [provinces, setProvinces] = useState([])
     const [addressSelect, setAddressSelect] = useState({
@@ -70,18 +70,22 @@ const FormInfoOrder = () => {
     //
     const [form] = useForm();
     const user = useSelector(state => state.user)
-    const { phone, name, email } = user
+    const { _id, phone, name, email } = user
+
+    useEffect(() => {
+        form.setFieldsValue(
+            {
+                "name": valueInfoOrder.name ? valueInfoOrder.name : name,
+                "phone": valueInfoOrder.phone ? valueInfoOrder.phone : phone,
+                "email": valueInfoOrder.email ? valueInfoOrder.email : email,
+                "prefix": "84",
+            }
+        );
+    }, [])
     const handleValuesChange = (changedValues, allValues) => {
-        allValues.address.city=allValues.address.city.split("_").pop()
-        console.log("allvalues", allValues);
+        setValueInfoOrder({ ...allValues, accountId: _id })
     }
-    form.setFieldsValue(
-        {
-            "name": name,
-            "phone": phone,
-            "email": email
-        }
-    );
+
     return (
         <Form form={form} {...layout} name="nest-messages" onValuesChange={handleValuesChange} validateMessages={validateMessages}>
             <Form.Item
@@ -128,7 +132,7 @@ const FormInfoOrder = () => {
             </Form.Item>
             <Form.Item
                 label="Delivery Time"
-                name={'birth'}
+                name={'deliveryTime'}
                 rules={[
                     {
                         required: true,
@@ -139,11 +143,10 @@ const FormInfoOrder = () => {
                 }} />
             </Form.Item>
             <Form.Item
-                label="Address"
-            >
+                label="Address">
                 <Input.Group compact>
                     <Form.Item
-                        name={['address', 'city']}
+                        name={'city'}
                         noStyle
                         rules={[
                             {
@@ -161,7 +164,7 @@ const FormInfoOrder = () => {
                         </Select>
                     </Form.Item>
                     <Form.Item
-                        name={['address', 'district']}
+                        name={'district'}
                         noStyle
                         rules={[
                             {
@@ -179,7 +182,7 @@ const FormInfoOrder = () => {
                         </Select>
                     </Form.Item>
                     <Form.Item
-                        name={['address', 'street']}
+                        name={'street'}
                         noStyle
                         rules={[
                             {

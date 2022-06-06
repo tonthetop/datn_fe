@@ -1,12 +1,9 @@
 import { Radio, Input, Space } from 'antd';
 import { useState } from 'react'
 
-function CheckoutRadio() {
-    const [value, setValue] = useState(1);
-
+function CheckoutRadio({checkedDelivery,valuePayment,setValuePayment}) {
     const onChange = (e) => {
-        console.log('radio checked', e.target.value);
-        setValue(e.target.value);
+        setValuePayment(e.target.value);
     };
     return (
         <>
@@ -14,7 +11,7 @@ function CheckoutRadio() {
                 <h5>Vận chuyển</h5>
                 <div className="checkout-radio-wrapper">
                     <div className="payment-radio d-flex justify-content-between">
-                        <Radio>Giao hàng tận nơi</Radio>
+                        <Radio checked={checkedDelivery}>Giao hàng tận nơi</Radio>
                         <span> Miễn phí</span>
                     </div>
                 </div>
@@ -22,7 +19,7 @@ function CheckoutRadio() {
             <div className='mt-3'>
                 <h5>Thanh toán</h5>
 
-                <Radio.Group className="checkout-radio-wrapper checkout-radio-wrapper-last" onChange={onChange} value={value}>
+                <Radio.Group className="checkout-radio-wrapper checkout-radio-wrapper-last" onChange={onChange} value={valuePayment}>
                     <div className="payment-radio position-relative">
                         <div className="d-flex justify-content-between ">
                             <Radio value={1} className="radio-button-custom align-items-center">

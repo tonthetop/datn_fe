@@ -16,7 +16,7 @@ const orderApi = {
         return axiosInstance.post(url, data);
     },
     add(data) {
-        const url = `/order/${data.id}`;
+        const url = `/order`;
         return axiosInstance.post(url, data);
     },
     update(data) {
