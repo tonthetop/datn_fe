@@ -18,6 +18,7 @@ function FindOrderPage() {
     })
     async function fetchData(data) {
         const results = await orderApi.getOrderByEmailOrPhone(data)
+        console.log(results)
         const orderInfos = results.map(e => {
             const status = e.orderStatus[e.orderStatus.length - 1].status;
             let deliveryStatus
@@ -26,8 +27,9 @@ function FindOrderPage() {
             else if (status === "PENDING") deliveryStatus = "CHƯA VẬN CHUYỂN"
             else deliveryStatus = "ĐÃ HỦY"
             const price = e.productList.reduce((acc, item) => {
-                return acc + item.price * (1 - item.discountValue / 100) * item.amount;
-            }, 0)
+                const discountValue = item.discountValue ? item.discountValue : 0
+                return acc + item.price * (1 - discountValue / 100) * item.amount;
+            }, 0).toLocaleString()
             const amount = e.productList.reduce((acc, item) => {
                 return acc + item.amount;
             }, 0)

@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
     baseURL: BASE_URL,
 });
 
-axiosInstance.interceptors.request.use(async(config) => {
+axiosInstance.interceptors.request.use(async (config) => {
     const token = JSON.parse(localStorage.getItem("user"))?.tokenAccess;
     console.log("jwtToken", token)
     config.headers = {
@@ -33,7 +33,7 @@ axiosInstance.interceptors.response.use(
         console.log(error);
         const statusCode = error.response.status;
         if (statusCode === 400) {
-            toast.error("Bad Request \\n" + error.response.data.errors[0].message);
+            toast.error(`Bad Request: ${error.response.data.errors[0].message}`);
             return;
         }
         if (statusCode === 401) {
@@ -56,6 +56,7 @@ axiosInstance.interceptors.response.use(
             toast.error("System Error: Something error");
             return;
         }
+        return
         throw error;
     }
 );

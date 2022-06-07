@@ -101,7 +101,7 @@ function App() {
               element={<pages.CartPage> </pages.CartPage>}
             ></Route>
             <Route
-              path="/thankyou/"
+              path="/thankyou/:orderId"
               element={<pages.ThankPage> </pages.ThankPage>}
             ></Route>
             <Route

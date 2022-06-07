@@ -26,6 +26,9 @@ const cartsReducer = (state = initialState, action) => {
             localStorage.setItem("carts", JSON.stringify(state));
             toast.success("Xóa thành công");
             return [...state];
+        case types.DELETE_ALLCART:
+            localStorage.removeItem("carts");
+            return [];
         case types.CHANGE_AMOUNT_CART:
             console.log("change_amount_cart", cart)
             state[index] = {

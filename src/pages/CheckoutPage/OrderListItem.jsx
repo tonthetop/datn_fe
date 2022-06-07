@@ -1,9 +1,12 @@
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import RowItemCheckout from "./RowItemCheckout"
 import { Input, Button } from 'antd'
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
 import { orderApi } from '../../api'
+import { cartsAction } from "../../redux/actions"
+import { useNavigate } from 'react-router-dom'
+
 function OrderListItem({ checkedDelivery, infoOrder }) {
     const { carts } = useSelector(state => state)
     const amountTotal = carts.reduce((acc, item) => acc + item.amount, 0)
@@ -12,9 +15,10 @@ function OrderListItem({ checkedDelivery, infoOrder }) {
         return acc + priceOrigin
     }, 0).toLocaleString()
 
-
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const handleSubmit = async () => {
-        if (checkedDelivery) {
+        if (checkedDelivery && (!infoOrder.hasOwnProperty("bankCode") || infoOrder.bankCode !== "")) {
             infoOrder.productList = carts.map(e => {
                 const discount = e.discountId !== "" ? {
                     discountId: e.discountId,
@@ -29,11 +33,20 @@ function OrderListItem({ checkedDelivery, infoOrder }) {
                     ...discount
                 }
             })
-            console.log("infoOrder", infoOrder)
             try {
-                await orderApi.add(infoOrder)
+                if (infoOrder.orderType === "PAYONL") {
+                    const result = await orderApi.add(infoOrder)
+                    if (result) window.open(result);
+                } else {
+                    const result = await orderApi.add(infoOrder)
+                    if (result) navigate(`/thankyou/${result._id}`);
+                }
+
             } catch (error) {
-                console.log(error.message)
+            }
+            finally {
+                const action = cartsAction.deleleAllCart()
+                dispatch(action)
             }
         }
         else {

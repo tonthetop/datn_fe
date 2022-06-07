@@ -1,7 +1,44 @@
 import './index.css'
 import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { orderApi } from '../../api'
+import { useLocation, useParams, useNavigate } from 'react-router-dom'
+import RowItemCheckout from '../CheckoutPage/RowItemCheckout'
+import { Input } from 'antd'
 function ThankPage() {
+    const [order, setOrder] = useState({ accountId: {} })
+    const orderId = useParams().orderId
+    console.log(orderId)
+    useEffect(() => {
+        async function fetchData() {
+            const result = await orderApi.get(orderId)
+            console.log(result)
+
+            setOrder(result)
+        }
+        fetchData()
+    }, [])
+
+
+
+    const carts = order.productList ? order.productList.map(e => {
+        return {
+            ...e,
+            _id: e.productId._id,
+            name: e.productId.name,
+            img: e.productId.imgList[1]
+        }
+    }) : []
+    const amountTotal = carts.reduce((acc, item) => acc + item.amount, 0)
+    const priceTotal = carts.reduce((acc, item) => {
+        const discountValue =item.discountValue?item.discountValue:0
+        const priceOrigin = item.price * (1 - discountValue / 100) * item.amount;
+        return acc + priceOrigin
+    }, 0).toLocaleString()
+
+
     return (
         <div className="thank-page-wrapper container py-5">
             <div className="row">
@@ -23,16 +60,15 @@ function ThankPage() {
                         <div className="row mb-3">
                             <div className="col-md-6">
                                 <h5>Thông tin mua hàng</h5>
-                                <p>Lê Anh Tuấn</p>
-                                <p>tuanak691@gmail.com</p>
-                                <p>0905803676</p>
+                                <p>{order.accountId.name}</p>
+                                <p>{order.accountId.email}</p>
+                                <p>{order.accountId.phone}</p>
                             </div>
                             <div class="col-md-6">
                                 <h5>Địa chỉ nhận hàng</h5>
-                                <p>Lê Anh Tuấn</p>
-                                <p>7</p>
-                                <p>Thị trấn Đồi Ngô, Huyện Lục Nam, Bắc Giang</p>
-                                <p>0905803676</p>
+                                <p>{order.accountId.name}</p>
+                                <p>{order.deliveryAddress}</p>
+                                <p>{order.receivePhone}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -56,7 +92,53 @@ function ThankPage() {
                     </div>
                 </div>
                 <div className="col-xs-12 col-md-5">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos aliquam beatae maxime nostrum corrupti deleniti a labore dolorem consequuntur dolore magni tempora eius officiis ipsum, quidem repudiandae alias, fugiat at.
+                    <div className="checkout-radio-wrapper">
+                        <div className="checkout-list-top">
+                            <div className="px-3 pt-2">
+                                <h5>{`Đơn hàng (${amountTotal} Sản phẩm)`}</h5>
+                            </div>
+                            <div className="checkout-list-item checkout-border-top p-3">
+                                {carts.map((e, index) => {
+                                    return (
+                                        <div key={index}>
+                                            <RowItemCheckout product={e}></RowItemCheckout>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            <div className="checkout-border-top p-3 ">
+                                <div className="">
+                                    <div className="d-flex justify-content-between">
+                                        <span>
+                                            Tạm tính
+                                        </span>
+                                        <span>
+                                            {priceTotal} ₫
+                                        </span>
+                                    </div>
+                                    <div className="d-flex justify-content-between mt-2">
+                                        <span>
+                                            Phí vận chuyển
+                                        </span>
+                                        <span>
+                                            Miễn phí
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="checkout-border-top py-2">
+                                    <div className="d-flex justify-content-between">
+                                        <span className="fs-5">
+                                            Tổng cộng
+                                        </span>
+                                        <span className="fs-5 text-primary">
+                                            {priceTotal} ₫
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@ import { InputNumber } from 'antd'
 import { useDispatch } from 'react-redux'
 import { cartsAction } from '../../redux/actions'
 function RowItemCheckout({ product }) {
+    console.log(product)
     return (
         <>
             <div className="product align-middle mb-3">
@@ -30,7 +31,7 @@ function RowItemCheckout({ product }) {
                                 <span>Size: {product.size}</span>
                             </div>
                             <div className="product-price">
-                                {product.discountValue !== "" ?
+                                {product.discountValue && product.discountValue !== "" ?
                                     <>
                                         <span style={{
                                             fontSize: "16px",

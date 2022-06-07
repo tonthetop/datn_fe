@@ -24,6 +24,7 @@ function CheckoutPage() {
     const [valueInfoOrder, setValueInfoOrder] = useState({})
     const [valuePayment, setValuePayment] = useState(null);
     const [checkedDelivery, setCheckedDelivery] = useState(false)
+    const [bankCode, setBankCode] = useState("")
     useEffect(() => {
         if (getInfoLegit(valueInfoOrder)) { setValuePayment(1); setCheckedDelivery(true) }
         else { setValuePayment(); setCheckedDelivery(false) }
@@ -32,9 +33,9 @@ function CheckoutPage() {
     let infoOrder = getInfoLegit(valueInfoOrder)
     if (valuePayment === 1) {
         infoOrder = { ...infoOrder, orderType: "COD" }
-    }else if (valuePayment===2){
-        infoOrder = { ...infoOrder, orderType: "PAYONL" }
-    } 
+    } else if (valuePayment === 2) {
+        infoOrder = { ...infoOrder, orderType: "PAYONL", bankCode:bankCode }
+    }
     return (
         <div className="row">
             <div className="col-xs-12 col-md-8">
@@ -49,6 +50,7 @@ function CheckoutPage() {
                     <div className="col-xs-12 col-md-6">
                         <CheckoutRadio
                             checkedDelivery={checkedDelivery}
+                            setBankCode={setBankCode}
                             valuePayment={valuePayment}
                             setValuePayment={setValuePayment}
                         ></CheckoutRadio>
@@ -57,7 +59,7 @@ function CheckoutPage() {
             </div>
             <div className="col-xs-12 col-md-4">
                 <OrderListItem infoOrder={infoOrder}
-                checkedDelivery={checkedDelivery}></OrderListItem>
+                    checkedDelivery={checkedDelivery}></OrderListItem>
             </div>
         </div>
     )

@@ -18,3 +18,8 @@ export const changeAmountCart = (cart) => {
         payload: cart,
     };
 };
+export const deleleAllCart = () => {
+    return {
+        type: types.DELETE_ALLCART,
+    };
+};
