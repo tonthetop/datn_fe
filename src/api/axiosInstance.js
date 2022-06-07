@@ -34,29 +34,22 @@ axiosInstance.interceptors.response.use(
         const statusCode = error.response.status;
         if (statusCode === 400) {
             toast.error(`Bad Request: ${error.response.data.errors[0].message}`);
-            return;
         }
         if (statusCode === 401) {
             toast.error("Unauthorized");
-            return;
         }
         if (statusCode === 403) {
             toast.error("No Permission");
-            return;
         }
         if (statusCode === 404) {
             toast.error("NotFound");
-            return;
         }
         if (statusCode === 409) {
             toast.error("Conflict: " + error.response.data.errors[0].message);
-            return;
         }
         if (statusCode === 500) {
             toast.error("System Error: Something error");
-            return;
         }
-        return
         throw error;
     }
 );

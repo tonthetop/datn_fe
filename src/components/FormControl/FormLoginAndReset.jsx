@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { userAction } from '../../redux/actions';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getParamQueries } from '../../utils/getParamQueries';
+import { useLoading } from '../../hooks/useLoading';
 const schemaLogin = yup.object().shape({
     email: yup.string().required().email(),
     password: yup.string().required(),
@@ -23,13 +24,19 @@ function FormLoginAndReset() {
         setForgotPassword(prev => !prev)
     }
     //
+    const [showLoading, hideLoading] = useLoading()
+    //
     const dispatch = useDispatch()
     const handleSubmit = async (data) => {
         try {
             if (!forgotPassword) // đăng nhập
             {
+                //
+                showLoading()
                 //call Api
                 const result = await authApi.login(data)
+                // hideLoading()
+
                 //dispatch action
                 const action = userAction.saveUser(result)
                 dispatch(action)
@@ -43,7 +50,7 @@ function FormLoginAndReset() {
 
             }
         } catch (error) {
-
+            hideLoading()
         }
     }
     return (

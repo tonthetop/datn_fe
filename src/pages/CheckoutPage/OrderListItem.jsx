@@ -36,7 +36,7 @@ function OrderListItem({ checkedDelivery, infoOrder }) {
             try {
                 if (infoOrder.orderType === "PAYONL") {
                     const result = await orderApi.add(infoOrder)
-                    if (result) window.open(result);
+                    if (result) window.open(result,"_self");
                 } else {
                     const result = await orderApi.add(infoOrder)
                     if (result) navigate(`/thankyou/${result._id}`);
