@@ -45,18 +45,26 @@ const FormInfoOrder = ({ valueInfoOrder, setValueInfoOrder }) => {
     //
     useEffect(() => {
         async function fetchData() {
-            const provinces = await axios.get('https://vapi.vnappmob.com/api/province/')
-            setProvinces(provinces.data.results)
+            try {
+                const provinces = await axios.get('https://vapi.vnappmob.com/api/province/')
+                setProvinces(provinces.data.results)
+            } catch (error) {
+
+            }
         }
         fetchData()
     }, [])
     useEffect(() => {
         async function fetchData() {
-            const province_id = addressSelect.province.split('_')[0]
-            const districts = await axios.get(`https://vapi.vnappmob.com/api/province/district/${province_id}`)
-            setAddressSelect(prev => {
-                return { ...prev, districts: districts.data.results }
-            })
+            try {
+                const province_id = addressSelect.province.split('_')[0]
+                const districts = await axios.get(`https://vapi.vnappmob.com/api/province/district/${province_id}`)
+                setAddressSelect(prev => {
+                    return { ...prev, districts: districts.data.results }
+                })
+            } catch (error) {
+
+            }
         }
         fetchData()
     }, [addressSelect.province])

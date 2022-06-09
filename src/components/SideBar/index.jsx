@@ -8,15 +8,24 @@ import { useEffect } from 'react';
 import { Formik, Field, Form, useFormik } from 'formik';
 import { Buffer } from 'buffer';
 import "./index.css"
+import { useLoading } from '../../hooks/useLoading'
 
 const SideBar = ({ setCurrentPage }) => {
     const [sizes, setSizes] = useState([])
+    const [showLoading, hideLoading] = useLoading()
     useEffect(() => {
         async function fetchData() {
-            const sizes = await productApi.getSizes()
-            setSizes(sizes.map((e, index) => {
-                return { key: index, content: e, value: e }
-            }))
+            try {
+                showLoading()
+                const sizes = await productApi.getSizes()
+                hideLoading()
+                setSizes(sizes.map((e, index) => {
+                    return { key: index, content: e, value: e }
+                }))
+            } catch (error) {
+                hideLoading()
+                return
+            }
         }
         fetchData()
     }, []);

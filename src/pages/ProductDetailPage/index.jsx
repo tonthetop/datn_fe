@@ -11,6 +11,7 @@ import { ReconciliationOutlined, FormOutlined, SettingOutlined, StarOutlined } f
 import { useDispatch } from 'react-redux'
 import { cartsAction } from '../../redux/actions'
 import { toast } from 'react-toastify'
+import { useLoading } from '../../hooks/useLoading'
 const { TabPane } = Tabs;
 function ProductDetailPage() {
     const { productId } = useParams()
@@ -38,19 +39,27 @@ function ProductDetailPage() {
     };
     const handleChangeSubInfoAmount = (value) => {
         setSubInfo(prev => {
-            return { ...prev, amount:value }
+            return { ...prev, amount: value }
         })
     }
     // fetch API va setProduct
+    const [showLoading, hideLoading] = useLoading()
     useEffect(() => {
         async function fetchData() {
-            const product = await productApi.get(productId)
-            setProduct(product)
-            setSubInfo({
-                size: product.productBySize[0].size,
-                amount: 0,
-                amountOfSize: product.productBySize[0].amount
-            })
+            try {
+                showLoading()
+                const product = await productApi.get(productId)
+                hideLoading()
+                setProduct(product)
+                setSubInfo({
+                    size: product.productBySize[0].size,
+                    amount: 0,
+                    amountOfSize: product.productBySize[0].amount
+                })
+            } catch (error) {
+                hideLoading()
+                return
+            }
         }
         fetchData()
     }, [productId]);
@@ -70,7 +79,7 @@ function ProductDetailPage() {
     //dispatch action
     const dispatch = useDispatch()
     const handleAddCart = () => {
-        if (subInfo.amount===0) return toast.warning("Bạn chưa nhập số lượng!")
+        if (subInfo.amount === 0) return toast.warning("Bạn chưa nhập số lượng!")
         const cart = {
             _id: product._id,
             name: product.name,

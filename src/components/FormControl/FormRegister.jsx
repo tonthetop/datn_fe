@@ -3,6 +3,7 @@ import { Row, InputGroup, Button, Form } from 'react-bootstrap'
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { accountApi } from '../../api';
+import { useLoading } from '../../hooks/useLoading'
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 const schema = yup.object().shape({
@@ -15,12 +16,17 @@ const schema = yup.object().shape({
 });
 
 function FormRegister() {
+    const [showLoading, hideLoading] = useLoading()
+
     const handleSubmit = async (data) => {
         try {
-            const result = await accountApi.add({ ...data, role: "USER" });
+            showLoading()
+            const result = await accountApi.add({ ...data});
+            hideLoading()
             toast.success(result)
         } catch (error) {
-
+            hideLoading()
+            return
         }
     }
     return (

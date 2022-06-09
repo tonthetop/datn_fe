@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import HashLoader from "react-spinners/HashLoader";
+import SyncLoader from "react-spinners/SyncLoader";
 
 export const LoadingContext = React.createContext({});
 
@@ -29,7 +29,7 @@ const LoadingProvider = ({ children }) => {
                         justifyContent:"center",
                         alignItems:"center"
                     }} >
-                        <HashLoader color="#B92F28" loading={loading} size={80} />
+                        <SyncLoader color="#fff" loading={loading} size={10} />
                     </div>
                 </div>
             )

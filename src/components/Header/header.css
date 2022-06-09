@@ -44,7 +44,15 @@ nav.main-nav li>a {
 
 #drop-dowm-menu-user {
     left: -70px;
-    top: 38px;
+    top: 29px;
+    background-color: #494a48!important;
+    display: none;
+    padding-top: 20px;
+}
+
+.icon-profile-header:hover #drop-dowm-menu-user {
+    display: block;
+    background-color: #494a48;
 }
 
 .drop-dowm-item-user {
@@ -52,7 +60,6 @@ nav.main-nav li>a {
     display: flex;
     width: 160px;
     text-transform: capitalize;
-    box-shadow: #fff;
     background-color: #494a48;
     color: #f0f0f0;
 }

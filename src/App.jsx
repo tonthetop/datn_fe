@@ -1,6 +1,8 @@
 import { AdminRoutes } from "./routes/AdminRoutes"
 import { PublicRoutes } from "./routes/PublicRoutes";
-import { AuthRoute } from "./routes/AuthRoute"
+import { AuthAdminRoute } from "./routes/AuthAdminRoute"
+import { AuthUserRoute } from "./routes/AuthUserRoute"
+import { UserRoutes } from "./routes/UserRoutes";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,9 +17,9 @@ const App = () => {
                 <Route
                     path="/admin/*"
                     element={
-                        <AuthRoute>
+                        <AuthAdminRoute>
                             <AdminRoutes />
-                        </AuthRoute>
+                        </AuthAdminRoute>
                     }
                 />
             </Routes>

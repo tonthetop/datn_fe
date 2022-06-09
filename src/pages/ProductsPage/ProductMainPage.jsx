@@ -7,21 +7,30 @@ import { productApi } from '../../api'
 import 'antd/dist/antd.css';
 import { Pagination, Select } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
+import { useLoading } from '../../hooks/useLoading'
 const { Option, OptGroup } = Select;
 
 const ProductMainPage = () => {
   let location = useLocation();
   const [products, setProducts] = useState([])
   const [totalRecords, setTotalRecords] = useState()
-  const [currentPage, setCurrentPage] = useState()
+  const [currentPage, setCurrentPage] = useState(1)
   //Example how to use it: 
+  const [showLoading, hideLoading] = useLoading()
   useEffect(() => {
     async function fetchData() {
-      const params = getParamQueries(location);
-      const { totalRecords, products } = await productApi.getProducts(params)
-      setProducts(products)
-      setTotalRecords(totalRecords)
-      setCurrentPage(params.page);
+      try {
+        const params = getParamQueries(location);
+        showLoading()
+        const { totalRecords, products } = await productApi.getProducts(params)
+        hideLoading()
+        setProducts(products)
+        setTotalRecords(totalRecords)
+        setCurrentPage(params.page);
+      } catch (error) {
+        hideLoading()
+
+      }
 
     }
     fetchData()
@@ -51,7 +60,6 @@ const ProductMainPage = () => {
   }
   const limit = getParamQueries(location)?.hasOwnProperty('limit') ? getParamQueries(location).limit : 12
 
-  console.log("currentPage", currentPage)
   return (
     <div className="row">
       <div className="col-xs-6 col-md-3">
@@ -76,7 +84,7 @@ const ProductMainPage = () => {
           <ListProduct productList={products}></ListProduct>
         </div>
         <div className="d-flex justify-content-end">
-          <Pagination simple current={currentPage} defaultCurrent={1} onChange={handleChangePagination} pageSize={limit} total={totalRecords} responsive />
+        <Pagination simple current={currentPage} defaultCurrent={1} onChange={handleChangePagination} pageSize={limit} total={totalRecords} responsive />
         </div>
       </div>
     </div>

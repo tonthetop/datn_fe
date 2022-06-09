@@ -35,7 +35,7 @@ function FormLoginAndReset() {
                 showLoading()
                 //call Api
                 const result = await authApi.login(data)
-                // hideLoading()
+                 hideLoading()
 
                 //dispatch action
                 const action = userAction.saveUser(result)
@@ -51,6 +51,7 @@ function FormLoginAndReset() {
             }
         } catch (error) {
             hideLoading()
+            return
         }
     }
     return (

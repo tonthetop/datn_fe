@@ -7,16 +7,24 @@ import { orderApi } from '../../api'
 import { useLocation, useParams, useNavigate } from 'react-router-dom'
 import RowItemCheckout from '../CheckoutPage/RowItemCheckout'
 import { Input } from 'antd'
+import { useLoading } from '../../hooks/useLoading'
 function ThankPage() {
     const [order, setOrder] = useState({ accountId: {} })
     const orderId = useParams().orderId
     console.log(orderId)
+    const [showLoading, hideLoading] = useLoading()
     useEffect(() => {
         async function fetchData() {
-            const result = await orderApi.get(orderId)
-            console.log(result)
-
-            setOrder(result)
+            try {
+                showLoading()
+                const result = await orderApi.get(orderId)
+                hideLoading()
+                console.log(result)
+                setOrder(result)
+            } catch (error) {
+                hideLoading()
+                return
+            }
         }
         fetchData()
     }, [])
@@ -33,7 +41,7 @@ function ThankPage() {
     }) : []
     const amountTotal = carts.reduce((acc, item) => acc + item.amount, 0)
     const priceTotal = carts.reduce((acc, item) => {
-        const discountValue =item.discountValue?item.discountValue:0
+        const discountValue = item.discountValue ? item.discountValue : 0
         const priceOrigin = item.price * (1 - discountValue / 100) * item.amount;
         return acc + priceOrigin
     }, 0).toLocaleString()
@@ -50,9 +58,9 @@ function ThankPage() {
                         <div className="col-10">
                             <h5 className="">Cảm ơn bạn đã đặt hàng</h5>
                             <p className="">
-                                Một email xác nhận đã được gửi tới tuanak691@gmail.com.
+                                Một email xác nhận đã được gửi tới  <u className="fw-bold fs-6">{order.accountId.email}</u>
                                 <br />
-                                Xin vui lòng kiểm tra email của bạn
+                                Xin vui lòng kiểm tra email của bạn!
                             </p>
                         </div>
                     </div>
@@ -60,21 +68,24 @@ function ThankPage() {
                         <div className="row mb-3">
                             <div className="col-md-6">
                                 <h5>Thông tin mua hàng</h5>
-                                <p>{order.accountId.name}</p>
-                                <p>{order.accountId.email}</p>
-                                <p>{order.accountId.phone}</p>
+                                <p>Người mua: {order.accountId.name}</p>
+                                <p>Email: {order.accountId.email}</p>
+                                <p>SDT: {order.accountId.phone}</p>
                             </div>
                             <div class="col-md-6">
                                 <h5>Địa chỉ nhận hàng</h5>
-                                <p>{order.accountId.name}</p>
-                                <p>{order.deliveryAddress}</p>
-                                <p>{order.receivePhone}</p>
+                                <p>Người nhận: {order.accountId.name}</p>
+                                <p>Địa Chỉ: {order.deliveryAddress}</p>
+                                <p>SDT người nhận: {order.receivePhone}</p>
+                                <p>Ngày giao hàng: {order.deliveryTime?.split("T")[0]}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <h5>Phương thức thanh toán</h5>
-                                <p>Thanh toán khi giao hàng (COD)</p>
+                                {order.orderType === "COD" ? <p>Thanh toán khi giao hàng (COD)</p> :
+                                    <p>Thanh toán online qua VNPAY</p>}
+
                             </div>
                             <div class="col-md-6">
                                 <h5>Phương thức vận chuyển</h5>

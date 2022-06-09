@@ -6,6 +6,7 @@ import { useLocation, useParams, useNavigate, createSearchParams } from 'react-r
 import { productApi } from '../../api'
 import 'antd/dist/antd.css'; import { Pagination, Select } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
+import { useLoading } from '../../hooks/useLoading'
 const { Option, OptGroup } = Select;
 
 const ProductCategoryPage = () => {
@@ -27,15 +28,24 @@ const ProductCategoryPage = () => {
     const [products, setProducts] = useState([])
     const [totalRecords, setTotalRecords] = useState()
     //Example how to use it: 
+    const [showLoading,hideLoading]=useLoading()
     useEffect(() => {
         async function fetchData() {
-            const params = getParamQueries(location);
-            params.type = categoryId
-            console.log("params fetch productAPI", params)
-            const { totalRecords, products } = await productApi.getProducts(params)
-            setProducts(products)
-            setTotalRecords(totalRecords)
-            setCurrentPage(params.page);
+            try {
+                const params = getParamQueries(location);
+                params.type = categoryId
+                console.log("params fetch productAPI", params)
+                //
+                showLoading()
+                const { totalRecords, products } = await productApi.getProducts(params)
+                hideLoading()
+                setProducts(products)
+                setTotalRecords(totalRecords)
+                setCurrentPage(params.page);
+            } catch (error) {
+                hideLoading()
+                return
+            }
         }
         fetchData()
     }, [location]);

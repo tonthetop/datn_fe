@@ -12,6 +12,10 @@ const authApi = {
     logout() {
         const url = "/auth/logout"
         return axiosInstance.get(url);
+    },
+    loginWithGoogle(token) {
+        const url = `/auth/login-with-google/${token}`;
+        return axiosInstance.get(url);
     }
 };
 export { authApi };

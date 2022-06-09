@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 //
-
+import { AuthUserRoute } from "./AuthUserRoute"
+import { UserRoutes } from "./UserRoutes";
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../components/Header/header";
@@ -109,6 +110,14 @@ function PublicRoutes() {
               element={<pages.CheckoutPage> </pages.CheckoutPage>}
             ></Route>
             <Route
+              path="/user/*"
+              element={
+                <AuthUserRoute>
+                  <UserRoutes />
+                </AuthUserRoute>
+              }
+            />
+            <Route
               path="/not-found"
               element={<div>NOTFOUNDAPI</div>}
             ></Route>
@@ -125,4 +134,4 @@ function PublicRoutes() {
   );
 }
 
-export  {PublicRoutes};
+export { PublicRoutes };

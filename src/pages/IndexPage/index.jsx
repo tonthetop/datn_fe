@@ -2,16 +2,24 @@ import React, { useState, useEffect, useLayoutEffect } from 'react'
 import ListProduct from '../../components/ListProduct'
 import BannerProduct from '../../components/Banner/BannerProduct'
 import { productApi } from '../../api'
+import { useLoading } from '../../hooks/useLoading'
 const IndexPage = () => {
   const [products, setProducts] = useState([])
   const [totalRecords, setTotalRecords] = useState()
   //Example how to use it: 
+  const [showLoading, hideLoading] = useLoading()
   useEffect(() => {
     async function fetchData() {
-      const params = { limit: 8 };
-      const { totalRecords, products } = await productApi.getProducts(params)
-      setProducts(products)
-      setTotalRecords(totalRecords)
+      try {
+        const params = { limit: 8 };
+        showLoading()
+        const { totalRecords, products } = await productApi.getProducts(params)
+        hideLoading()
+        setProducts(products)
+        setTotalRecords(totalRecords)
+      } catch (error) {
+        hideLoading()
+      }
     }
     fetchData()
   }, []);

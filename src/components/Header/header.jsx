@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { userAction } from '../../redux/actions'
 import { authApi } from '../../api'
+import Avatar from 'react-avatar';
 function Header() {
     const [showNavbar, setShowNavbar] = useState(false)
     const carts = useSelector(state => state.carts)
@@ -51,9 +52,6 @@ function Header() {
                             <Link className="nav-link text-light header-nav-link" to="/">Trang chủ</Link>
                         </li>
                         <li className="nav-item px-3">
-                            <Link className="nav-link text-light header-nav-link" to="/introduction">Giới thiệu</Link>
-                        </li>
-                        <li className="nav-item px-3">
                             <Link className="nav-link text-light header-nav-link" to="/products">Sản phẩm</Link>
                         </li>
                         <li className="nav-item px-3">
@@ -78,22 +76,35 @@ function Header() {
                                     <i className="fa-solid fa-user"></i>
                                 </Link>
                             </div>}
-                            {isLogin && <div className="position-relative ">
-                                <div onClick={() => setDisplayDropdown(prev => !prev)} className="text-light icon-ava">
-                                    <i className="fa-solid fa-magnifying-glass"></i>
+                            {isLogin && user.role === "USER" && <div className="position-relative icon-profile-header">
+                                <div className="text-light icon-ava header-nav-icon">
+                                    <Avatar name={user.name} size="35" round={true} />
                                 </div>
-                                {displayDropdown && <div id="drop-dowm-menu-user" className="z-dropdown position-absolute fs-6 mt-2 w-40 bg-white rounded flex flex-col gap-2">
-                                    <Link className='drop-dowm-item-user' to="/admin">
+                                <div id="drop-dowm-menu-user" className="z-dropdown position-absolute fs-6 w-40 bg-white rounded flex flex-col gap-2">
+                                    <Link className='drop-dowm-item-user' to="/user/order-history">
                                         <div className="">Order History</div>
                                     </Link>
 
-                                    <Link className='drop-dowm-item-user' to="/profile">
+                                    <Link className='drop-dowm-item-user' to="/user/profile">
                                         <div className="">Profile</div>
                                     </Link>
                                     <div style={{ cursor: "pointer" }} className='drop-dowm-item-user' onClick={handleLogout}>
                                         <div className="">Log out</div>
                                     </div>
-                                </div>}
+                                </div>
+                            </div>}
+                            {isLogin && user.role === "ADMIN" && <div className="position-relative icon-profile-header">
+                                <div className="text-light icon-ava header-nav-icon">
+                                    <Avatar name={user.name} size="35" round={true} />
+                                </div>
+                                <div id="drop-dowm-menu-user" className="z-dropdown position-absolute fs-6 w-40 bg-white rounded flex flex-col gap-2">
+                                    <Link className='drop-dowm-item-user' to="/admin">
+                                        <div className="">Dashboard</div>
+                                    </Link>
+                                    <div style={{ cursor: "pointer" }} className='drop-dowm-item-user' onClick={handleLogout}>
+                                        <div className="">Log out</div>
+                                    </div>
+                                </div>
                             </div>}
                         </li>
                     </ul>
