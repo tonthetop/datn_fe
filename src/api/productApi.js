@@ -1,6 +1,10 @@
 import axiosInstance from "./axiosInstance";
 
 const productApi = {
+    getAll() {
+        const url = "/product/getAll";
+        return axiosInstance.get(url);
+    },
     getProducts(params) {
         const url = "/product";
         return axiosInstance.get(url, { params });
@@ -19,9 +23,9 @@ const productApi = {
         const url = `/product/${data.id}`;
         return axiosInstance.post(url, data);
     },
-    update(data) {
-        const url = `/product/${data.id}`;
-        return axiosInstance.patch(url, data);
+    update(id, data) {
+        const url = `/product/${id}`;
+        return axiosInstance.put(url, data);
     },
     remove(id) {
         const url = `/product/${id}`;

@@ -153,13 +153,13 @@ const AdminRoutes = () => {
                         </Routes>
                     </div>
                 </Content>
-                <Footer
+                {/* <Footer
                     style={{
                         textAlign: 'center',
                     }}
                 >
                     Shoes App ©2022
-                </Footer>
+                </Footer> */}
             </Layout>
         </Layout>
     );
