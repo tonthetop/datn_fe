@@ -60,7 +60,7 @@ function FormLoginAndReset() {
             <Formik
                 validationSchema={forgotPassword ? schemaReset : schemaLogin}
                 onSubmit={handleSubmit}
-                onChange={e => console.log(e)}
+                onChange={e => console.log({e})}
                 initialValues={{
                     email: '',
                     password: '',

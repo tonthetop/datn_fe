@@ -9,7 +9,6 @@ function FindOrderPage() {
     const [showInput, setShowInput] = useState("phone");
 
     const handleClick = (e) => {
-        console.log("ahndleClick", e.target.value)
         setShowInput(e.target.value);
     };
 

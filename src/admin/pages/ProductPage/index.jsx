@@ -8,18 +8,23 @@ import { Button, Input, Space, Table, Popconfirm, Result } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { ProductPopup, showModal } from './ProductPopup';
 import './index.css'
+import { useQuery } from 'react-query'
+import { toast } from 'react-toastify';
+
 const ProductPage = () => {
 
 
     const [dataSource, setDataSource] = useState([]);
     const [showLoading, hideLoading] = useLoading()
-    async function fetchData(params = "") {
-        try {
-            params = { ...params, limit: 10 }
-            showLoading()
-            let { products } = await productApi.getAll()
+
+    const { data,status } = useQuery(
+        'admin-products',
+        () => productApi.getAll()
+    )
+    useEffect(() => {
+        if (status === 'success') {
             hideLoading()
-            products = products.map((e, index) => {
+            let _data = data.products.map((e, index) => {
                 return {
                     _id: e._id,
                     imgList: e.imgList,
@@ -33,15 +38,15 @@ const ProductPage = () => {
                     createdAt: e.createdAt,
                 }
             })
-            setDataSource(products);
-        } catch (error) {
+            setDataSource(_data);
+        }
+        else if (status === 'loading') {
+            showLoading()
+        }
+        else {
             hideLoading()
         }
-
-    }
-    useEffect(() => {
-        fetchData()
-    }, [])
+    }, [status])
     // search Name
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
@@ -49,7 +54,6 @@ const ProductPage = () => {
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
-        console.log("selectedKeys", selectedKeys)
         setSearchText(selectedKeys[0]);
         setSearchedColumn(dataIndex);
     };
@@ -243,18 +247,18 @@ const ProductPage = () => {
             dataIndex: 'createdAt',
             key: 'createdAt',
             width: '15%',
-            render: (value) => Date(value).toString().split("GMT")[0],
+            render: (value) => new Date(value).toString().split("GMT").shift(),
             sorter: {
-                compare: (a, b) => a.createdAt - b.createdAt,
+                compare: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
                 multiple: 2,
             }
         },
         {
-            title: 'operation',
+            title: 'Operation',
             dataIndex: 'operation',
             render: (text, record) =>
                 dataSource.length >= 1 ? (
-                    <div className="cell-delete"onClick={e => e.stopPropagation()}>
+                    <div className="cell-delete" onClick={e => e.stopPropagation()}>
                         <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record)}>
                             <Button type='primary'>Delete</Button>
                         </Popconfirm>
@@ -310,12 +314,13 @@ const ProductPage = () => {
     const [productSelected, setProductSelected] = useState({})
     const [isModalVisible, setIsModalVisible] = useState(false);
     return (
-        <div>
+        <div className=''>
             <Table
+                responsive
                 bordered
                 onRow={(record, rowIndex) => {
                     return {
-                        onDoubleClick: event => {
+                        onClick: event => {
                             setProductSelected(record);
                             setIsModalVisible(true)
                         },
@@ -326,6 +331,7 @@ const ProductPage = () => {
         </div>
 
     )
+
 };
 
 export { ProductPage };

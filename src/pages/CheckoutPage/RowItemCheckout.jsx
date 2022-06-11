@@ -5,7 +5,6 @@ import { InputNumber } from 'antd'
 import { useDispatch } from 'react-redux'
 import { cartsAction } from '../../redux/actions'
 function RowItemCheckout({ product }) {
-    console.log(product)
     return (
         <>
             <div className="product align-middle mb-3">

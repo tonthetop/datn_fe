@@ -8,3 +8,17 @@
     align-items: center;
     justify-content: center;
 }
+
+tr.ant-table-row.ant-table-row-level-0:hover td {
+    background: lightblue !important;
+}
+
+tr.ant-table-row.ant-table-row-level-0:hover td:not(:last-child) {
+    cursor: pointer;
+}
+
+.ant-table-thead>tr>.ant-table-selection-column {
+    width: 50px;
+    display: flex;
+    justify-content: center;
+}

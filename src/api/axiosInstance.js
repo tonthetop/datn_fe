@@ -12,7 +12,6 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(async (config) => {
     const token = JSON.parse(localStorage.getItem("user"))?.tokenAccess;
-    console.log("jwtToken", token)
     config.headers = {
         "Content-Type": "application/json",
     };
@@ -30,7 +29,6 @@ axiosInstance.interceptors.response.use(
         return response;
     },
     (error) => {
-        console.log(error);
         const statusCode = error.response.status;
         if (statusCode === 400) {
             toast.error(`Bad Request: ${error.response.data.errors[0].message}`);

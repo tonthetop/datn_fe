@@ -11,7 +11,6 @@ import { useLoading } from '../../hooks/useLoading'
 function ThankPage() {
     const [order, setOrder] = useState({ accountId: {} })
     const orderId = useParams().orderId
-    console.log(orderId)
     const [showLoading, hideLoading] = useLoading()
     useEffect(() => {
         async function fetchData() {
@@ -19,7 +18,6 @@ function ThankPage() {
                 showLoading()
                 const result = await orderApi.get(orderId)
                 hideLoading()
-                console.log(result)
                 setOrder(result)
             } catch (error) {
                 hideLoading()

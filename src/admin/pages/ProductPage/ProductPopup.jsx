@@ -37,17 +37,15 @@ const ProductPopup = ({ setDataSource, isModalVisible, setIsModalVisible, produc
     //
     const [showLoading, hideLoading] = useLoading()
     const handleSubmit = async (values) => {
-        console.log(values)
         if (values) {
             try {
-                console.log(values)
+                console.log({values})
                 //
                 const { name, brand, productType, price, imgList, description, discountIds, productBySize } = values
                 setDataSource(prev => {
                     let index = prev.findIndex(
                         (e) => e._id === product._id
                     );
-                    console.log("index", index)
                     prev[index] = {
                         ...prev[index],
                         price: price,

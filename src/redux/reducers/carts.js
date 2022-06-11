@@ -30,7 +30,6 @@ const cartsReducer = (state = initialState, action) => {
             localStorage.removeItem("carts");
             return [];
         case types.CHANGE_AMOUNT_CART:
-            console.log("change_amount_cart", cart)
             state[index] = {
                 ...state[index],
                 amount: cart.amount,

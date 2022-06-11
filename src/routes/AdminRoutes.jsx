@@ -26,8 +26,6 @@ const AdminRoutes = () => {
         return pathList[item]
     })
     const defaultSelectedKey = [...pathName]?.pop()?.value || 1
-
-    console.log(defaultSelectedKey)
     const [collapsed, setCollapsed] = useState(false);
     return (
         <Layout
@@ -119,7 +117,7 @@ const AdminRoutes = () => {
                         })}
                     </Breadcrumb>
                     <div
-                        className="site-layout-background"
+                        className="site-layout-background container"
                         style={{
                             padding: 24,
                             minHeight: 360,

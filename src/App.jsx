@@ -7,22 +7,27 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import './index.css';
+import { QueryClientProvider, QueryClient } from 'react-query'
 
 const App = () => {
+    const queryClient = new QueryClient()
     return (
         <>
             <ToastContainer autoClose={1000} />
-            <Routes>
-                <Route path="/*" element={<PublicRoutes />} />
-                <Route
-                    path="/admin/*"
-                    element={
-                        <AuthAdminRoute>
-                            <AdminRoutes />
-                        </AuthAdminRoute>
-                    }
-                />
-            </Routes>
+            <QueryClientProvider client={queryClient}>
+                <Routes>
+                    <Route path="/*" element={<PublicRoutes />} />
+                    <Route
+                        path="/admin/*"
+                        element={
+                            <AuthAdminRoute>
+                                <AdminRoutes />
+                            </AuthAdminRoute>
+                        }
+                    />
+                </Routes>
+            </QueryClientProvider>
+
         </>
     );
 };

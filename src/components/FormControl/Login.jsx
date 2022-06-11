@@ -15,7 +15,7 @@ function Login({ handleSubmit, values, errors, handleChange, handleSetForgotPass
     const dispatch = useDispatch()
     const handleSuccessLogin = async (credentialResponse) => {
         try {
-            console.log(credentialResponse)
+            console.log({credentialResponse})
             showLoading()
             //call Api
             const result = await authApi.loginWithGoogle(credentialResponse.credential)
