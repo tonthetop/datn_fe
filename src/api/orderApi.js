@@ -1,6 +1,10 @@
 import axiosInstance from "./axiosInstance";
 
 const orderApi = {
+    getOdersDeleted(params) {
+        const url = "/order/deleted";
+        return axiosInstance.get(url, { params });
+    },
     getOders(params) {
         const url = "/order";
         return axiosInstance.get(url, { params });

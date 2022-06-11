@@ -1,6 +1,10 @@
 import axiosInstance from "./axiosInstance";
 
 const productApi = {
+    getProductsDeleted() {
+        const url = "/product/deleted";
+        return axiosInstance.get(url);
+    },
     getAll() {
         const url = "/product/getAll";
         return axiosInstance.get(url);
