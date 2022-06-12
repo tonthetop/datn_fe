@@ -33,21 +33,22 @@ axiosInstance.interceptors.response.use(
         if (statusCode === 400) {
             toast.error(`Bad Request: ${error.response.data.errors[0].message}`);
         }
-        if (statusCode === 401) {
+        else if (statusCode === 401) {
             toast.error("Unauthorized");
         }
-        if (statusCode === 403) {
+        else if (statusCode === 403) {
             toast.error("No Permission");
         }
-        if (statusCode === 404) {
+        else if (statusCode === 404) {
             toast.error("NotFound");
         }
-        if (statusCode === 409) {
+        else if (statusCode === 409) {
             toast.error("Conflict: " + error.response.data.errors[0].message);
         }
-        if (statusCode === 500) {
-            toast.error("System Error: Something error");
+        else if (statusCode === 500) {
+            toast.error("Server Error: Something error");
         }
+        else toast.error("Server Error: "+ error.message);
         throw error;
     }
 );

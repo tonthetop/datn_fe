@@ -31,9 +31,13 @@ const productApi = {
         const url = `/product/${id}`;
         return axiosInstance.put(url, data);
     },
-    remove(id) {
+    delete(id) {
         const url = `/product/${id}`;
         return axiosInstance.delete(url);
+    },
+    restore(id) {
+        const url = `/product/restore/${id}`;
+        return axiosInstance.get(url);
     },
 };
 export { productApi };

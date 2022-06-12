@@ -1,41 +1,22 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
-import { orderApi } from '../../../api';
 import { useLoading } from '../../../hooks/useLoading';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Popconfirm } from 'antd';
 import Highlighter from 'react-highlight-words';
-import { OrderPopup, showModal } from './OrderPopup';
 import './index.css'
-import { useQuery } from 'react-query'
-import { toast } from 'react-toastify';
-import { getTotalPrice } from '../../../utils/getTotalPrice';
-import { useAdminOrderDeteted } from '../../../hooks/useAdminOrder';
+import { useAdminOrderDeteted, useRestoreAdminOrder } from '../../../hooks/useAdminOrder';
 
 const OrderDeleted = () => {
 
 
-    const [dataSource, setDataSource] = useState([]);
     const [showLoading, hideLoading] = useLoading()
     //
-
     let { data, status } = useAdminOrderDeteted()
     useEffect(() => {
         if (status === 'success') {
             hideLoading()
-            let _data = data.orders?.map((e, index) => {
-                return {
-                    key: index,
-                    currentStatus: e.orderStatus.pop()?.status,
-                    clientName: e.accountId.name,
-                    clientPhone: e.accountId.phone || "",
-                    totalPrice: getTotalPrice(e.productList),
-                    clientEmail: e.accountId.email.split('@').join(' @'),
-                    ...e
-                }
-            })
-            setDataSource(_data);
         }
         else if (status === 'loading') {
             showLoading()
@@ -147,18 +128,12 @@ const OrderDeleted = () => {
             ),
     });
     //
-    const handleDelete = async (record) => {
-        const _dataSource = [...dataSource]
-        setDataSource(_dataSource.filter(item => item.key !== record.key));
-        //
-        try {
-            showLoading()
-            const result = await orderApi.remove(record._id)
-            hideLoading()
-        } catch (error) {
-            hideLoading()
-        }
-        //
+    const handleRemove = async (record) => {
+    }
+    //
+    const {mutate:restoreAdminOrder}=useRestoreAdminOrder()
+    const handleRestore = async (record) => {
+        restoreAdminOrder(record)
     }
     // Column
     const columns = [
@@ -265,14 +240,12 @@ const OrderDeleted = () => {
             title: 'Operation',
             dataIndex: 'operation',
             render: (text, record) =>
-                dataSource.length >= 1 ? (
+                data.length >= 1 ? (
                     <div className="cell-delete d-flex flex-column" style={{ rowGap: "10%" }} onClick={e => e.stopPropagation()}>
-                        <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record)}>
+                        <Popconfirm title="Sure to remove?" onConfirm={() => handleRemove(record)}>
                             <Button type='danger'>Remove</Button>
                         </Popconfirm>
-                        <Popconfirm title="Sure to delete?" >
-                            <Button type='primary'>Recover</Button>
-                        </Popconfirm>
+                        <Button type='primary' onClick={() => handleRestore(record)}>Restore</Button>
                     </div>
                 ) : null,
         }, ,
@@ -336,9 +309,8 @@ const OrderDeleted = () => {
                             setIsModalVisible(true)
                         },
                     };
-                }} rowSelection={rowSelection} columns={columns} dataSource={dataSource}
+                }} rowSelection={rowSelection} columns={columns} dataSource={data}
             />
-            {/* <OrderPopup setDataSource={setDataSource} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} order={orderSelected}></OrderPopup> */}
         </>
 
     )

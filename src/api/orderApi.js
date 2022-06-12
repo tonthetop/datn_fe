@@ -27,9 +27,13 @@ const orderApi = {
         const url = `/order/${data.id}`;
         return axiosInstance.patch(url, data);
     },
-    remove(id) {
+    delete(id) {
         const url = `/order/${id}`;
         return axiosInstance.delete(url);
+    },
+    restore(id) {
+        const url = `/order/restore/${id}`;
+        return axiosInstance.get(url);
     },
 };
 export { orderApi };

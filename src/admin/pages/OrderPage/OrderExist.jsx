@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
-import { orderApi } from '../../../api';
 import { useLoading } from '../../../hooks/useLoading';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Popconfirm } from 'antd';
 import Highlighter from 'react-highlight-words';
-import { OrderPopup, showModal } from './OrderPopup';
 import './index.css'
-import { useQuery } from 'react-query'
-import { toast } from 'react-toastify';
-import { getTotalPrice } from '../../../utils/getTotalPrice';
-import { useAdminOrderExist } from '../../../hooks/useAdminOrder';
+import { useAdminOrderExist, useDeleteAdminOrder } from '../../../hooks/useAdminOrder';
 
 const OrderExist = () => {
 
 
-    const [dataSource, setDataSource] = useState([]);
     const [showLoading, hideLoading] = useLoading()
     //
 
@@ -24,18 +18,6 @@ const OrderExist = () => {
     useEffect(() => {
         if (status === 'success') {
             hideLoading()
-            let _data = data.orders?.map((e, index) => {
-                return {
-                    key: index,
-                    currentStatus: e.orderStatus.pop()?.status,
-                    clientName: e.accountId.name,
-                    clientPhone: e.accountId.phone || "",
-                    totalPrice: getTotalPrice(e.productList),
-                    clientEmail: e.accountId.email.split('@').join(' @'),
-                    ...e
-                }
-            })
-            setDataSource(_data);
         }
         else if (status === 'loading') {
             showLoading()
@@ -147,18 +129,10 @@ const OrderExist = () => {
             ),
     });
     //
+    const {mutate:deleteAdminOrder}=useDeleteAdminOrder()
+
     const handleDelete = async (record) => {
-        const _dataSource = [...dataSource]
-        setDataSource(_dataSource.filter(item => item.key !== record.key));
-        //
-        try {
-            showLoading()
-            const result = await orderApi.remove(record._id)
-            hideLoading()
-        } catch (error) {
-            hideLoading()
-        }
-        //
+        deleteAdminOrder(record)
     }
     // Column
     const columns = [
@@ -265,7 +239,7 @@ const OrderExist = () => {
             title: 'Operation',
             dataIndex: 'operation',
             render: (text, record) =>
-                dataSource.length >= 1 ? (
+                data.length >= 1 ? (
                     <div className="cell-delete" onClick={e => e.stopPropagation()}>
                         <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record)}>
                             <Button type='danger'>Delete</Button>
@@ -333,7 +307,7 @@ const OrderExist = () => {
                             setIsModalVisible(true)
                         },
                     };
-                }} rowSelection={rowSelection} columns={columns} dataSource={dataSource}
+                }} rowSelection={rowSelection} columns={columns} dataSource={data}
             />
             {/* <OrderPopup setDataSource={setDataSource} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} order={orderSelected}></OrderPopup> */}
         </>

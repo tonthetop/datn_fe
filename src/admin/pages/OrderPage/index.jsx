@@ -13,7 +13,7 @@ function OrderPage() {
     return (
         <>
             <Switch checkedChildren="Existing" size="default" onChange={handleSwitch} unCheckedChildren="Deleted" defaultChecked />
-            {query?<OrderExist></OrderExist>:<OrderDeleted/>}
+            {query ? <OrderExist></OrderExist> : <OrderDeleted />}
         </>
     )
 }

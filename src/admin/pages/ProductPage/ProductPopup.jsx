@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback,useMemo } from 'react';
-import { Form, Input, InputNumber, Button, Select, DatePicker, Modal } from 'antd';
+import React, { useMemo } from 'react';
+import { Form, Input, Select, Modal } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import axios from "axios";
 import { useLoading } from '../../../hooks/useLoading';
-import { productApi } from '../../../api';
+import { useUpdateAdminProduct } from '../../../hooks/useAdminProduct';
 const { Option } = Select;
 const layout = {
     labelCol: {
@@ -14,13 +13,14 @@ const layout = {
 
 
 
-const ProductPopup = ({ setDataSource, isModalVisible, setIsModalVisible, product }) => {
+const ProductPopup = ({ isModalVisible, setIsModalVisible, product }) => {
 
     //
     const validateMessages = {
         required: '${label} is required!'
     };
     const [form] = useForm();
+
     useMemo(() => {
         form.setFieldsValue(
             {
@@ -28,40 +28,16 @@ const ProductPopup = ({ setDataSource, isModalVisible, setIsModalVisible, produc
                 "price": product.price
             }
         );
-    }, [product])
+    },[product])
 
     //
     const handleCancel = () => {
         setIsModalVisible(false);
     };
-    //
-    const [showLoading, hideLoading] = useLoading()
+    const { mutate: updateAdminProduct } = useUpdateAdminProduct()
     const handleSubmit = async (values) => {
         if (values) {
-            try {
-                console.log({values})
-                //
-                const { name, brand, productType, price, imgList, description, discountIds, productBySize } = values
-                setDataSource(prev => {
-                    let index = prev.findIndex(
-                        (e) => e._id === product._id
-                    );
-                    prev[index] = {
-                        ...prev[index],
-                        price: price,
-                        name: name
-                    };
-                    return [...prev]
-                })
-                // call api
-                showLoading()
-                await productApi.update(product._id, { name, price })
-                hideLoading()
-                //
-            } catch (error) {
-                hideLoading()
-            }
-
+            updateAdminProduct({ product, values })
             setIsModalVisible(false)
         };
     };

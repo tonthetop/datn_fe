@@ -1,42 +1,23 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
-import { productApi } from '../../../api';
 import { useLoading } from '../../../hooks/useLoading';
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Popconfirm, Result } from 'antd';
+import { Button, Input, Space, Table, Popconfirm } from 'antd';
 import Highlighter from 'react-highlight-words';
-import { ProductPopup } from './ProductPopup';
 import './index.css'
-import { useQuery } from 'react-query'
-import { toast } from 'react-toastify';
-import { useAdminProductDeteted } from '../../../hooks/useAdminProduct';
+import { useAdminProductDeteted, useRestoreAdminProduct } from '../../../hooks/useAdminProduct';
 
 const ProductDeleted = () => {
 
 
-    const [dataSource, setDataSource] = useState([]);
     const [showLoading, hideLoading] = useLoading()
 
     const { data, status } = useAdminProductDeteted()
+
     useEffect(() => {
         if (status === 'success') {
             hideLoading()
-            let _data = data.products.map((e, index) => {
-                return {
-                    _id: e._id,
-                    imgList: e.imgList,
-                    key: index,
-                    name: e.name,
-                    brand: e.brand,
-                    productType: e.productType,
-                    image: (<img style={{ height: "50px", width: "70px", objectFit: "cover" }} src={e.imgList[1]}></img>),
-                    price: e.price,
-                    discount: e.discountIds.length > 0 ? e.discountIds[0].value : 0,
-                    createdAt: e.createdAt,
-                }
-            })
-            setDataSource(_data);
         }
         else if (status === 'loading') {
             showLoading()
@@ -145,21 +126,14 @@ const ProductDeleted = () => {
                 text
             ),
     });
-    //
-    const handleDelete = async (record) => {
-        const _dataSource = [...dataSource]
-        setDataSource(_dataSource.filter(item => item.key !== record.key));
-        //
-        try {
-            showLoading()
-            const result = await productApi.remove(record._id)
-            hideLoading()
-        } catch (error) {
-            hideLoading()
-        }
-        //
-    }
     // Column
+    const handleRemove = () => {
+
+    }
+    const { mutate: restoreAdminProduct } = useRestoreAdminProduct()
+    const handleRestore = (record) => {
+        restoreAdminProduct(record)
+    }
     const columns = [
         {
             title: 'Name',
@@ -255,15 +229,13 @@ const ProductDeleted = () => {
             title: 'Operation',
             dataIndex: 'operation',
             render: (text, record) =>
-                dataSource.length >= 1 ? (
+                data.length >= 1 ? (
                     <>
-                        <div className="cell-delete d-flex flex-column" style={{rowGap:"10%"}} onClick={e => e.stopPropagation()}>
-                            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record)}>
+                        <div className="cell-delete d-flex flex-column" style={{ rowGap: "10%" }} onClick={e => e.stopPropagation()}>
+                            <Popconfirm title="Sure to Remove?" onConfirm={() => handleRemove(record)}>
                                 <Button type='danger'>Remove</Button>
                             </Popconfirm>
-                            <Popconfirm title="Sure to delete?" >
-                                <Button type='primary'>Recover</Button>
-                            </Popconfirm>
+                            <Button type='primary' onClick={() => handleRestore(record)}>Restore</Button>
                         </div>
                     </>
                 ) : null,
@@ -328,9 +300,8 @@ const ProductDeleted = () => {
                             setIsModalVisible(true)
                         },
                     };
-                }} rowSelection={rowSelection} columns={columns} dataSource={dataSource}
+                }} rowSelection={rowSelection} columns={columns} dataSource={data}
             />
-            <ProductPopup setDataSource={setDataSource} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} product={productSelected}></ProductPopup>
         </div>
 
     )
