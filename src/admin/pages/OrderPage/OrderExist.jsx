@@ -7,6 +7,7 @@ import { Button, Input, Space, Table, Popconfirm } from 'antd';
 import Highlighter from 'react-highlight-words';
 import './index.css'
 import { useAdminOrderExist, useDeleteAdminOrder } from '../../../hooks/useAdminOrder';
+import { OrderPopup } from './OrderPopup';
 
 const OrderExist = () => {
 
@@ -309,7 +310,7 @@ const OrderExist = () => {
                     };
                 }} rowSelection={rowSelection} columns={columns} dataSource={data}
             />
-            {/* <OrderPopup setDataSource={setDataSource} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} order={orderSelected}></OrderPopup> */}
+            <OrderPopup isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} order={orderSelected}></OrderPopup>
         </>
 
     )

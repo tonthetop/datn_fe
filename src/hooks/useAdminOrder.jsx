@@ -9,7 +9,8 @@ export const useAdminOrderExist = () => {
             let _data = data.map((e, index) => {
                 return {
                     key: index,
-                    currentStatus: e.orderStatus.pop()?.status,
+                    currentStatus:[...e.orderStatus].pop()?.status,
+                    currentStatusDescription:[...e.orderStatus].pop()?.description,
                     clientName: e.accountId.name,
                     clientPhone: e.accountId.phone || "",
                     totalPrice: getTotalPrice(e.productList),
@@ -41,17 +42,18 @@ export const useAdminOrderDeteted = () => {
 };
 export const useUpdateAdminOrder = () => {
     const queryClient = useQueryClient();
-    return useMutation(data => productApi.update(data.product._id, data.values), {
+    return useMutation(data => orderApi.update(data.order._id, data.values), {
         onMutate: async (data) => {
+            console.log({ data })
             // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
             await queryClient.cancelQueries('admin-product-exist')
             // Snapshot the previous value
-            const previousTodos = queryClient.getQueryData('admin-product-exist')
+            const previousTodos = queryClient.getQueryData('admin-order-exist')
 
             // update 
-            queryClient.setQueryData('admin-product-exist', old => {
+            queryClient.setQueryData('admin-order-exist', old => {
                 let index = old.findIndex(
-                    (e) => e._id === data.product._id
+                    (e) => e._id === data.order._id
                 );
                 old[index] = {
                     ...old[index],
@@ -65,11 +67,11 @@ export const useUpdateAdminOrder = () => {
         },
         // If the mutation fails, use the context returned from onMutate to roll back
         onError: (err, record, context) => {
-            queryClient.setQueryData('admin-product-exist', context.previousTodos)
+            queryClient.setQueryData('admin-order-exist', context.previousTodos)
         },
         // Always refetch after error or success:
         onSettled: () => {
-            queryClient.invalidateQueries('admin-product-exist')
+            queryClient.invalidateQueries('admin-order-exist')
         },
     })
 };

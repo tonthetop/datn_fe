@@ -55,7 +55,7 @@ export const useUpdateAdminProduct = () => {
             // Snapshot the previous value
             const previousTodos = queryClient.getQueryData('admin-product-exist')
 
-            // update 
+            // update UI
             queryClient.setQueryData('admin-product-exist', old => {
                 let index = old.findIndex(
                     (e) => e._id === data.product._id
@@ -71,7 +71,7 @@ export const useUpdateAdminProduct = () => {
             return { previousTodos }
         },
         // If the mutation fails, use the context returned from onMutate to roll back
-        onError: (err, record, context) => {
+        onError: (err, data, context) => {
             queryClient.setQueryData('admin-product-exist', context.previousTodos)
         },
         // Always refetch after error or success:

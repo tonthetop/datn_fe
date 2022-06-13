@@ -1,9 +1,12 @@
-import React, { useState, useEffect, useCallback,useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Form, Input, InputNumber, Button, Select, DatePicker, Modal } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import axios from "axios";
 import { useLoading } from '../../../hooks/useLoading';
-import { productApi } from '../../../api';
+import { orderApi } from '../../../api';
+import moment from 'moment';
+import { useUpdateAdminOrder } from '../../../hooks/useAdminOrder';
+import { toast } from 'react-toastify';
 const { Option } = Select;
 const layout = {
     labelCol: {
@@ -13,76 +16,118 @@ const layout = {
 /* eslint-disable no-template-curly-in-string */
 
 
-
-const ProductPopup = ({ setDataSource, isModalVisible, setIsModalVisible, product }) => {
-
-    //
+const statusDescription = [
+    { key: "PENDING", value: "Đơn hàng đang chờ xác nhận" },
+    { key: "ACCEPTED", value: "Đơn hàng đã được chấp nhận" },
+    { key: "SUCCESS", value: "Đơn hàng đã giao thành công" },
+    { key: "CANCEL", value: "Đơn hàng đã hủy" },
+]
+const OrderPopup = ({ setDataSource, isModalVisible, setIsModalVisible, order }) => {    //
     const validateMessages = {
         required: '${label} is required!'
     };
     const [form] = useForm();
-    useMemo(() => {
-        form.setFieldsValue(
-            {
-                "name": product.name,
-                "price": product.price
-            }
-        );
-    }, [product])
+    form.setFieldsValue(
+        {
+            "deliveryAddress": order.deliveryAddress,
+            "currentStatus": order.currentStatus,
+            "description": order.description,
+            "receivePhone": order.receivePhone,
+            "currentStatusDescription": order.currentStatusDescription
+
+        }
+    );
 
     //
     const handleCancel = () => {
         setIsModalVisible(false);
     };
     //
-    const [showLoading, hideLoading] = useLoading()
+    const { mutate: updateAdminOrder } = useUpdateAdminOrder()
     const handleSubmit = async (values) => {
         if (values) {
-            try {
-                console.log({values})
-                //
-                const { name, brand, productType, price, imgList, description, discountIds, productBySize } = values
-                setDataSource(prev => {
-                    let index = prev.findIndex(
-                        (e) => e._id === product._id
-                    );
-                    prev[index] = {
-                        ...prev[index],
-                        price: price,
-                        name: name
-                    };
-                    return [...prev]
-                })
-                // call api
-                showLoading()
-                await productApi.update(product._id, { name, price })
-                hideLoading()
-                //
-            } catch (error) {
-                hideLoading()
-            }
+            const indexStatus = order.orderStatus.findIndex(e => e.status === values.currentStatus)
+            if (indexStatus === -1) {
+                const orderStatus = [...order.orderStatus]
+                orderStatus.push({ status: values.currentStatus, description: values.currentStatusDescription })
+                values.orderStatus = orderStatus;
+                delete values.currentStatus
+                delete values.currentStatusDescription
+                values.deliveryTime = values.deliveryTime?new Date(values.deliveryTime):new Date(order.deliveryTime)
+                console.log("values affter:", values)
+                updateAdminOrder({ order, values })
+                setIsModalVisible(false)
 
-            setIsModalVisible(false)
+            }
+            else if (indexStatus === order.orderStatus.length - 1) {
+                const orderStatus = [...order.orderStatus]
+                const x = orderStatus.find(e => e.status === values.currentStatus)
+                x.description = values.currentStatusDescription
+                values.orderStatus = orderStatus;
+                delete values.currentStatus
+                delete values.currentStatusDescription
+                values.deliveryTime = values.deliveryTime?new Date(values.deliveryTime):new Date(order.deliveryTime)
+                console.log("values affter:", values)
+                updateAdminOrder({ order, values })
+                setIsModalVisible(false)
+            }
+            else toast.warning("Order Status not permission")
         };
     };
+    //
+    const handleChangeOrderStatus = (key) => {
+        console.log(key)
+        console.log(statusDescription.find(e => e.key === key).value)
+        form.setFieldsValue({
+            "currentStatusDescription": statusDescription.find(e => e.key === key).value
+        })
+    }
     return (
         <>
             <Modal title="Basic Modal" visible={isModalVisible} onOk={() => form.submit()} onCancel={handleCancel}>
                 <Form form={form} {...layout} name="nest-messages" onFinish={handleSubmit} validateMessages={validateMessages}>
                     <Form.Item
-                        name={'name'}
-                        label="ProductName"
+                        label="Client Name"
+                    >
+                        <span
+                        >{order.clientName}</span>
+                    </Form.Item>
+                    <Form.Item
+                        label="Client Email"
+                    >
+                        <span
+                        >{order.clientEmail}</span>
+                    </Form.Item>
+                    <Form.Item
+                        label="Total Price"
+                    >
+                        <span
+                        >{order.totalPrice?.toLocaleString() + " đ"}</span>
+                    </Form.Item>
+                    <Form.Item
+                        name={'deliveryAddress'}
+                        label="Delivery Address"
                         rules={[
                             {
                                 required: true,
-                            },
+                            }
                         ]}
                     >
                         <Input />
                     </Form.Item>
+
                     <Form.Item
-                        name={'price'}
-                        label="Price"
+                        name={'deliveryTime'}
+                        label="Delivery Time"
+                        className='order-required-label'
+                    >
+                        <DatePicker defaultValue={moment(order.deliveryTime)} style={{
+                            width: '100%',
+                        }} />
+                    </Form.Item>
+                    <Form.Item
+                        name={'receivePhone'}
+                        label="Receiver Phone"
                         rules={[
                             {
                                 required: true,
@@ -93,13 +138,50 @@ const ProductPopup = ({ setDataSource, isModalVisible, setIsModalVisible, produc
                             }
                         ]}
                     >
-                        <Input />
+                        <Input></Input>
                     </Form.Item>
-
+                    <Form.Item
+                        label="Order Status"
+                        className='order-status-label order-required-label'
+                    >
+                        <Input.Group compact>
+                            <Form.Item
+                                name={'currentStatus'}>
+                                <Select onChange={handleChangeOrderStatus} style={{ width: 105 }}>
+                                    <Option key={1} value="PENDING"> PENDING</Option>
+                                    <Option key={2} value="ACCEPTED"> ACCEPTED</Option>
+                                    <Option key={3} value="SUCCESS"> SUCCESS</Option>
+                                    <Option key={4} value="CANCEL"> CANCEL</Option>
+                                </Select>
+                            </Form.Item>
+                            <Form.Item
+                                name={'currentStatusDescription'}
+                                style={{ width: 210 }}
+                                rules={[
+                                    {
+                                        required: true,
+                                    },
+                                ]}
+                            >
+                                <Input placeholder='Status Description'></Input>
+                            </Form.Item>
+                        </Input.Group>
+                    </Form.Item>
+                    <Form.Item
+                        name={'description'}
+                        label="Description"
+                        rules={[
+                            {
+                                required: true,
+                            }
+                        ]}
+                    >
+                        <Input.TextArea />
+                    </Form.Item>
                 </Form>
             </Modal>
         </>
     );
 };
 
-export { ProductPopup };
+export { OrderPopup };

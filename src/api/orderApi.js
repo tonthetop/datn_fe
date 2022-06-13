@@ -23,9 +23,9 @@ const orderApi = {
         const url = `/order`;
         return axiosInstance.post(url, data);
     },
-    update(data) {
-        const url = `/order/${data.id}`;
-        return axiosInstance.patch(url, data);
+    update(id, data) {
+        const url = `/order/${id}`;
+        return axiosInstance.put(url, data);
     },
     delete(id) {
         const url = `/order/${id}`;

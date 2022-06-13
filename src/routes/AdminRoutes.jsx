@@ -117,11 +117,12 @@ const AdminRoutes = () => {
                         })}
                     </Breadcrumb>
                     <div
-                        className="site-layout-background container"
+                        className="site-layout-background"
                         style={{
-                            padding: 24,
+                            padding: 12,
                             minHeight: 360,
-                            backgroundColor: "#fff"
+                            backgroundColor: "#fff",
+                            display: "contents"
                         }}
                     >
                         <Routes>

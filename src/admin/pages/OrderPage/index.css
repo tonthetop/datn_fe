@@ -22,3 +22,17 @@ tr.ant-table-row.ant-table-row-level-0:hover td:not(:last-child) {
     display: flex;
     justify-content: center;
 }
+
+.order-status-label {
+    margin-bottom: 0px!important
+}
+
+.order-required-label>div>label:before {
+    display: inline-block;
+    margin-right: 4px;
+    color: #ff4d4f;
+    font-size: 14px;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    content: "*";
+}
