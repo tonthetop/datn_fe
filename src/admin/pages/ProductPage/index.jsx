@@ -1,7 +1,9 @@
-import { Switch } from 'antd';
-import { useState } from 'react';
+import { Switch, Button } from 'antd';
+import React, { useState } from 'react';
 import { ProductDeleted } from './ProductDeleted';
 import { ProductExist } from './ProductExist';
+import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import { CSVLink } from 'react-csv';
 
 function ProductPage() {
     const [query, setQuery] = useState(true)
@@ -12,8 +14,8 @@ function ProductPage() {
     }
     return (
         <>
-            <Switch checkedChildren="Existing" size="default" onChange={handleSwitch} unCheckedChildren="Deleted" defaultChecked />
-            {query ? <ProductExist></ProductExist> : <ProductDeleted />}
+            <Switch className='mb-4' checkedChildren="Existing" size="default" onChange={handleSwitch} unCheckedChildren="Deleted" defaultChecked />
+            {query ? <ProductExist ></ProductExist> : <ProductDeleted />}
         </>
     )
 }

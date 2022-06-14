@@ -1,3 +1,4 @@
+import moment from "moment";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { productApi } from '../api/productApi';
 
@@ -6,16 +7,13 @@ export const useAdminProductExist = () => {
         select: (data) => {
             let _data = data.map((e, index) => {
                 return {
-                    _id: e._id,
-                    imgList: e.imgList,
                     key: index,
-                    name: e.name,
-                    brand: e.brand,
-                    productType: e.productType,
+                    ...e,
                     image: (<img style={{ height: "50px", width: "70px", objectFit: "cover" }} src={e.imgList[1]}></img>),
-                    price: e.price,
                     discount: e.discountIds.length > 0 ? e.discountIds[0].value : 0,
-                    createdAt: e.createdAt,
+                    currentSize: e.productBySize[0].size,
+                    currentAmount: e.productBySize[0].amount,
+                    currentDiscount: e.discountIds.length > 0 ?`${e.discountIds[0].code}--${e.discountIds[0].value}%--${moment(e.discountIds[0].timeBegin).format('YYYY/MM/DD')}-${moment(e.discountIds[0].timeEnd).format('YYYY/MM/DD')}`: "Chưa có giảm giá"
                 }
             })
             return _data;
@@ -27,16 +25,10 @@ export const useAdminProductDeteted = () => {
         select: (data) => {
             let _data = data.map((e, index) => {
                 return {
-                    _id: e._id,
-                    imgList: e.imgList,
                     key: index,
-                    name: e.name,
-                    brand: e.brand,
-                    productType: e.productType,
+                    ...e,
                     image: (<img style={{ height: "50px", width: "70px", objectFit: "cover" }} src={e.imgList[1]}></img>),
-                    price: e.price,
                     discount: e.discountIds.length > 0 ? e.discountIds[0].value : 0,
-                    createdAt: e.createdAt,
                 }
             })
             return _data;
@@ -56,16 +48,16 @@ export const useUpdateAdminProduct = () => {
             const previousTodos = queryClient.getQueryData('admin-product-exist')
 
             // update UI
-            queryClient.setQueryData('admin-product-exist', old => {
-                let index = old.findIndex(
-                    (e) => e._id === data.product._id
-                );
-                old[index] = {
-                    ...old[index],
-                    ...data.values
-                };
-                return [...old]
-            })
+            // queryClient.setQueryData('admin-product-exist', old => {
+            //     let index = old.findIndex(
+            //         (e) => e._id === data.product._id
+            //     );
+            //     old[index] = {
+            //         ...old[index],
+            //         ...data.values,
+            //     };
+            //     return [...old]
+            // })
 
             // Return a context object with the snapshotted value
             return { previousTodos }
@@ -81,7 +73,7 @@ export const useUpdateAdminProduct = () => {
     })
 };
 
-export const useDeleteAdminProduct= () => {
+export const useDeleteAdminProduct = () => {
     const queryClient = useQueryClient();
     return useMutation((record) => productApi.delete(record._id), {
         onMutate: async record => {

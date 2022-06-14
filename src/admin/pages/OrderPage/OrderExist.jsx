@@ -8,6 +8,8 @@ import Highlighter from 'react-highlight-words';
 import './index.css'
 import { useAdminOrderExist, useDeleteAdminOrder } from '../../../hooks/useAdminOrder';
 import { OrderPopup } from './OrderPopup';
+import { CSVLink } from 'react-csv';
+import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 
 const OrderExist = () => {
 
@@ -130,7 +132,7 @@ const OrderExist = () => {
             ),
     });
     //
-    const {mutate:deleteAdminOrder}=useDeleteAdminOrder()
+    const { mutate: deleteAdminOrder } = useDeleteAdminOrder()
 
     const handleDelete = async (record) => {
         deleteAdminOrder(record)
@@ -179,6 +181,28 @@ const OrderExist = () => {
             title: 'Status',
             dataIndex: 'currentStatus',
             width: '5%',
+            render: (value) => {
+                let typeColor
+                switch (value) {
+                    case "SUCCESS":
+                        typeColor = 'btn-success'
+                        break;
+                    case "ACCEPTED":
+                        typeColor = 'btn-warning'
+                        break;
+                    case "PENDING":
+                        typeColor = 'btn-info'
+                        break;
+                    case "CANCEL":
+                        typeColor = 'btn-secondary'
+                        break;
+                    default:
+                        break;
+                }
+                return (
+                    <span className={`px-2 py-1 w-100 text-center d-block  rounded-pill ${typeColor}`}>{value}</span>
+                )
+            },
             filters: [
                 {
                     text: 'PENDING',
@@ -297,7 +321,21 @@ const OrderExist = () => {
     const [orderSelected, setOrderSelected] = useState({})
     const [isModalVisible, setIsModalVisible] = useState(false);
     return (
-        <>
+        <div className='position-relative'>
+            <div className='left-option-admin-product'>
+                <Button className='me-3' type="primary" shape="round" icon={<DownloadOutlined />} >
+                    <CSVLink
+                        style={{
+                            color: "#fff",
+                            textDecoration: "none",
+                        }}
+                        filename={`Order-exist-${new Date()}.csv`}
+                        data={data ? data : []}
+                    >
+                        Export Excel
+                    </CSVLink>
+                </Button>
+            </div>
             <Table
                 responsive
                 bordered
@@ -311,7 +349,7 @@ const OrderExist = () => {
                 }} rowSelection={rowSelection} columns={columns} dataSource={data}
             />
             <OrderPopup isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} order={orderSelected}></OrderPopup>
-        </>
+        </div>
 
     )
 

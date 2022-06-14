@@ -7,10 +7,10 @@ import { Button, Input, Space, Table, Popconfirm } from 'antd';
 import Highlighter from 'react-highlight-words';
 import './index.css'
 import { useAdminProductDeteted, useRestoreAdminProduct } from '../../../hooks/useAdminProduct';
+import { CSVLink } from 'react-csv';
+import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 
 const ProductDeleted = () => {
-
-
     const [showLoading, hideLoading] = useLoading()
 
     const { data, status } = useAdminProductDeteted()
@@ -289,7 +289,21 @@ const ProductDeleted = () => {
     const [productSelected, setProductSelected] = useState({})
     const [isModalVisible, setIsModalVisible] = useState(false);
     return (
-        <div className=''>
+        <div className='position-relative'>
+            <div className='left-option-admin-product'>
+                <Button className='me-3' type="primary" shape="round" icon={<DownloadOutlined />} >
+                    <CSVLink
+                        style={{
+                            color: "#fff",
+                            textDecoration: "none",
+                        }}
+                        filename={`Product-deleted-${new Date()}.csv`}
+                        data={data ? data : []}
+                    >
+                        Export Excel
+                    </CSVLink>
+                </Button>
+            </div>
             <Table
                 responsive
                 bordered

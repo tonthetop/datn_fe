@@ -28,7 +28,8 @@ export const useAdminOrderDeteted = () => {
             let _data = data.map((e, index) => {
                 return {
                     key: index,
-                    currentStatus: e.orderStatus.pop()?.status,
+                    currentStatus:[...e.orderStatus].pop()?.status,
+                    currentStatusDescription:[...e.orderStatus].pop()?.description,
                     clientName: e.accountId.name,
                     clientPhone: e.accountId.phone || "",
                     totalPrice: getTotalPrice(e.productList),

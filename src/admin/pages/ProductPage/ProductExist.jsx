@@ -8,6 +8,8 @@ import Highlighter from 'react-highlight-words';
 import { ProductPopup } from './ProductPopup';
 import './index.css'
 import { useAdminProductExist, useDeleteAdminProduct } from '../../../hooks/useAdminProduct';
+import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import { CSVLink } from 'react-csv';
 
 const ProductExist = () => {
 
@@ -284,8 +286,26 @@ const ProductExist = () => {
     };
     const [productSelected, setProductSelected] = useState({})
     const [isModalVisible, setIsModalVisible] = useState(false);
+
     return (
-        <div className=''>
+        <div className='position-relative'>
+            <div className='left-option-admin-product'>
+                <Button className='me-3' type="primary" shape="round" icon={<DownloadOutlined />} >
+                    <CSVLink
+                        style={{
+                            color:"#fff",
+                            textDecoration: "none",
+                        }}
+                        filename={`Product-exist-${new Date()}.csv`}
+                        data={data ? data : []}
+                    >
+                        Export Excel
+                    </CSVLink>
+                </Button>
+                <Button type="primary" className='me-2' shape="round" icon={< PlusOutlined />}>
+                    Create
+                </Button>
+            </div>
             <Table
                 responsive
                 bordered
@@ -299,7 +319,7 @@ const ProductExist = () => {
                 }} rowSelection={rowSelection} columns={columns} dataSource={data}
             />
             <ProductPopup isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} product={productSelected}></ProductPopup>
-        </div>
+        </div >
 
     )
 

@@ -22,3 +22,9 @@ tr.ant-table-row.ant-table-row-level-0:hover td:not(:last-child) {
     display: flex;
     justify-content: center;
 }
+
+.left-option-admin-product {
+    position: absolute;
+    top: -46px;
+    right: -9px;
+}

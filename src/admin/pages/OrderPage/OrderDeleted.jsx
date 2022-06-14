@@ -7,6 +7,8 @@ import { Button, Input, Space, Table, Popconfirm } from 'antd';
 import Highlighter from 'react-highlight-words';
 import './index.css'
 import { useAdminOrderDeteted, useRestoreAdminOrder } from '../../../hooks/useAdminOrder';
+import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import { CSVLink } from 'react-csv';
 
 const OrderDeleted = () => {
 
@@ -131,7 +133,7 @@ const OrderDeleted = () => {
     const handleRemove = async (record) => {
     }
     //
-    const {mutate:restoreAdminOrder}=useRestoreAdminOrder()
+    const { mutate: restoreAdminOrder } = useRestoreAdminOrder()
     const handleRestore = async (record) => {
         restoreAdminOrder(record)
     }
@@ -298,7 +300,21 @@ const OrderDeleted = () => {
     const [orderSelected, setOrderSelected] = useState({})
     const [isModalVisible, setIsModalVisible] = useState(false);
     return (
-        <>
+        <div className='position-relative'>
+            <div className='left-option-admin-product'>
+                <Button className='me-3' type="primary" shape="round" icon={<DownloadOutlined />} >
+                    <CSVLink
+                        style={{
+                            color: "#fff",
+                            textDecoration: "none",
+                        }}
+                        filename={`Order-deleted-${new Date()}.csv`}
+                        data={data ? data : []}
+                    >
+                        Export Excel
+                    </CSVLink>
+                </Button>
+            </div>
             <Table
                 responsive
                 bordered
@@ -311,7 +327,7 @@ const OrderDeleted = () => {
                     };
                 }} rowSelection={rowSelection} columns={columns} dataSource={data}
             />
-        </>
+        </div>
 
     )
 

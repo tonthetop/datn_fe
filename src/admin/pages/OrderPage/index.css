@@ -36,3 +36,20 @@ tr.ant-table-row.ant-table-row-level-0:hover td:not(:last-child) {
     line-height: 1;
     content: "*";
 }
+
+.ant-modal-body {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0px!important;
+    padding-top: 0px!important;
+    ;
+}
+
+.ant-modal-content {
+    display: inline-block;
+}
+
+.order-modal {
+    width: 700px!important;
+    top: 14px!important;
+}

@@ -7,6 +7,7 @@ import { orderApi } from '../../../api';
 import moment from 'moment';
 import { useUpdateAdminOrder } from '../../../hooks/useAdminOrder';
 import { toast } from 'react-toastify';
+import { ListProduct } from './ListProduct';
 const { Option } = Select;
 const layout = {
     labelCol: {
@@ -22,7 +23,8 @@ const statusDescription = [
     { key: "SUCCESS", value: "Đơn hàng đã giao thành công" },
     { key: "CANCEL", value: "Đơn hàng đã hủy" },
 ]
-const OrderPopup = ({ setDataSource, isModalVisible, setIsModalVisible, order }) => {    //
+const OrderPopup = ({ isModalVisible, setIsModalVisible, order }) => {    //
+    console.log({ order })
     const validateMessages = {
         required: '${label} is required!'
     };
@@ -53,7 +55,7 @@ const OrderPopup = ({ setDataSource, isModalVisible, setIsModalVisible, order })
                 values.orderStatus = orderStatus;
                 delete values.currentStatus
                 delete values.currentStatusDescription
-                values.deliveryTime = values.deliveryTime?new Date(values.deliveryTime):new Date(order.deliveryTime)
+                values.deliveryTime = values.deliveryTime ? new Date(values.deliveryTime) : new Date(order.deliveryTime)
                 console.log("values affter:", values)
                 updateAdminOrder({ order, values })
                 setIsModalVisible(false)
@@ -66,7 +68,7 @@ const OrderPopup = ({ setDataSource, isModalVisible, setIsModalVisible, order })
                 values.orderStatus = orderStatus;
                 delete values.currentStatus
                 delete values.currentStatusDescription
-                values.deliveryTime = values.deliveryTime?new Date(values.deliveryTime):new Date(order.deliveryTime)
+                values.deliveryTime = values.deliveryTime ? new Date(values.deliveryTime) : new Date(order.deliveryTime)
                 console.log("values affter:", values)
                 updateAdminOrder({ order, values })
                 setIsModalVisible(false)
@@ -76,16 +78,20 @@ const OrderPopup = ({ setDataSource, isModalVisible, setIsModalVisible, order })
     };
     //
     const handleChangeOrderStatus = (key) => {
-        console.log(key)
-        console.log(statusDescription.find(e => e.key === key).value)
         form.setFieldsValue({
             "currentStatusDescription": statusDescription.find(e => e.key === key).value
         })
     }
     return (
         <>
-            <Modal title="Basic Modal" visible={isModalVisible} onOk={() => form.submit()} onCancel={handleCancel}>
-                <Form form={form} {...layout} name="nest-messages" onFinish={handleSubmit} validateMessages={validateMessages}>
+            <Modal className='order-modal' title={`Cập nhật order: ${order._id}`} visible={isModalVisible} onOk={() => form.submit()} onCancel={handleCancel}
+            >
+
+                <Form
+                    style={{
+                        width: "70%"
+                    }}
+                    form={form} {...layout} name="nest-messages" onFinish={handleSubmit} validateMessages={validateMessages}>
                     <Form.Item
                         label="Client Name"
                     >
@@ -121,7 +127,7 @@ const OrderPopup = ({ setDataSource, isModalVisible, setIsModalVisible, order })
                         label="Delivery Time"
                         className='order-required-label'
                     >
-                        <DatePicker defaultValue={moment(order.deliveryTime)} style={{
+                        <DatePicker defaultValue={moment(new Date(order.deliveryTime))} style={{
                             width: '100%',
                         }} />
                     </Form.Item>
@@ -156,14 +162,14 @@ const OrderPopup = ({ setDataSource, isModalVisible, setIsModalVisible, order })
                             </Form.Item>
                             <Form.Item
                                 name={'currentStatusDescription'}
-                                style={{ width: 210 }}
+                                style={{ width: 125 }}
                                 rules={[
                                     {
                                         required: true,
                                     },
                                 ]}
                             >
-                                <Input placeholder='Status Description'></Input>
+                                <Input.TextArea placeholder='Status Description'></Input.TextArea>
                             </Form.Item>
                         </Input.Group>
                     </Form.Item>
@@ -179,6 +185,7 @@ const OrderPopup = ({ setDataSource, isModalVisible, setIsModalVisible, order })
                         <Input.TextArea />
                     </Form.Item>
                 </Form>
+                <ListProduct order={order}> </ListProduct>
             </Modal>
         </>
     );

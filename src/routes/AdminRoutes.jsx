@@ -41,7 +41,8 @@ const AdminRoutes = () => {
                     height: "100vh",
                     position: "sticky",
                     top: 0,
-                    left: 0
+                    left: 0,
+                    zIndex: 100
                 }}>
 
                 <div className="logo-admin my-3" >
@@ -94,10 +95,14 @@ const AdminRoutes = () => {
                     </SubMenu>
                 </Menu>
             </Sider>
-            <Layout className="site-layout" >
+            <Layout className="site-layout"
+                style={{
+                    width: "100vw",
+                }} >
                 <Content
                     style={{
                         margin: '0 16px',
+
                     }}
                 >
                     <Breadcrumb
@@ -119,10 +124,9 @@ const AdminRoutes = () => {
                     <div
                         className="site-layout-background"
                         style={{
-                            padding: 12,
+                            padding: 24,
                             minHeight: 360,
-                            backgroundColor: "#fff",
-                            display: "contents"
+                            backgroundColor: "#fff"
                         }}
                     >
                         <Routes>
