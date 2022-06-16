@@ -39,5 +39,9 @@ const productApi = {
         const url = `/product/restore/${id}`;
         return axiosInstance.get(url);
     },
+    countProduct(params) {
+        const url = "/product/count-product";
+        return axiosInstance.get(url, { params });
+    },
 };
 export { productApi };

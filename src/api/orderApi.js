@@ -35,5 +35,9 @@ const orderApi = {
         const url = `/order/restore/${id}`;
         return axiosInstance.get(url);
     },
+    countRevenue(params) {
+        const url = "/order/count-revenue";
+        return axiosInstance.get(url, { params });
+    },
 };
 export { orderApi };
