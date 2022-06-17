@@ -35,6 +35,10 @@ const productApi = {
         const url = `/product/${id}`;
         return axiosInstance.delete(url);
     },
+    deleteForce(id) {
+        const url = `/product/delete-force/${id}`;
+        return axiosInstance.delete(url);
+    },
     restore(id) {
         const url = `/product/restore/${id}`;
         return axiosInstance.get(url);

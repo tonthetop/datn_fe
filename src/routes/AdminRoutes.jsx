@@ -97,7 +97,7 @@ const AdminRoutes = () => {
             </Sider>
             <Layout className="site-layout"
                 style={{
-                    width: "100vw",
+                    maxWidth: "100vw",
                 }} >
                 <Content
                     style={{

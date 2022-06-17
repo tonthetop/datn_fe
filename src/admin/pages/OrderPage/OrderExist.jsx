@@ -253,13 +253,13 @@ const OrderExist = () => {
                 multiple: 2,
             }
         },
-        {
-            title: 'Address',
-            dataIndex: 'deliveryAddress',
-            key: 'deliveryAddress',
-            width: '20%',
-            ...getColumnSearchProps('deliveryAddress'),
-        },
+        // {
+        //     title: 'Address',
+        //     dataIndex: 'deliveryAddress',
+        //     key: 'deliveryAddress',
+        //     width: '20%',
+        //     ...getColumnSearchProps('deliveryAddress'),
+        // },
         {
             title: 'Operation',
             dataIndex: 'operation',

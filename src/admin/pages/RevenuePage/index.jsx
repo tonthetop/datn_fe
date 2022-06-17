@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
-import { getCountRevenueByBrand, getCountRevenueByType } from "../../../hooks/useAdminRevenueChart"
+import { dataDonutBrand, getCountRevenueByBrand, getCountRevenueByType, getCountRevenueDonutBrand, getCountRevenueDonutType } from "../../../hooks/useAdminRevenueChart"
 import { LineRevenue } from "./LineRevenue"
 import { Switch, Button, Radio } from 'antd';
 import moment from "moment";
+import { DonutRevenue } from "./DonutRevenue";
 
 function RevenuePage() {
     const [data, setData] = useState({ labels: [], datasets: [] })
+    const [dataDonut, setDataDonut] = useState({ labels: [], datasets: [] })
     const [query, setQuery] = useState(true)
     const d = new Date();
     const [option, setOption] = useState(moment(d.setDate(d.getDate() - 7)).format("YYYY-MM-DD"))
@@ -14,14 +16,17 @@ function RevenuePage() {
             if (query) {
                 const result = await getCountRevenueByBrand(option, moment(new Date()).format("YYYY-MM-DD"))
                 setData(result)
+                setDataDonut(getCountRevenueDonutBrand())
             }
             else {
                 const result = await getCountRevenueByType(option, moment(new Date()).format("YYYY-MM-DD"))
                 setData(result)
+                setDataDonut(getCountRevenueDonutType())
+
             }
         }
         fetchData()
-    }, [query,option])
+    }, [query, option])
 
     const handleSwitch = (value) => {
         if (value) setQuery(true)
@@ -31,7 +36,7 @@ function RevenuePage() {
     console.log(option)
     const handleChangeRadio = (e) => {
         const option = e.target.value
-        const d=new Date()
+        const d = new Date()
         switch (option) {
             case "date":
                 setOption(moment(d.setDate(d.getDate() - 1)).format("YYYY-MM-DD"))
@@ -48,8 +53,8 @@ function RevenuePage() {
             default:
                 break;
         }
-
     }
+    console.log({ dataDonut })
     return (
         <div className='d-flex justify-content-between'>
 
@@ -65,7 +70,9 @@ function RevenuePage() {
                 </div>
                 <LineRevenue data={data} title={query ? "BRAND" : "PRODUCT TYPE"}></LineRevenue>
             </div>
-            <div>sss</div>
+            <div className="d-flex align-items-center">
+                <DonutRevenue data={dataDonut} />
+            </div>
         </div>
     )
 }

@@ -134,3 +134,31 @@ export const useRestoreAdminOrder = () => {
     })
 
 };
+
+export const useDeleteForceAdminOrder = () => {
+    const queryClient = useQueryClient();
+    return useMutation((record) => orderApi.deleteForce(record._id), {
+        onMutate: async record => {
+            // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
+            await queryClient.cancelQueries('admin-order-deleted')
+            // Snapshot the previous value
+            const previousTodos = queryClient.getQueryData('admin-order-deleted')
+            //update 
+            queryClient.setQueryData('admin-order-deleted', old => {
+                const _old = [...old]
+                return _old.filter(item => item.key != record.key)
+            })
+            // Return a context object with the snapshotted value
+            return { previousTodos }
+        },
+        // If the mutation fails, use the context returned from onMutate to roll back
+        onError: (err, record, context) => {
+            queryClient.setQueryData('admin-order-deleted', context.previousTodos)
+        },
+        // Always refetch after error or success:
+        onSettled: () => {
+            queryClient.invalidateQueries('admin-order-deleted')
+        },
+    })
+
+};

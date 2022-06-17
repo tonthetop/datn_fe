@@ -6,7 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Popconfirm } from 'antd';
 import Highlighter from 'react-highlight-words';
 import './index.css'
-import { useAdminProductDeteted, useRestoreAdminProduct } from '../../../hooks/useAdminProduct';
+import { useAdminProductDeteted, useDeleteForceAdminProduct, useRestoreAdminProduct } from '../../../hooks/useAdminProduct';
 import { CSVLink } from 'react-csv';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 
@@ -127,8 +127,10 @@ const ProductDeleted = () => {
             ),
     });
     // Column
-    const handleRemove = () => {
+    const { mutate: deleteForceAdminProduct } = useDeleteForceAdminProduct()
 
+    const handleRemove = (record) => {
+        deleteForceAdminProduct(record)
     }
     const { mutate: restoreAdminProduct } = useRestoreAdminProduct()
     const handleRestore = (record) => {
@@ -286,8 +288,7 @@ const ProductDeleted = () => {
             },
         ],
     };
-    const [productSelected, setProductSelected] = useState({})
-    const [isModalVisible, setIsModalVisible] = useState(false);
+
     return (
         <div className='position-relative'>
             <div className='left-option-admin-product'>
@@ -307,14 +308,7 @@ const ProductDeleted = () => {
             <Table
                 responsive
                 bordered
-                onRow={(record, rowIndex) => {
-                    return {
-                        onClick: event => {
-                            setProductSelected(record);
-                            setIsModalVisible(true)
-                        },
-                    };
-                }} rowSelection={rowSelection} columns={columns} dataSource={data}
+                 rowSelection={rowSelection} columns={columns} dataSource={data}
             />
         </div>
 

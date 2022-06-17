@@ -21,6 +21,10 @@ tr.ant-table-row.ant-table-row-level-0:hover td:not(:last-child) {
     width: 50px;
     display: flex;
     justify-content: center;
+    height: 77px;
+    line-height: 77px;
+    padding-bottom: 0px;
+    padding-top: 0px;
 }
 
 .order-status-label {

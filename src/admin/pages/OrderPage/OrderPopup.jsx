@@ -45,21 +45,40 @@ const OrderPopup = ({ isModalVisible, setIsModalVisible, order }) => {    //
         setIsModalVisible(false);
     };
     //
+    const getValueCurrentOrderStatus = (status) => {
+        switch (status) {
+            case "PENDING":
+                return 1
+            case "ACCEPTED":
+                return 2
+            case "SUCCESS":
+                return 3
+            case "CANCEL":
+                return 4
+            default:
+                return;
+        }
+    }
+    //
     const { mutate: updateAdminOrder } = useUpdateAdminOrder()
     const handleSubmit = async (values) => {
         if (values) {
             const indexStatus = order.orderStatus.findIndex(e => e.status === values.currentStatus)
             if (indexStatus === -1) {
-                const orderStatus = [...order.orderStatus]
-                orderStatus.push({ status: values.currentStatus, description: values.currentStatusDescription })
-                values.orderStatus = orderStatus;
-                delete values.currentStatus
-                delete values.currentStatusDescription
-                values.deliveryTime = values.deliveryTime ? new Date(values.deliveryTime) : new Date(order.deliveryTime)
-                console.log("values affter:", values)
-                updateAdminOrder({ order, values })
-                setIsModalVisible(false)
-
+                if (getValueCurrentOrderStatus(values.currentStatus) >
+                    getValueCurrentOrderStatus([...order.orderStatus].pop().status)
+                    && getValueCurrentOrderStatus([...order.orderStatus].pop().status) !== 3) {
+                    const orderStatus = [...order.orderStatus]
+                    orderStatus.push({ status: values.currentStatus, description: values.currentStatusDescription })
+                    values.orderStatus = orderStatus;
+                    delete values.currentStatus
+                    delete values.currentStatusDescription
+                    values.deliveryTime = values.deliveryTime ? new Date(values.deliveryTime) : new Date(order.deliveryTime)
+                    console.log("values affter:", values)
+                    updateAdminOrder({ order, values })
+                    setIsModalVisible(false)
+                }
+                else toast.warning("Order Status not permission")
             }
             else if (indexStatus === order.orderStatus.length - 1) {
                 const orderStatus = [...order.orderStatus]

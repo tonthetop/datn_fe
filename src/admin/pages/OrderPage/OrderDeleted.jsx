@@ -6,7 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Popconfirm } from 'antd';
 import Highlighter from 'react-highlight-words';
 import './index.css'
-import { useAdminOrderDeteted, useRestoreAdminOrder } from '../../../hooks/useAdminOrder';
+import { useAdminOrderDeteted, useDeleteForceAdminOrder, useRestoreAdminOrder } from '../../../hooks/useAdminOrder';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 import { CSVLink } from 'react-csv';
 
@@ -130,7 +130,10 @@ const OrderDeleted = () => {
             ),
     });
     //
+    const { mutate: deleteForceAdminOrder } = useDeleteForceAdminOrder()
+
     const handleRemove = async (record) => {
+        deleteForceAdminOrder(record)
     }
     //
     const { mutate: restoreAdminOrder } = useRestoreAdminOrder()
@@ -232,13 +235,6 @@ const OrderDeleted = () => {
             }
         },
         {
-            title: 'Address',
-            dataIndex: 'deliveryAddress',
-            key: 'deliveryAddress',
-            width: '20%',
-            ...getColumnSearchProps('deliveryAddress'),
-        },
-        {
             title: 'Operation',
             dataIndex: 'operation',
             render: (text, record) =>
@@ -297,8 +293,6 @@ const OrderDeleted = () => {
             },
         ],
     };
-    const [orderSelected, setOrderSelected] = useState({})
-    const [isModalVisible, setIsModalVisible] = useState(false);
     return (
         <div className='position-relative'>
             <div className='left-option-admin-product'>
@@ -315,17 +309,7 @@ const OrderDeleted = () => {
                     </CSVLink>
                 </Button>
             </div>
-            <Table
-                responsive
-                bordered
-                onRow={(record, rowIndex) => {
-                    return {
-                        onClick: event => {
-                            setOrderSelected(record);
-                            setIsModalVisible(true)
-                        },
-                    };
-                }} rowSelection={rowSelection} columns={columns} dataSource={data}
+            <Table responsive bordered rowSelection={rowSelection} columns={columns} dataSource={data}
             />
         </div>
 

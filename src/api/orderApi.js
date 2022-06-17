@@ -31,6 +31,10 @@ const orderApi = {
         const url = `/order/${id}`;
         return axiosInstance.delete(url);
     },
+    deleteForce(id) {
+        const url = `/order/delete-force/${id}`;
+        return axiosInstance.delete(url);
+    },
     restore(id) {
         const url = `/order/restore/${id}`;
         return axiosInstance.get(url);

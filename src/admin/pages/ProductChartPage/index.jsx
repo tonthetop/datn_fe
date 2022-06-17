@@ -18,15 +18,17 @@ function ProductChartPage() {
     }, [])
     console.log({ dataProductType })
     return (
-        <div className='d-flex justify-content-between'>
-            <div className='line-chart-product w-75 d-flex align-items-end pb-5'>
-                <LineProduct></LineProduct>
-            </div>
-            <div className='donut-chart-product w-25'>
+        <div className='d-flex justify-content-center'
+        style={{
+            columnGap:"15%"
+        }}>
+            <div className="w-30">
                 <DonutProduct data={dataProductType} />
-                <DonutProduct data={dataProductBrand} />
             </div>
+            <div className="w-30">
+                <DonutProduct data={dataProductBrand} />
 
+            </div>
         </div>
     )
 }
