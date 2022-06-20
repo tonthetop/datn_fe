@@ -43,5 +43,9 @@ const orderApi = {
         const url = "/order/count-revenue";
         return axiosInstance.get(url, { params });
     },
+    countOrderStatus(params) {
+        const url = "/order/count-order-status";
+        return axiosInstance.get(url, { params });
+    },
 };
 export { orderApi };

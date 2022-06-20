@@ -9,8 +9,8 @@ export const useAdminOrderExist = () => {
             let _data = data.map((e, index) => {
                 return {
                     key: index,
-                    currentStatus:[...e.orderStatus].pop()?.status,
-                    currentStatusDescription:[...e.orderStatus].pop()?.description,
+                    currentStatus: [...e.orderStatus].pop()?.status,
+                    currentStatusDescription: [...e.orderStatus].pop()?.description,
                     clientName: e.accountId.name,
                     clientPhone: e.accountId.phone || "",
                     totalPrice: getTotalPrice(e.productList),
@@ -28,8 +28,8 @@ export const useAdminOrderDeteted = () => {
             let _data = data.map((e, index) => {
                 return {
                     key: index,
-                    currentStatus:[...e.orderStatus].pop()?.status,
-                    currentStatusDescription:[...e.orderStatus].pop()?.description,
+                    currentStatus: [...e.orderStatus].pop()?.status,
+                    currentStatusDescription: [...e.orderStatus].pop()?.description,
                     clientName: e.accountId.name,
                     clientPhone: e.accountId.phone || "",
                     totalPrice: getTotalPrice(e.productList),
@@ -45,7 +45,7 @@ export const useUpdateAdminOrder = () => {
     const queryClient = useQueryClient();
     return useMutation(data => orderApi.update(data.order._id, data.values), {
         onMutate: async (data) => {
-            console.log({ data })
+            console.log(JSON.stringify(data.values))
             // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
             await queryClient.cancelQueries('admin-product-exist')
             // Snapshot the previous value

@@ -126,7 +126,7 @@ const AdminRoutes = () => {
                         style={{
                             padding: 24,
                             minHeight: 360,
-                            backgroundColor: "#fff"
+                            backgroundColor: "#fff",
                         }}
                     >
                         <Routes>
