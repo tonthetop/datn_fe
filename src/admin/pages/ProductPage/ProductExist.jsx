@@ -10,6 +10,7 @@ import './index.css'
 import { useAdminProductExist, useDeleteAdminProduct } from '../../../hooks/useAdminProduct';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 import { CSVLink } from 'react-csv';
+import { ProductPopupCreate } from './ProductPopUpCreate';
 
 const ProductExist = () => {
 
@@ -286,14 +287,17 @@ const ProductExist = () => {
     };
     const [productSelected, setProductSelected] = useState({})
     const [isModalVisible, setIsModalVisible] = useState(false);
-
+    const [isModalCreateVisible, setIsModalCreateVisible] = useState(false);
+    const handleOpenCreatePopup = () => {
+        setIsModalCreateVisible(true);
+    }
     return (
         <div className='position-relative'>
             <div className='left-option-admin-product'>
                 <Button className='me-3' type="primary" shape="round" icon={<DownloadOutlined />} >
                     <CSVLink
                         style={{
-                            color:"#fff",
+                            color: "#fff",
                             textDecoration: "none",
                         }}
                         filename={`Product-exist-${new Date()}.csv`}
@@ -302,9 +306,13 @@ const ProductExist = () => {
                         Export Excel
                     </CSVLink>
                 </Button>
-                <Button type="primary" className='me-2' shape="round" icon={< PlusOutlined />}>
+                <Button type="primary" className='me-2' shape="round" onClick={handleOpenCreatePopup} icon={< PlusOutlined />}>
                     Create
                 </Button>
+                {isModalCreateVisible && < ProductPopupCreate
+                    isModalVisible={isModalCreateVisible}
+                    setIsModalVisible={setIsModalCreateVisible}
+                />}
             </div>
             <Table
                 responsive

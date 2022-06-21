@@ -24,7 +24,7 @@ const productApi = {
         return axiosInstance.get(url);
     },
     add(data) {
-        const url = `/product/${data.id}`;
+        const url = `/product`;
         return axiosInstance.post(url, data);
     },
     update(id, data) {
@@ -46,6 +46,10 @@ const productApi = {
     countProduct(params) {
         const url = "/product/count-product";
         return axiosInstance.get(url, { params });
+    },
+    cloudinaryUpload(data) {
+        const url = `/product/cloudinary-upload`;
+        return axiosInstance.post(url, data);
     },
 };
 export { productApi };
