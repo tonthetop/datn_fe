@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Form, Input, Select, Modal, Divider, Space, Typography } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { useLoading } from '../../../hooks/useLoading';
-import { useUpdateAdminProduct } from '../../../hooks/useAdminProduct';
+import { useUpdateAdminProduct, useAddAdminProduct } from '../../../hooks/useAdminProduct';
 import { PlusOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import { useRef } from 'react';
@@ -21,6 +21,9 @@ const layout = {
 
 const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
     //    console.log(product)
+    const [imgList, setImgList] = useState([])
+    const [showLoading, hideLoading] = useLoading([])
+    const [listSize, setListSize] = useState([])
 
     const validateMessages = {
         required: '${label} is required!'
@@ -49,18 +52,44 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
     const handleCancel = () => {
         setIsModalVisible(false);
     };
-    const { mutate: updateAdminProduct } = useUpdateAdminProduct()
+    const handleFileUpload = async (listFiles) => {
+        const promiseUpload = listFiles.map(async (file) => {
+            const uploadData = new FormData();
+            uploadData.append("file", file, "file");
+            return productApi.cloudinaryUpload(uploadData)
+        })
+        let result = await Promise.all(promiseUpload)
+        return result.map(e => e.secure_url)
+    }
+    const { mutate: addAdminProduct } = useAddAdminProduct()
     const handleSubmit = async (values) => {
-        if (values) {
-            console.log(values)
-        };
+        if (values && imgList.length > 0) {
+            try {
+                showLoading()
+                const imgListResult = await handleFileUpload(imgList)  // api
+                console.log(imgListResult)
+                const discount = discounts.find(e => e.code === values.currentDiscount.split("--").shift())
+                values.discountIds = [discount._id]
+                values.imgList = imgListResult
+                delete values.currentDiscount
+                addAdminProduct(values)                     //api
+                hideLoading()
+                setIsModalVisible(false)
+            } catch (error) {
+                hideLoading()
+            }
+        }
+        else toast.warning("Img List is required")
     };
+    //
 
     //
+    const [listSizeMain, setListSizeMain] = useState([])
     const [itemsSize, setItemsSize] = useState([]);
     const [sizeName, setSizeName] = useState('');
     const onSizeNameChange = (event) => {
         setSizeName(event.target.value);
+
     };
 
     const addItem = (e) => {
@@ -72,28 +101,27 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
         else toast.warning("Size name is required!")
 
     };
-    const [showLoading, hideLoading] = useLoading()
-    const handleFileUpload = async (e) => {
-        console.log(Array.from(e.target.files))
-        const promiseUpload = Array.from(e.target.files).map(async (file) => {
-            const uploadData = new FormData();
-            uploadData.append("file", file, "file");
-            return productApi.cloudinaryUpload(uploadData)
+
+    const handleSetValueFile = (e) => {
+        setImgList(Array.from(e.target.files))
+    }
+    const handleChangeAmount = (e) => {
+
+    }
+    const handleChangeSize = (size) => {
+        listSize.find(e => e.size == size)
+        setListSizeMain(prev => {
+            return [...prev, {
+                size: size,
+                amount: 0
+            }]
         })
-        try {
-            showLoading()
-            const result = await Promise.all(promiseUpload)
-            hideLoading()
-            console.log(result)
-        } catch (error) {
-            hideLoading()
-        }
     }
     return (
         <>
             <Modal title="Thêm mới sản phẩm" visible={isModalVisible} onOk={() => form.submit()} onCancel={handleCancel}>
                 <Form form={form} {...layout} name="nest-messages" onFinish={handleSubmit} validateMessages={validateMessages}>
-                    {/* <Form.Item
+                    <Form.Item
                         name={'name'}
                         label="ProductName"
                         rules={[
@@ -157,8 +185,9 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
                             className='d-flex'
                         >
                             <Form.Item
-                                name={'currentSize'}>
+                            >
                                 <Select
+                                    onChange={handleChangeSize}
                                     autoClearSearchValue
                                     style={{
                                         width: 150,
@@ -199,7 +228,6 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
                             </Form.Item>
 
                             <Form.Item
-                                name={'currentAmount'}
                                 label="Amount"
                                 className='ms-3 d-flex w-50'
                                 style={{ width: 100 }}
@@ -209,7 +237,7 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
                                     },
                                 ]}
                             >
-                                <Input placeholder='Amount'></Input>
+                                <Input placeholder='Amount' onChange={handleChangeAmount}></Input>
                             </Form.Item>
                         </Input.Group>
                     </Form.Item>
@@ -222,7 +250,8 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
                             },
                         ]}
                     >
-                        <Select >
+                        <Select
+                        >
                             {discounts.map((e, index) => {
                                 return (
                                     <Option key={index} value={e.discountItem}>{e.discountItem}</Option>
@@ -230,9 +259,8 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
                             })}
 
                         </Select>
-                    </Form.Item> */}
+                    </Form.Item>
                     <Form.Item
-                        name={'imgList'}
                         label="Image List"
                         rules={[
                             {
@@ -240,9 +268,13 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
                             },
                         ]}
                     >
-                        <Input multiple="multiple" type={"file"} onChange={(e) => handleFileUpload(e)} />
+                        <Input
+                            multiple="multiple" type={"file"} accept="image/*" required
+                            onChange={handleSetValueFile}
+                        />
+                        {/* onChange={(e) => handleFileUpload(e)} */}
                     </Form.Item>
-                    {/* <Form.Item
+                    <Form.Item
                         name={'description'}
                         label="Description"
                         rules={[
@@ -252,7 +284,7 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
                         ]}
                     >
                         <Input />
-                    </Form.Item> */}
+                    </Form.Item>
                 </Form>
             </Modal>
         </>
