@@ -15,10 +15,8 @@ import "./index.css";
 import { FreeMode, Navigation, Thumbs, Pagination } from "swiper";
 // const img1 = "https://bizweb.dktcdn.net/100/377/398/products/women-s-air-force-1-white-pendant-dd1525-100-release-date.jpg?v=1646286178000"
 // const img2 = "https://bizweb.dktcdn.net/thumb/grande/100/377/398/products/women-s-air-force-1-white-pendant-dd1525-100-release-date-c630b781-6dba-4139-8a3f-d106bdafcedd.jpg?v=1646286268000"
-export default function ThumbsProduct({imgList}) {
+export default function ThumbsProduct({ imgList }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    const img1 = imgList[0]
-    const img2 = imgList[1]
     return (
         <>
             <Swiper
@@ -34,13 +32,13 @@ export default function ThumbsProduct({imgList}) {
                 modules={[Navigation, Thumbs, Pagination]}
                 className="mySwiper2"
             >
-                <SwiperSlide>
-                    <img src={img1} />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src={img2} />
-                </SwiperSlide>
-
+                {imgList.map(img => {
+                    return (
+                        <SwiperSlide>
+                            <img src={img} />
+                        </SwiperSlide>
+                    )
+                })}
 
             </Swiper>
             <Swiper
@@ -52,14 +50,13 @@ export default function ThumbsProduct({imgList}) {
                 modules={[FreeMode, Navigation, Thumbs]}
                 className="mySwiper"
             >
-                <SwiperSlide>
-                    <img src={img1} />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src={img2} />
-                </SwiperSlide>
-
-
+                {imgList.map(img => {
+                    return (
+                        <SwiperSlide>
+                            <img src={img} />
+                        </SwiperSlide>
+                    )
+                })}
             </Swiper>
         </>
     );

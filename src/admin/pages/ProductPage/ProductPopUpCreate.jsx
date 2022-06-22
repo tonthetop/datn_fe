@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Form, Input, Select, Modal, Divider, Space, Typography } from 'antd';
+import { Form, Input, Select, Modal, Divider, Space, Typography, InputNumber } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { useLoading } from '../../../hooks/useLoading';
 import { useUpdateAdminProduct, useAddAdminProduct } from '../../../hooks/useAdminProduct';
@@ -23,8 +23,10 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
     //    console.log(product)
     const [imgList, setImgList] = useState([])
     const [showLoading, hideLoading] = useLoading([])
-    const [listSize, setListSize] = useState([])
-
+    const [itemsSize, setItemsSize] = useState([]);
+    const [amountCurrent, setAmountCurrent] = useState(0)
+    const [sizeCurrent, setSizeCurrent] = useState()
+    const [sizeName, setSizeName] = useState('');
     const validateMessages = {
         required: '${label} is required!'
     };
@@ -53,24 +55,24 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
         setIsModalVisible(false);
     };
     const handleFileUpload = async (listFiles) => {
-        const promiseUpload = listFiles.map(async (file) => {
-            const uploadData = new FormData();
-            uploadData.append("file", file, "file");
-            return productApi.cloudinaryUpload(uploadData)
+        const uploadData = new FormData();
+        listFiles.forEach((file) => {
+            uploadData.append("files", file);
         })
-        let result = await Promise.all(promiseUpload)
-        return result.map(e => e.secure_url)
+        return productApi.cloudinaryUpload(uploadData)
     }
     const { mutate: addAdminProduct } = useAddAdminProduct()
     const handleSubmit = async (values) => {
-        if (values && imgList.length > 0) {
+        if (values && imgList.length > 0 && itemsSize.length > 0) {
             try {
                 showLoading()
                 const imgListResult = await handleFileUpload(imgList)  // api
-                console.log(imgListResult)
+
+                //
                 const discount = discounts.find(e => e.code === values.currentDiscount.split("--").shift())
                 values.discountIds = [discount._id]
                 values.imgList = imgListResult
+                values.productBySize = itemsSize
                 delete values.currentDiscount
                 addAdminProduct(values)                     //api
                 hideLoading()
@@ -79,14 +81,8 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
                 hideLoading()
             }
         }
-        else toast.warning("Img List is required")
+        else toast.warning("Some field is required")
     };
-    //
-
-    //
-    const [listSizeMain, setListSizeMain] = useState([])
-    const [itemsSize, setItemsSize] = useState([]);
-    const [sizeName, setSizeName] = useState('');
     const onSizeNameChange = (event) => {
         setSizeName(event.target.value);
 
@@ -95,7 +91,14 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
     const addItem = (e) => {
         e.preventDefault();
         if (sizeName !== '') {
-            setItemsSize([...itemsSize, sizeName]);
+            setItemsSize(prev => {
+                const x = [...prev]
+                x.push({
+                    size: sizeName,
+                    amount: 0
+                })
+                return x
+            });
             setSizeName('');
         }
         else toast.warning("Size name is required!")
@@ -104,18 +107,23 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
 
     const handleSetValueFile = (e) => {
         setImgList(Array.from(e.target.files))
-    }
-    const handleChangeAmount = (e) => {
 
     }
+    const handleChangeAmount = (amount) => {
+        if (sizeCurrent) {
+            setAmountCurrent(amount)
+            const index = itemsSize.findIndex(item => item.size == sizeCurrent)
+            setItemsSize(prev => {
+                const x = [...prev]
+                prev[index].amount = amount
+                return x
+            })
+        }
+    }
     const handleChangeSize = (size) => {
-        listSize.find(e => e.size == size)
-        setListSizeMain(prev => {
-            return [...prev, {
-                size: size,
-                amount: 0
-            }]
-        })
+        const item = itemsSize.find(e => e.size == size)
+        setAmountCurrent(item.amount)
+        setSizeCurrent(item.size)
     }
     return (
         <>
@@ -222,7 +230,7 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
                                     )}
                                 >
                                     {itemsSize.map((e, index) => (
-                                        <Option key={index} value={e}>{e}</Option>
+                                        <Option key={index} value={e.size}>{e.size}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>
@@ -237,7 +245,7 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
                                     },
                                 ]}
                             >
-                                <Input placeholder='Amount' onChange={handleChangeAmount}></Input>
+                                <InputNumber min={0} size="middle" value={amountCurrent} onChange={handleChangeAmount} />
                             </Form.Item>
                         </Input.Group>
                     </Form.Item>
@@ -267,6 +275,8 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
                                 required: true,
                             },
                         ]}
+                        className='order-required-label'
+
                     >
                         <Input
                             multiple="multiple" type={"file"} accept="image/*" required

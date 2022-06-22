@@ -13,7 +13,7 @@ function OrderChartPage() {
     useEffect(() => {
         async function fetchData() {
 
-            const result = await getCountOrderStatus(option, moment(new Date()).format("YYYY-MM-DD"))
+            const result = await getCountOrderStatus(option, moment(new Date()).format("YYYY-MM-DD")) 
             setData(result)
             setDataDonut(getCountOrderStatusDonut())
         }

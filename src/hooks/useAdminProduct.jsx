@@ -9,7 +9,7 @@ export const useAdminProductExist = () => {
                 return {
                     key: index,
                     ...e,
-                    image: (<img style={{ height: "50px", width: "70px", objectFit: "cover" }} src={e.imgList[1]}></img>),
+                    image: (<img style={{ height: "50px", width: "70px", objectFit: "cover" }} src={e.imgList[0]}></img>),
                     discount: e.discountIds.length > 0 ? e.discountIds[0].value : 0,
                     currentSize: e.productBySize[0]?.size||"",
                     currentAmount: e.productBySize[0]?.amount|"",
@@ -27,7 +27,7 @@ export const useAdminProductDeteted = () => {
                 return {
                     key: index,
                     ...e,
-                    image: (<img style={{ height: "50px", width: "70px", objectFit: "cover" }} src={e.imgList[1]}></img>),
+                    image: (<img style={{ height: "50px", width: "70px", objectFit: "cover" }} src={e.imgList[0]}></img>),
                     discount: e.discountIds.length > 0 ? e.discountIds[0].value : 0,
                 }
             })

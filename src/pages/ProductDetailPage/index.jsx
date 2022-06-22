@@ -83,7 +83,7 @@ function ProductDetailPage() {
         const cart = {
             _id: product._id,
             name: product.name,
-            img: product.imgList[1],
+            img: product.imgList[0],
             price: product.price,
             size: subInfo.size,
             amount: subInfo.amount,

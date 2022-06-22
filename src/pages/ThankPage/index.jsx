@@ -34,7 +34,7 @@ function ThankPage() {
             ...e,
             _id: e.productId._id,
             name: e.productId.name,
-            img: e.productId.imgList[1]
+            img: e.productId.imgList[0]
         }
     }) : []
     const amountTotal = carts.reduce((acc, item) => acc + item.amount, 0)
