@@ -9,7 +9,7 @@ import { LoadingProvider } from '../src/context/LoadingProvider'
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const clientId="597507392876-n64cman5jll200bpjdc5s2d7hm9h38pu.apps.googleusercontent.com"
+const clientId="243286079203-c38qnk1bm3rero1ogdpk2chnbhehn643.apps.googleusercontent.com"
 //const clientId = "597507392876-c941fph1dbiikn70madcsgfpunpbmlnn.apps.googleusercontent.com"
 //const clientId=  "39336608773-ttq6cf0bsq3ns1g1acsb3nq6a4cu50ac.apps.googleusercontent.com"
 root.render(
