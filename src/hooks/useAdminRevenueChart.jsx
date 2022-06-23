@@ -14,18 +14,18 @@ function dateRangeGenerate(startDate, endDate, steps = 1) {
 
     return dateArray;
 }
-const color={
-    typeOne:{
-        border:faker.color.rgb(),
-        background:faker.color.rgb()
+const color = {
+    typeOne: {
+        border: faker.color.rgb(),
+        background: faker.color.rgb()
     },
-    typeTwo:{
-        border:faker.color.rgb(),
-        background:faker.color.rgb()
+    typeTwo: {
+        border: faker.color.rgb(),
+        background: faker.color.rgb()
     },
-    typeThree:{
-        border:faker.color.rgb(),
-        background:faker.color.rgb()
+    typeThree: {
+        border: faker.color.rgb(),
+        background: faker.color.rgb()
     }
 }
 export const dataDonutBrand = []
@@ -34,10 +34,9 @@ export const getCountRevenueByBrand = async (startDate, endDate) => {
     {
         try {
             const dateRange = startDate + "--" + endDate
-            const resultAll = await orderApi.countRevenue({ dateRange })
-            const resultBrandAdidas = await orderApi.countRevenue({ dateRange, type: "brand", value: "ADIDAS" })
-            const resultBrandNike = await orderApi.countRevenue({ dateRange, type: "brand", value: "NIKE" })
-            const resultBrandJordan = await orderApi.countRevenue({ dateRange, type: "brand", value: "JORDAN" })
+            const promiseAll = [orderApi.countRevenue({ dateRange }), orderApi.countRevenue({ dateRange, type: "brand", value: "ADIDAS" }), orderApi.countRevenue({ dateRange, type: "brand", value: "NIKE" }),
+            orderApi.countRevenue({ dateRange, type: "brand", value: "JORDAN" })]
+            const [resultAll, resultBrandAdidas, resultBrandNike, resultBrandJordan] = await Promise.all(promiseAll)
             dataDonutBrand[0] = resultBrandAdidas.reduce((acc, item) => acc + item.totalBill, 0)
             dataDonutBrand[1] = resultBrandNike.reduce((acc, item) => acc + item.totalBill, 0)
             dataDonutBrand[2] = resultBrandJordan.reduce((acc, item) => acc + item.totalBill, 0)
@@ -76,8 +75,8 @@ export const getCountRevenueByBrand = async (startDate, endDate) => {
                     return 0
                 }
                 ),
-                 backgroundColor: color.typeTwo.border,
-                 borderColor: color.typeTwo.background,
+                backgroundColor: color.typeTwo.border,
+                borderColor: color.typeTwo.background,
                 lineTension: 0.3
 
             },
@@ -89,8 +88,8 @@ export const getCountRevenueByBrand = async (startDate, endDate) => {
                     return 0
                 }
                 ),
-                 backgroundColor: color.typeThree.border,
-                 borderColor: color.typeThree.background,
+                backgroundColor: color.typeThree.border,
+                borderColor: color.typeThree.background,
                 lineTension: 0.3
 
             },
@@ -124,8 +123,8 @@ export const getCountRevenueByType = async (startDate, endDate) => {
                     return 0
                 }
                 ),
-                 backgroundColor: faker.color.rgb(),
-                 borderColor: faker.color.rgb(),
+                backgroundColor: faker.color.rgb(),
+                borderColor: faker.color.rgb(),
                 lineTension: 0.3
             },
             {
@@ -136,8 +135,8 @@ export const getCountRevenueByType = async (startDate, endDate) => {
                     return 0
                 }
                 ),
-                 backgroundColor: color.typeOne.border,
-                 borderColor: color.typeOne.background,
+                backgroundColor: color.typeOne.border,
+                borderColor: color.typeOne.background,
                 lineTension: 0.3
             },
             {
@@ -148,8 +147,8 @@ export const getCountRevenueByType = async (startDate, endDate) => {
                     return 0
                 }
                 ),
-                 backgroundColor: color.typeTwo.border,
-                 borderColor: color.typeTwo.background,
+                backgroundColor: color.typeTwo.border,
+                borderColor: color.typeTwo.background,
                 lineTension: 0.3
 
             },
@@ -161,8 +160,8 @@ export const getCountRevenueByType = async (startDate, endDate) => {
                     return 0
                 }
                 ),
-                 backgroundColor: color.typeThree.border,
-                 borderColor: color.typeThree.background,
+                backgroundColor: color.typeThree.border,
+                borderColor: color.typeThree.background,
                 lineTension: 0.3
 
             },
@@ -182,8 +181,8 @@ export const getCountRevenueDonutBrand = () => {
                 {
                     label: '# of Votes',
                     data: dataCount,
-                    backgroundColor: Object.values(color).map(e=>e.background),
-                    borderColor:Object.values(color).map(e=>e.border),
+                    backgroundColor: Object.values(color).map(e => e.background),
+                    borderColor: Object.values(color).map(e => e.border),
                     borderWidth: 1,
                 }
             ]
@@ -204,8 +203,8 @@ export const getCountRevenueDonutType = () => {
                 {
                     label: '# of Votes',
                     data: dataCount,
-                    backgroundColor: Object.values(color).map(e=>e.background),
-                    borderColor:Object.values(color).map(e=>e.border),
+                    backgroundColor: Object.values(color).map(e => e.background),
+                    borderColor: Object.values(color).map(e => e.border),
                     borderWidth: 1,
                 }
             ]
