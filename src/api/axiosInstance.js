@@ -4,8 +4,9 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
- const BASE_URL = "http://localhost:8080/";
+// const BASE_URL = "http://localhost:8080/";
 //const BASE_URL = "http://21.253.65.9:8080/"
+const BASE_URL = "https://shoesappnew.herokuapp.com/"
 const axiosInstance = axios.create({
     baseURL: BASE_URL,
 });
@@ -48,7 +49,7 @@ axiosInstance.interceptors.response.use(
         else if (statusCode === 500) {
             toast.error("Server Error: Something error");
         }
-        else toast.error("Server Error: "+ error.message);
+        else toast.error("Server Error: " + error.message);
         throw error;
     }
 );
