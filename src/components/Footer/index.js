@@ -1,5 +1,5 @@
 import './index.css'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 const Footer = () => {
     return (
         <div className="footer-wrapper">
@@ -8,18 +8,23 @@ const Footer = () => {
                     <div className="row">
                         <div className="col-sm-12 col-md-6">
                             <h6>About</h6>
-                            <p className="text-justify">Scanfcode.com <i>CODE WANTS TO BE SIMPLE </i> is an initiative  to help the upcoming programmers with the code. Scanfcode focuses on providing the most efficient code or snippets as the code wants to be simple. We will help programmers build up concepts in different programming languages that include C, C++, Java, HTML, CSS, Bootstrap, JavaScript, PHP, Android, SQL and Algorithm.</p>
+
+                            <p className="text-justify">
+                                Sneakers App
+                            </p>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam voluptates vel itaque? Nobis incidunt id officia magnam nostrum alias tempora in quaerat eligendi, odit eveniet, cum deleniti reprehenderit dolorum temporibus.
+                            </p>
                         </div>
 
                         <div className="col-xs-6 col-md-3">
                             <h6>Categories</h6>
                             <ul className="footer-links">
-                                <li><Link to="##">C</Link></li>
-                                <li><Link to="##">UI Design</Link></li>
-                                <li><Link to="##">PHP</Link></li>
-                                <li><Link to="##">Java</Link></li>
-                                <li><Link to="##">Android</Link></li>
-                                <li><Link to="##">Templates</Link></li>
+                                <li><Link to="##">Shoes</Link></li>
+                                <li><Link to="##">Sandals</Link></li>
+                                <li><Link to="##">Accessorizes</Link></li>
+                                <li><Link to="##">New Arrivals</Link></li>
+                                <li><Link to="##">Best-selling goods</Link></li>
                             </ul>
                         </div>
 
@@ -36,11 +41,11 @@ const Footer = () => {
                     </div>
                     <hr />
                 </div>
+
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 col-sm-6 col-xs-12">
-                            <p className="copyright-text">Copyright &copy; 2017 All Rights Reserved by
-                                <Link to="##">Scanfcode</Link>.
+                            <p className="copyright-text">Copyright &copy; 2022 All Rights Reserved
                             </p>
                         </div>
 

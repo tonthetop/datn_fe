@@ -28,7 +28,9 @@ function PublicRoutes() {
     category: "danh mục",
     dep: "dép",
     giay: "giày",
-    phukien: "phụ kiện"
+    phukien: "phụ kiện",
+    "product-detail": "chi tiết sản phẩm",
+    thankyou:"Cám ơn",
   }
 
   const pathName = arrayPath.map(item => {
@@ -88,6 +90,10 @@ function PublicRoutes() {
             <Route
               path="/find-order"
               element={<pages.FindOrderPage> </pages.FindOrderPage>}
+            ></Route>
+            <Route
+              path="/contact"
+              element={<pages.ContactPage> </pages.ContactPage>}
             ></Route>
             <Route
               path="/login-and-register"

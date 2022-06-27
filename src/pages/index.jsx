@@ -6,4 +6,5 @@ export * from './CartPage'
 export * from './ThankPage'
 export * from './ProductDetailPage'
 export * from './CheckoutPage'
+export * from './ContactPage'
 
