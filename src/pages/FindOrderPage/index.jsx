@@ -79,8 +79,8 @@ function FindOrderPage() {
                         />
                     </div>
                 </div>
-                <div className="col-md-7 ">
-                    <div className="container">
+                <div className="col-md-7">
+                    <div className="container order-list-find-page">
                         {
                             orderInfos.map(e => {
                                 return (

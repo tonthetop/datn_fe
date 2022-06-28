@@ -30,7 +30,7 @@ function PublicRoutes() {
     giay: "giày",
     phukien: "phụ kiện",
     "product-detail": "chi tiết sản phẩm",
-    thankyou:"Cám ơn",
+    thankyou: "Cám ơn",
   }
 
   const pathName = arrayPath.map(item => {
@@ -124,12 +124,8 @@ function PublicRoutes() {
               }
             />
             <Route
-              path="/not-found"
-              element={<div>NOTFOUNDAPI</div>}
-            ></Route>
-            <Route
               path="*"
-              element={<div>NOTFOUNDROUTE</div>}
+              element={<pages.NotFoundPage />}
             ></Route>
           </Routes>
         </div>

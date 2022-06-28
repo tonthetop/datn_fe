@@ -8,7 +8,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import './index.css';
 import { QueryClientProvider, QueryClient } from 'react-query'
-
 const App = () => {
     const queryClient = new QueryClient()
     return (
@@ -25,6 +24,7 @@ const App = () => {
                             </AuthAdminRoute>
                         }
                     />
+
                 </Routes>
             </QueryClientProvider>
 
