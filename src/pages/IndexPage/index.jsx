@@ -1,56 +1,55 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
-import ListProduct from '../../components/ListProduct'
-import BannerProduct from '../../components/Banner/BannerProduct'
-import { productApi } from '../../api'
-import { useLoading } from '../../hooks/useLoading'
+import React, { useState, useEffect, useLayoutEffect } from "react";
+import ListProduct from "../../components/ListProduct";
+import BannerProduct from "../../components/Banner/BannerProduct";
+import { productApi } from "../../api";
+import { useLoading } from "../../hooks/useLoading";
 const IndexPage = () => {
-  const [products, setProducts] = useState([])
-  const [totalRecords, setTotalRecords] = useState()
-  //Example how to use it: 
-  const [showLoading, hideLoading] = useLoading()
+  const [bestSellProducts, setBestSellProducts] = useState([]);
+  const [newArrivalProducts, setNewArrivalProducts] = useState([]);
+
+  //Example how to use it:
+  const [showLoading, hideLoading] = useLoading();
   useEffect(() => {
     async function fetchData() {
       try {
-        const params = { limit: 8 };
-        showLoading()
-        const { totalRecords, products } = await productApi.getProducts(params)
-        hideLoading()
-        setProducts(products)
-        setTotalRecords(totalRecords)
+        const params1 = { limit: 8 };
+        const params2 = { limit: 8, sortBy: "min_time" };
+
+        showLoading();
+        const result1 = await productApi.getProducts(params1);
+        const result2 = await productApi.getProducts(params2);
+        hideLoading();
+        setBestSellProducts(result1.products);
+        setNewArrivalProducts(result2.products);
       } catch (error) {
-        hideLoading()
+        hideLoading();
       }
     }
-    fetchData()
+    fetchData();
   }, []);
 
   return (
     <div>
       <div className="row">
         <h1 className="text-uppercase text-center ">
-          <span className="title-banner border-dark ">
-            Danh mục sản phẩm
-          </span>
+          <span className="title-banner border-dark ">Danh mục sản phẩm</span>
         </h1>
       </div>
       <BannerProduct></BannerProduct>
       <div className="row mb-3 ">
         <h1 className="text-uppercase text-center">
-          <span className="title-banner border-dark">
-            Sản phẩm bán chạy
-          </span>
+          <span className="title-banner border-dark">Sản phẩm bán chạy</span>
         </h1>
       </div>
-      <ListProduct productList={products}></ListProduct>
+      <ListProduct productList={bestSellProducts}></ListProduct>
       <div className="row mb-3">
         <h1 className="text-uppercase text-center ">
-          <span className="title-banner border-dark ">
-            Sản phẩm mới
-          </span> </h1>
-        <ListProduct productList={products}></ListProduct>
+          <span className="title-banner border-dark ">Sản phẩm mới</span>{" "}
+        </h1>
+        <ListProduct productList={newArrivalProducts}></ListProduct>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export { IndexPage }
+export { IndexPage };

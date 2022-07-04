@@ -245,7 +245,9 @@ const ProductPopupCreate = ({ isModalVisible, setIsModalVisible }) => {
                                     },
                                 ]}
                             >
-                                <InputNumber min={0} size="middle" value={amountCurrent} onChange={handleChangeAmount} />
+                                <InputNumber 
+                                style={{width:60}}
+                                min={0} size="middle" value={amountCurrent} onChange={handleChangeAmount} />
                             </Form.Item>
                         </Input.Group>
                     </Form.Item>

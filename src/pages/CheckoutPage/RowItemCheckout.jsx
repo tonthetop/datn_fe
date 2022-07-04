@@ -24,22 +24,22 @@ function RowItemCheckout({ product }) {
                         <div className="d-flex justify-content-between">
                             <div className=""
                                 style={{
-                                    fontSize: "16px",
+                                    fontSize: "14px",
                                     fontWeight: "500"
                                 }}>
                                 <span>Size: {product.size}</span>
-                            </div>
+                            </div>  
                             <div className="product-price">
                                 {product.discountValue && product.discountValue !== "" ?
                                     <>
                                         <span style={{
-                                            fontSize: "16px",
+                                            fontSize: "14px",
                                             fontWeight: "500"
                                         }} className="">{(product.price * (1 - product.discountValue / 100)).toLocaleString()}₫</span>
 
                                         <span className="discount-price ">{product.price.toLocaleString()}₫</span></>
                                     : <span style={{
-                                        fontSize: "16px",
+                                        fontSize: "14px",
                                         fontWeight: "500"
                                     }} className="">{(product.price).toLocaleString()}₫</span>
                                 }

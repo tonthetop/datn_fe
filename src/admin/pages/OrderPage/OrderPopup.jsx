@@ -138,7 +138,7 @@ const OrderPopup = ({ isModalVisible, setIsModalVisible, order }) => {    //
                             }
                         ]}
                     >
-                        <Input />
+                        <Input.TextArea />
                     </Form.Item>
 
                     <Form.Item

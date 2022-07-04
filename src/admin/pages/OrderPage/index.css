@@ -45,7 +45,7 @@ tr.ant-table-row.ant-table-row-level-0:hover td:not(:last-child) {
     display: flex;
     justify-content: space-between;
     padding-bottom: 0px!important;
-    padding-top: 0px!important;
+    padding-top: 20px!important;
     ;
 }
 

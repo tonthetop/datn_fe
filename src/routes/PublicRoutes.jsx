@@ -31,6 +31,7 @@ function PublicRoutes() {
     phukien: "phụ kiện",
     "product-detail": "chi tiết sản phẩm",
     thankyou: "Cám ơn",
+    checkout: "đặt hàng"
   }
 
   const pathName = arrayPath.map(item => {
