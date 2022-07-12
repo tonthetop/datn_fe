@@ -81,13 +81,13 @@ function Header() {
                                     <Avatar name={user.name} size="35" round={true} />
                                 </div>
                                 <div id="drop-dowm-menu-user" className="z-dropdown position-absolute fs-6 w-40 bg-white rounded flex flex-col gap-2">
-                                    <Link className='drop-dowm-item-user' to="/user/order-history">
+                                    {/* <Link className='drop-dowm-item-user' to="/user/order-history">
                                         <div className="">Order History</div>
                                     </Link>
 
                                     <Link className='drop-dowm-item-user' to="/user/profile">
                                         <div className="">Profile</div>
-                                    </Link>
+                                    </Link> */}
                                     <div style={{ cursor: "pointer" }} className='drop-dowm-item-user' onClick={handleLogout}>
                                         <div className="">Log out</div>
                                     </div>
