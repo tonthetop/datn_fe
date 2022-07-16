@@ -162,7 +162,8 @@ const ProductPopup = ({ isModalVisible, setIsModalVisible, product }) => {
                                 required: true,
                             },
                             {
-                                pattern: /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+                                //pattern: /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+                                pattern: /^\+?(0|[1-9]\d*)$/,
                                 message: "Price must be a positive number"
                             }
                         ]}

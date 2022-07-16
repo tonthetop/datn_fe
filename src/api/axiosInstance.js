@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
     baseURL: BASE_URL,
 });
 
-axiosInstance.interceptors.request.use(async (config) => {
+axiosInstance.interceptors.request.use(async(config) => {
     const token = JSON.parse(localStorage.getItem("user"))?.tokenAccess;
     config.headers = {
         "Content-Type": "application/json",
@@ -33,23 +33,17 @@ axiosInstance.interceptors.response.use(
         const statusCode = error.response.status;
         if (statusCode === 400) {
             toast.error(`Bad Request: ${error.response.data.errors[0].message}`);
-        }
-        else if (statusCode === 401) {
+        } else if (statusCode === 401) {
             toast.error("Unauthorized");
-        }
-        else if (statusCode === 403) {
+        } else if (statusCode === 403) {
             toast.error("No Permission");
-        }
-        else if (statusCode === 404) {
+        } else if (statusCode === 404) {
             toast.error("NotFound");
-        }
-        else if (statusCode === 409) {
+        } else if (statusCode === 409) {
             toast.error("Conflict: " + error.response.data.errors[0].message);
-        }
-        else if (statusCode === 500) {
+        } else if (statusCode === 500) {
             toast.error("Server Error: Something error");
-        }
-        else toast.error("Server Error: " + error.message);
+        } else toast.error("Server Error: " + error.message);
         throw error;
     }
 );
